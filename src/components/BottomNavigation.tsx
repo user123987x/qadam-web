@@ -19,39 +19,57 @@ export const BottomNavigation = () => {
   const navigate = useNavigate();
 
   return (
-    <nav
+    <div
       className="mobile-nav"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      style={{
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+      }}
     >
-      <div className="flex items-center justify-around w-full h-full max-w-md mx-auto">
-        {navigationItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          const IconComponent = item.icon;
+      <div className="flex items-center justify-center w-full h-full">
+        <div className="flex items-center justify-around w-full max-w-md">
+          {navigationItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            const IconComponent = item.icon;
 
-          return (
-            <button
-              key={item.key}
-              onClick={() => navigate(item.path)}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 py-2 px-3 transition-all duration-200 flex-1 h-full relative",
-                "text-neutral-500 hover:text-neutral-700 active:scale-95 active:bg-neutral-100/50",
-                isActive && "text-soft-green",
-              )}
-            >
-              {isActive && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-soft-green rounded-full" />
-              )}
-              <IconComponent
-                size={20}
-                className="transition-all duration-200"
-              />
-              <span className="text-xs font-medium transition-all duration-200 leading-tight">
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={item.key}
+                onClick={() => navigate(item.path)}
+                className={cn(
+                  "flex flex-col items-center justify-center gap-1 py-3 px-3 transition-all duration-200 flex-1 relative",
+                  "hover:bg-gray-100/50 active:scale-95 min-h-[60px]",
+                  isActive ? "text-green-600" : "text-gray-500",
+                )}
+                style={{
+                  minWidth: "60px",
+                  minHeight: "60px",
+                }}
+              >
+                {isActive && (
+                  <div
+                    className="absolute top-0 left-1/2 w-8 h-1 bg-green-600 rounded-full"
+                    style={{
+                      transform: "translateX(-50%)",
+                    }}
+                  />
+                )}
+                <IconComponent
+                  size={20}
+                  className="transition-all duration-200"
+                />
+                <span className="text-xs font-medium transition-all duration-200 leading-tight text-center">
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </nav>
+    </div>
   );
 };
