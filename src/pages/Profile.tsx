@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { UserRoleSelector } from "@/components/UserRoleSelector";
+import { ProfilePhotoUpload } from "@/components/ProfilePhotoUpload";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { useUserRole } from "@/hooks/useUserRole";
 import {
   mockProjects,
@@ -12,6 +14,7 @@ import {
   mockWorkers,
 } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
+import { SettingsIcon, LogOutIcon } from "@/components/ui/icons";
 
 const Profile = () => {
   const { currentUser, userRole, isEmployer, isWorker, isSupplier } =
@@ -115,8 +118,10 @@ const Profile = () => {
       <div className="glass-effect border-b border-white/20">
         <div className="max-w-md mx-auto px-6 py-6">
           <div className="text-center">
-            <div className="text-6xl mb-4">{currentUser?.avatar}</div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            <div className="mb-4">
+              <ProfilePhotoUpload size="xl" className="mx-auto" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
               {currentUser?.name}
             </h1>
             <div className="flex items-center justify-center gap-2 mb-2">
@@ -204,27 +209,44 @@ const Profile = () => {
         </Card>
 
         {/* App Settings */}
-        <Card>
+        <Card className="app-card">
           <CardHeader>
-            <CardTitle>App Settings</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <SettingsIcon size={20} />
+              App Settings
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start">
-              <span className="mr-2">🔔</span>
-              Notification Settings
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <span className="mr-2">🌙</span>
-              Dark Mode
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <span className="mr-2">🌍</span>
-              Language & Region
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <span className="mr-2">📊</span>
-              Export Data
-            </Button>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between py-2">
+              <span className="text-neutral-700 dark:text-neutral-300">
+                Notifications
+              </span>
+              <Button variant="outline" size="sm">
+                Configure
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-between py-2">
+              <DarkModeToggle showLabel={true} />
+            </div>
+
+            <div className="flex items-center justify-between py-2">
+              <span className="text-neutral-700 dark:text-neutral-300">
+                Language & Region
+              </span>
+              <Button variant="outline" size="sm">
+                English
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-between py-2">
+              <span className="text-neutral-700 dark:text-neutral-300">
+                Export Data
+              </span>
+              <Button variant="outline" size="sm">
+                Download
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -253,14 +275,14 @@ const Profile = () => {
         </Card>
 
         {/* Logout */}
-        <Card className="border-red-200">
+        <Card className="app-card border-red-200 dark:border-red-800">
           <CardContent className="pt-6">
             <Button
               variant="outline"
-              className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+              className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
               onClick={handleLogout}
             >
-              <span className="mr-2">🚪</span>
+              <LogOutIcon size={20} className="mr-2" />
               Sign Out
             </Button>
           </CardContent>
