@@ -47,7 +47,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       onClick={() => navigate(`/projects/${project.id}`)}
     >
       <CardHeader className="pb-4">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-lg text-neutral-800 leading-tight mb-2 line-clamp-1">
               {project.name}
@@ -56,13 +56,13 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
               {project.description}
             </p>
           </div>
-          <Badge className={getStatusStyles(project.status)}>
+          <Badge className={`${getStatusStyles(project.status)} shrink-0`}>
             {statusConfig?.label}
           </Badge>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 pt-0">
         {/* Progress Section */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
