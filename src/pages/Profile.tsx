@@ -11,15 +11,19 @@ import {
   mockMaterials,
   mockWorkers,
 } from "@/lib/constants";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { currentUser, userRole, isEmployer, isWorker, isSupplier } =
     useUserRole();
-  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    // Clear all authentication data
+    localStorage.removeItem("authUserId");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("currentUserId");
+    localStorage.removeItem("currentUserRole");
     navigate("/login");
   };
   const getProfileStats = () => {
