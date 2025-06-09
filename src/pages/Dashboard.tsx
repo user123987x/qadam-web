@@ -21,9 +21,12 @@ const Dashboard = () => {
       const completedProjects = mockProjects.filter(
         (p) => p.status === "completed",
       );
-      const totalBudget = mockProjects.reduce((sum, p) => sum + p.budget, 0);
+      const totalBudget = mockProjects.reduce(
+        (sum, p) => sum + (p.budget || 0),
+        0,
+      );
       const totalSpent = mockProjects.reduce(
-        (sum, p) => sum + p.spentAmount,
+        (sum, p) => sum + (p.spentAmount || 0),
         0,
       );
 
@@ -54,7 +57,10 @@ const Dashboard = () => {
       const workerLogs = mockWorkLogs.filter(
         (l) => l.workerId === currentUser?.id,
       );
-      const totalEarnings = workerLogs.reduce((sum, l) => sum + l.earnings, 0);
+      const totalEarnings = workerLogs.reduce(
+        (sum, l) => sum + (l.earnings || 0),
+        0,
+      );
       const thisMonthLogs = workerLogs.filter((l) => {
         const logDate = new Date(l.date);
         const now = new Date();
@@ -89,7 +95,7 @@ const Dashboard = () => {
         (m) => m.remainingQuantity / m.totalQuantity < 0.2,
       );
       const totalDelivered = mockMaterials.reduce(
-        (sum, m) => sum + m.usedQuantity * m.pricePerUnit,
+        (sum, m) => sum + (m.usedQuantity || 0) * (m.pricePerUnit || 0),
         0,
       );
 
