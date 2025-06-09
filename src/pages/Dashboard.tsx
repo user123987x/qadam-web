@@ -209,12 +209,10 @@ const Dashboard = () => {
     <div className="min-h-screen bg-neutral-50 pb-20">
       {/* Header */}
       <div className="glass-effect sticky top-0 z-10 border-b border-white/20">
-        <div className="max-w-md mx-auto px-6 py-6">
+        <div className="px-6 py-6 max-w-md mx-auto w-full">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 flex-1">
-              <div
-                className={`w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium`}
-              >
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium shrink-0">
                 <RoleIcon size={24} className="text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -227,7 +225,7 @@ const Dashboard = () => {
               </div>
             </div>
             <Badge
-              className={`${getRoleColor()} bg-white border shadow-soft px-3 py-1`}
+              className={`${getRoleColor()} bg-white border shadow-soft px-3 py-1 shrink-0`}
             >
               {userRole?.charAt(0).toUpperCase() + userRole?.slice(1)}
             </Badge>
@@ -235,7 +233,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-6 py-6 space-y-8">
+      <div className="px-6 py-6 space-y-8 max-w-md mx-auto w-full">
         {/* Quick Stats */}
         <div className="grid grid-cols-2 gap-4">
           {dashboardData.stats.map((stat, index) => {
