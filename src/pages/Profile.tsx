@@ -115,21 +115,21 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
       {/* Header */}
-      <div className="glass-effect border-b border-white/20">
+      <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-700/60">
         <div className="max-w-md mx-auto px-6 py-6">
           <div className="text-center">
             <div className="mb-4">
               <ProfilePhotoUpload size="xl" className="mx-auto" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+            <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1">
               {currentUser?.name}
             </h1>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Badge
                 className={`
-                ${userRole === "employer" ? "bg-blue-100 text-blue-800" : ""}
-                ${userRole === "worker" ? "bg-emerald-100 text-emerald-800" : ""}
-                ${userRole === "supplier" ? "bg-purple-100 text-purple-800" : ""}
+                ${userRole === "employer" ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200" : ""}
+                ${userRole === "worker" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : ""}
+                ${userRole === "supplier" ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200" : ""}
               `}
               >
                 {userRole
@@ -137,13 +137,12 @@ const Profile = () => {
                   : "Guest"}
               </Badge>
             </div>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-neutral-600 dark:text-neutral-300">
               {currentUser?.email}
             </p>
           </div>
         </div>
       </div>
-
       <div className="max-w-md mx-auto px-6 py-4 space-y-6">
         {/* Profile Stats */}
         <Card className="app-card">
