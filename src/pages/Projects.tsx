@@ -67,11 +67,11 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20">
+    <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
       <div className="glass-effect sticky top-0 z-10 border-b border-white/20">
-        <div className="page-header">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="px-6 py-4 max-w-md mx-auto w-full">
+          <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium">
               <ProjectIcon size={24} className="text-white" />
             </div>
@@ -97,7 +97,7 @@ const Projects = () => {
         </div>
       </div>
 
-      <div className="main-content">
+      <div className="px-6 py-4 space-y-6 max-w-md mx-auto w-full">
         {/* Project Stats */}
         <div className="app-card-elevated">
           <CardHeader>
