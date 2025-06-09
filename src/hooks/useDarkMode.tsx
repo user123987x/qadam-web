@@ -37,21 +37,30 @@ export const DarkModeProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const updateDocumentClass = (dark: boolean) => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    try {
+      if (dark) {
+        document.documentElement.classList.add("dark");
+        document.body.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.body.classList.remove("dark");
+      }
+      console.log("Dark mode updated:", dark); // Debug log
+    } catch (error) {
+      console.error("Error updating dark mode classes:", error);
     }
   };
 
   const toggleDarkMode = () => {
     const newMode = !isDarkMode;
+    console.log("Toggling dark mode from", isDarkMode, "to", newMode); // Debug log
     setIsDarkMode(newMode);
     localStorage.setItem("darkMode", newMode.toString());
     updateDocumentClass(newMode);
   };
 
   const setDarkMode = (dark: boolean) => {
+    console.log("Setting dark mode to:", dark); // Debug log
     setIsDarkMode(dark);
     localStorage.setItem("darkMode", dark.toString());
     updateDocumentClass(dark);
@@ -73,7 +82,15 @@ export const DarkModeProvider = ({ children }: { children: ReactNode }) => {
 export const useDarkMode = () => {
   const context = useContext(DarkModeContext);
   if (context === undefined) {
-    throw new Error("useDarkMode must be used within a DarkModeProvider");
+    // Return a fallback instead of throwing an error
+    console.warn(
+      "useDarkMode must be used within a DarkModeProvider. Using fallback.",
+    );
+    return {
+      isDarkMode: false,
+      toggleDarkMode: () => {},
+      setDarkMode: () => {},
+    };
   }
   return context;
 };
