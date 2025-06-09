@@ -126,7 +126,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-200;
     /* Prevent zoom on iOS */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -139,6 +139,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Ensure root element also gets proper dark mode styling */
+  html {
+    @apply bg-background text-foreground transition-colors duration-200;
   }
 
   /* Safe area support for mobile devices */
@@ -241,10 +246,10 @@
   }
 
   .btn-outline {
-    @apply bg-white hover:bg-neutral-50 text-neutral-700 font-medium border border-neutral-200;
+    @apply bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-medium border border-neutral-200 dark:border-neutral-600;
     @apply px-6 py-3 rounded-xl transition-all duration-200 min-h-[48px] flex items-center justify-center;
-    @apply hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)] active:scale-[0.98];
-    @apply focus:ring-2 focus:ring-neutral-200 focus:outline-none;
+    @apply hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.25)] active:scale-[0.98];
+    @apply focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600 focus:outline-none;
     @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
@@ -257,10 +262,10 @@
 
   /* Input System */
   .input-field {
-    @apply bg-white border border-neutral-200 text-neutral-900 placeholder:text-neutral-400;
+    @apply bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500;
     @apply px-4 py-3 rounded-xl transition-all duration-200;
     @apply focus:ring-2 focus:ring-[hsl(var(--soft-green))]/20 focus:border-[hsl(var(--soft-green))] focus:outline-none;
-    @apply hover:border-neutral-300;
+    @apply hover:border-neutral-300 dark:hover:border-neutral-500;
   }
 
   /* Status Badges */
