@@ -112,8 +112,8 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-md mx-auto px-4 py-6">
+      <div className="glass-effect border-b border-white/20">
+        <div className="max-w-md mx-auto px-6 py-6">
           <div className="text-center">
             <div className="text-6xl mb-4">{currentUser?.avatar}</div>
             <h1 className="text-2xl font-bold text-gray-900 mb-1">
@@ -137,7 +137,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-md mx-auto px-6 py-4 space-y-6">
         {/* Profile Stats */}
         <Card>
           <CardHeader>
