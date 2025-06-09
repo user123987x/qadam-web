@@ -20,7 +20,7 @@ export const BottomNavigation = () => {
 
   return (
     <div className="mobile-nav safe-area-bottom">
-      <div className="flex items-center w-full">
+      <div className="flex items-stretch w-full h-full">
         {navigationItems.map((item) => {
           const isActive = location.pathname === item.path;
           const IconComponent = item.icon;
@@ -32,15 +32,15 @@ export const BottomNavigation = () => {
               className={cn("mobile-nav-item flex-1", isActive && "active")}
             >
               <IconComponent
-                size={22}
+                size={20}
                 className={cn(
-                  "transition-all duration-200",
+                  "transition-all duration-200 mb-1",
                   isActive ? "text-soft-green" : "text-neutral-500",
                 )}
               />
               <span
                 className={cn(
-                  "text-xs font-medium transition-all duration-200 mt-1",
+                  "text-xs font-medium transition-all duration-200 leading-none",
                   isActive ? "text-soft-green" : "text-neutral-500",
                 )}
               >
