@@ -207,24 +207,24 @@ const Dashboard = () => {
   const RoleIcon = getRoleIcon();
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
+    <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-10">
+      <div className="bg-white/95 backdrop-blur-lg border-b border-neutral-200/60 sticky top-0 z-10">
         <div className="px-6 py-4 max-w-md mx-auto w-full">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <ProfilePhotoUpload size="md" className="shrink-0" />
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200 truncate">
+                <h1 className="text-xl font-semibold text-neutral-800 truncate">
                   Welcome back, {currentUser?.name?.split(" ")[0]}
                 </h1>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 truncate">
+                <p className="text-sm text-neutral-600 truncate">
                   {dashboardData.title}
                 </p>
               </div>
             </div>
             <Badge
-              className={`${getRoleColor()} bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 shadow-soft px-3 py-1 shrink-0`}
+              className={`${getRoleColor()} bg-white border border-neutral-200 shadow-soft px-3 py-1 shrink-0`}
             >
               {userRole
                 ? userRole.charAt(0).toUpperCase() + userRole.slice(1)
