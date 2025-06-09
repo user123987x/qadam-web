@@ -100,7 +100,9 @@ const Profile = () => {
                 ${userRole === "supplier" ? "bg-purple-100 text-purple-800" : ""}
               `}
               >
-                {userRole?.charAt(0).toUpperCase() + userRole?.slice(1)}
+                {userRole
+                  ? userRole.charAt(0).toUpperCase() + userRole.slice(1)
+                  : "Guest"}
               </Badge>
             </div>
             <p className="text-gray-600">{currentUser?.email}</p>
