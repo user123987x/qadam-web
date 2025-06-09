@@ -207,7 +207,7 @@ export const mockWorkLogs: WorkLog[] = [
 
 // App navigation items
 export const navigationItems = [
-  { key: "home", label: "Home", icon: "🏠", path: "/" },
+  { key: "home", label: "Home", icon: "🏠", path: "/dashboard" },
   { key: "projects", label: "Projects", icon: "🏗️", path: "/projects" },
   { key: "add", label: "Add Entry", icon: "➕", path: "/add-entry" },
   { key: "profile", label: "Profile", icon: "👤", path: "/profile" },
