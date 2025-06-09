@@ -15,6 +15,13 @@ export const DarkModeToggle = ({
 }: DarkModeToggleProps) => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
+  // Debug: Check if dark mode is working
+  console.log("DarkModeToggle rendered, isDarkMode:", isDarkMode);
+  console.log(
+    "Document has dark class:",
+    document.documentElement.classList.contains("dark"),
+  );
+
   const getSizeClasses = () => {
     switch (size) {
       case "sm":
