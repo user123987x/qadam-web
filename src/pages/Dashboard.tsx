@@ -42,7 +42,7 @@ const Dashboard = () => {
           { label: "Completed", value: completedProjects.length, icon: "✅" },
           {
             label: "Budget Used",
-            value: `${Math.round((totalSpent / totalBudget) * 100)}%`,
+            value: `${totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0}%`,
             icon: "💰",
           },
         ],
