@@ -113,7 +113,7 @@ const Profile = () => {
   const profileStats = getProfileStats();
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
       {/* Header */}
       <div className="glass-effect border-b border-white/20">
         <div className="max-w-md mx-auto px-6 py-6">

@@ -207,7 +207,7 @@ const Dashboard = () => {
   const RoleIcon = getRoleIcon();
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-24">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
       {/* Header */}
       <div className="glass-effect sticky top-0 z-10 border-b border-white/20">
         <div className="px-6 py-4 max-w-md mx-auto w-full">
