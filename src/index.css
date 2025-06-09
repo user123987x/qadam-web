@@ -153,11 +153,16 @@
 
   /* Consistent spacing for main content areas */
   .main-content {
-    @apply px-6 py-6 space-y-8 max-w-md mx-auto w-full;
+    @apply px-6 py-4 space-y-6 max-w-md mx-auto w-full;
   }
 
   .page-header {
-    @apply px-6 py-6 max-w-md mx-auto w-full;
+    @apply px-6 py-4 max-w-md mx-auto w-full;
+  }
+
+  /* Page layout with proper bottom spacing for navigation */
+  .page-layout {
+    @apply min-h-screen bg-neutral-50 pb-24;
   }
 
   /* Line clamp utilities */
