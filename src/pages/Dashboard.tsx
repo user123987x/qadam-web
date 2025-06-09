@@ -227,7 +227,9 @@ const Dashboard = () => {
             <Badge
               className={`${getRoleColor()} bg-white border shadow-soft px-3 py-1 shrink-0`}
             >
-              {userRole?.charAt(0).toUpperCase() + userRole?.slice(1)}
+              {userRole
+                ? userRole.charAt(0).toUpperCase() + userRole.slice(1)
+                : "User"}
             </Badge>
           </div>
         </div>
