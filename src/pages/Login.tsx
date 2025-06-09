@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,13 +22,13 @@ const Login = () => {
   const location = useLocation();
   const { switchUser } = useUserRole();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    role: '' as UserRole | '',
-    rememberMe: false
+    email: "",
+    password: "",
+    role: "" as UserRole | "",
+    rememberMe: false,
   });
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -58,11 +58,10 @@ const Login = () => {
       switchUser(user.id);
 
       // Redirect to intended page or dashboard
-      const from = location.state?.from?.pathname || '/dashboard';
+      const from = location.state?.from?.pathname || "/dashboard";
       navigate(from, { replace: true });
     } else {
-      setError('Invalid email or password. Please try again.');
-    }
+      setError("Invalid email or password. Please try again.");
     }
 
     setIsLoading(false);
