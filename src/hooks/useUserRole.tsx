@@ -1,40 +1,41 @@
-import { UserRole } from "@/lib/types";
+import { useState, useEffect } from "react";
+import { UserRole, User } from "@/lib/types";
 import { mockUsers } from "@/lib/constants";
 
-// Import useAuth dynamically to avoid context issues
-let useAuth: any;
-try {
-  useAuth = require("./useAuth").useAuth;
-} catch {
-  useAuth = null;
-}
-
 export const useUserRole = () => {
-  let currentUser = null;
-  let userRole = null;
-  let login = () => {};
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
 
-  // Try to use auth context if available
-  if (useAuth) {
-    try {
-      const auth = useAuth();
-      currentUser = auth.user;
-      userRole = auth.user?.role || null;
-      login = auth.login;
-    } catch (error) {
-      // Fallback if auth context is not available
-      console.warn("useAuth not available, using fallback");
-    }
-  }
+  useEffect(() => {
+    // Check for authentication from localStorage
+    const storedUserId =
+      localStorage.getItem("authUserId") ||
+      localStorage.getItem("currentUserId");
 
-  // For demo purposes, allow switching between users
-  const switchUser = (userId: string) => {
-    try {
-      if (login) {
-        login(userId);
+    if (storedUserId) {
+      const user = mockUsers.find((u) => u.id === storedUserId);
+      if (user) {
+        setCurrentUser(user);
+        setUserRole(user.role);
       }
-    } catch (error) {
-      console.warn("switchUser failed:", error);
+    } else {
+      // Default to first employer for demo if no user is logged in
+      const defaultUser =
+        mockUsers.find((u) => u.role === "employer") || mockUsers[0];
+      setCurrentUser(defaultUser);
+      setUserRole(defaultUser.role);
+    }
+  }, []);
+
+  const switchUser = (userId: string) => {
+    const user = mockUsers.find((u) => u.id === userId);
+    if (user) {
+      setCurrentUser(user);
+      setUserRole(user.role);
+      localStorage.setItem("authUserId", user.id);
+      localStorage.setItem("authToken", `demo-token-${userId}`);
+      localStorage.setItem("currentUserId", user.id);
+      localStorage.setItem("currentUserRole", user.role);
     }
   };
 
