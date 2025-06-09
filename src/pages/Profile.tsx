@@ -15,7 +15,13 @@ import {
 const Profile = () => {
   const { currentUser, userRole, isEmployer, isWorker, isSupplier } =
     useUserRole();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   const getProfileStats = () => {
     if (isEmployer) {
       const activeProjects = mockProjects.filter(
@@ -238,6 +244,20 @@ const Profile = () => {
             <Button variant="outline" className="w-full justify-start">
               <span className="mr-2">⭐</span>
               Rate App
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Logout */}
+        <Card className="border-red-200">
+          <CardContent className="pt-6">
+            <Button
+              variant="outline"
+              className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+              onClick={handleLogout}
+            >
+              <span className="mr-2">🚪</span>
+              Sign Out
             </Button>
           </CardContent>
         </Card>
