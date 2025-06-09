@@ -126,7 +126,7 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-200;
+    @apply bg-background text-foreground;
     /* Prevent zoom on iOS */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -139,11 +139,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-  }
-
-  /* Ensure root element also gets proper dark mode styling */
-  html {
-    @apply bg-background text-foreground transition-colors duration-200;
   }
 
   /* Safe area support for mobile devices */
@@ -217,14 +212,14 @@
 
   /* Card System */
   .app-card {
-    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-neutral-200/60 dark:border-neutral-700/60 backdrop-blur-sm;
-    @apply hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.25)] transition-all duration-200;
+    @apply bg-white rounded-xl shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-neutral-200/60 backdrop-blur-sm;
+    @apply hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] transition-all duration-200;
     @apply p-0; /* Remove default padding to ensure consistent spacing */
   }
 
   .app-card-elevated {
-    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] border border-neutral-200/60 dark:border-neutral-700/60;
-    @apply hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.3)] transition-all duration-200;
+    @apply bg-white rounded-xl shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] border border-neutral-200/60;
+    @apply hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] transition-all duration-200;
     @apply p-0; /* Remove default padding to ensure consistent spacing */
   }
 
@@ -246,10 +241,10 @@
   }
 
   .btn-outline {
-    @apply bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-medium border border-neutral-200 dark:border-neutral-600;
+    @apply bg-white hover:bg-neutral-50 text-neutral-700 font-medium border border-neutral-200;
     @apply px-6 py-3 rounded-xl transition-all duration-200 min-h-[48px] flex items-center justify-center;
-    @apply hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.25)] active:scale-[0.98];
-    @apply focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600 focus:outline-none;
+    @apply hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)] active:scale-[0.98];
+    @apply focus:ring-2 focus:ring-neutral-200 focus:outline-none;
     @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
@@ -262,10 +257,10 @@
 
   /* Input System */
   .input-field {
-    @apply bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500;
+    @apply bg-white border border-neutral-200 text-neutral-900 placeholder:text-neutral-400;
     @apply px-4 py-3 rounded-xl transition-all duration-200;
     @apply focus:ring-2 focus:ring-[hsl(var(--soft-green))]/20 focus:border-[hsl(var(--soft-green))] focus:outline-none;
-    @apply hover:border-neutral-300 dark:hover:border-neutral-500;
+    @apply hover:border-neutral-300;
   }
 
   /* Status Badges */
@@ -315,17 +310,6 @@
     z-index: 9999 !important;
     display: flex !important;
     align-items: center !important;
-  }
-
-  .dark .mobile-nav {
-    background: rgba(30, 30, 35, 0.95) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 -4px 16px -8px rgba(0, 0, 0, 0.25) !important;
-  }
-
-  /* Glass effect for dark mode */
-  .dark .glass-effect {
-    @apply bg-neutral-800/80 backdrop-blur-lg border border-neutral-700/20;
   }
 
   /* Utility Classes */
