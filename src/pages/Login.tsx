@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,15 +19,24 @@ import { UserRole } from "@/lib/types";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { switchUser } = useUserRole();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    role: "" as UserRole | "",
-    rememberMe: false,
+    email: '',
+    password: '',
+    role: '' as UserRole | '',
+    rememberMe: false
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Check for success message from signup
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+    }
+  }, [location]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +56,13 @@ const Login = () => {
     if (user) {
       // Simulate successful login
       switchUser(user.id);
-      navigate("/dashboard");
+
+      // Redirect to intended page or dashboard
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
     } else {
-      setError("Invalid email or password. Please try again.");
+      setError('Invalid email or password. Please try again.');
+    }
     }
 
     setIsLoading(false);
@@ -84,6 +97,14 @@ const Login = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {successMessage && (
+                <Alert className="border-emerald-200 bg-emerald-50">
+                  <AlertDescription className="text-emerald-700">
+                    {successMessage}
+                  </AlertDescription>
+                </Alert>
+              )}
+
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
