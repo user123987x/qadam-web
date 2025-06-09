@@ -60,14 +60,13 @@ const Materials = () => {
 
   const materialCounts = {
     all: mockMaterials.length,
-    "low-stock": mockMaterials.filter(
-      (m) => m.remainingQuantity / m.totalQuantity < 0.2,
-    ).length,
-    "medium-stock": mockMaterials.filter((m) => {
+    'low-stock': mockMaterials.filter(m => m.totalQuantity > 0 && (m.remainingQuantity / m.totalQuantity) < 0.2).length,
+    'medium-stock': mockMaterials.filter(m => {
+      if (m.totalQuantity <= 0) return false;
       const ratio = m.remainingQuantity / m.totalQuantity;
       return ratio >= 0.2 && ratio < 0.8;
     }).length,
-    "well-stocked": mockMaterials.filter(
+    'well-stocked': mockMaterials.filter(m => m.totalQuantity > 0 && (m.remainingQuantity / m.totalQuantity) >= 0.8).length
       (m) => m.remainingQuantity / m.totalQuantity >= 0.8,
     ).length,
   };
@@ -188,11 +187,8 @@ const Materials = () => {
                   </Card>
                 ) : (
                   filteredMaterials.map((material) => {
-                    const stockPercentage =
-                      (material.remainingQuantity / material.totalQuantity) *
-                      100;
-                    const usagePercentage =
-                      (material.usedQuantity / material.totalQuantity) * 100;
+                    const stockPercentage = material.totalQuantity > 0 ? (material.remainingQuantity / material.totalQuantity) * 100 : 0;
+                    const usagePercentage = material.totalQuantity > 0 ? (material.usedQuantity / material.totalQuantity) * 100 : 0;
                     const stockStatus = getStockStatus(material);
                     const totalValue =
                       material.totalQuantity * material.pricePerUnit;
