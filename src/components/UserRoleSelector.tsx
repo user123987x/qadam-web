@@ -103,7 +103,7 @@ export const UserRoleSelector = () => {
 
               <div className="flex items-center gap-4">
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
                     isSelected
                       ? "bg-gradient-to-br from-soft-green to-deep-blue"
                       : "bg-gradient-to-br from-neutral-100 to-neutral-200"
@@ -119,10 +119,12 @@ export const UserRoleSelector = () => {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-medium text-neutral-800 truncate">
+                    <h3 className="font-medium text-neutral-800 truncate flex-1">
                       {user.name}
                     </h3>
-                    <Badge className={getRoleBadgeClass(user.role)}>
+                    <Badge
+                      className={`${getRoleBadgeClass(user.role)} shrink-0`}
+                    >
                       {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                     </Badge>
                   </div>
