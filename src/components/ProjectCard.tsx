@@ -4,6 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { projectStatuses } from "@/lib/constants";
+import {
+  LocationIcon,
+  CalendarIcon,
+  DollarIcon,
+  WorkerIcon,
+} from "@/components/ui/icons";
 
 interface ProjectCardProps {
   project: Project;
@@ -20,83 +26,110 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const budgetUsed =
     project.budget > 0 ? (project.spentAmount / project.budget) * 100 : 0;
 
+  const getStatusStyles = (status: string) => {
+    switch (status) {
+      case "active":
+        return "status-active";
+      case "planning":
+        return "status-planning";
+      case "completed":
+        return "status-completed";
+      case "paused":
+        return "status-paused";
+      default:
+        return "status-planning";
+    }
+  };
+
   return (
     <Card
-      className="cursor-pointer hover:shadow-md transition-shadow"
+      className="app-card cursor-pointer hover:shadow-medium transition-all duration-200 active:scale-[0.98]"
       onClick={() => navigate(`/projects/${project.id}`)}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <h3 className="font-semibold text-lg leading-tight mb-1">
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-lg text-neutral-800 leading-tight mb-2 line-clamp-1">
               {project.name}
             </h3>
-            <p className="text-sm text-gray-600 line-clamp-2">
+            <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
               {project.description}
             </p>
           </div>
-          <Badge className={`ml-2 ${statusConfig?.color} text-white border-0`}>
+          <Badge className={getStatusStyles(project.status)}>
             {statusConfig?.label}
           </Badge>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {/* Progress Section */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Progress</span>
-            <span className="font-medium">
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium text-neutral-700">
+              Progress
+            </span>
+            <span className="text-sm font-semibold text-neutral-800">
               {Math.round(progressPercentage)}%
             </span>
           </div>
-          <Progress value={progressPercentage} className="h-2" />
-          <div className="flex justify-between text-xs text-gray-500">
+          <div className="progress-bar h-2">
+            <div
+              className="progress-fill"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+          <div className="flex justify-between text-xs text-neutral-500">
             <span>{project.completedArea} m² completed</span>
             <span>{project.totalArea} m² total</span>
           </div>
         </div>
 
-        {/* Location and Dates */}
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-1">
-            <span>📍</span>
-            <span>{project.location}</span>
+        {/* Project Details */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center gap-2">
+            <LocationIcon size={16} className="text-neutral-400" />
+            <span className="text-sm text-neutral-600 truncate">
+              {project.location}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <WorkerIcon size={16} className="text-neutral-400" />
+            <span className="text-sm text-neutral-600">
+              {project.assignedWorkers.length} workers
+            </span>
           </div>
         </div>
 
-        <div className="flex justify-between text-sm">
-          <div className="text-gray-600">
-            Start: {new Date(project.startDate).toLocaleDateString()}
+        <div className="flex items-center justify-between text-sm text-neutral-500">
+          <div className="flex items-center gap-2">
+            <CalendarIcon size={16} className="text-neutral-400" />
+            <span>
+              Start: {new Date(project.startDate).toLocaleDateString()}
+            </span>
           </div>
-          <div className="text-gray-600">
-            End: {new Date(project.endDate).toLocaleDateString()}
-          </div>
+          <span>End: {new Date(project.endDate).toLocaleDateString()}</span>
         </div>
 
         {/* Budget Information */}
-        <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Budget Used</span>
-            <span className="font-medium">{Math.round(budgetUsed)}%</span>
+        <div className="bg-gradient-to-r from-neutral-50 to-neutral-100 rounded-xl p-4 space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium text-neutral-700 flex items-center gap-2">
+              <DollarIcon size={16} className="text-neutral-400" />
+              Budget Used
+            </span>
+            <span className="text-sm font-semibold text-neutral-800">
+              {Math.round(budgetUsed)}%
+            </span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="font-semibold text-emerald-600">
+          <div className="flex justify-between items-center">
+            <span className="text-lg font-semibold text-soft-green">
               ${project.spentAmount.toLocaleString()}
             </span>
-            <span className="text-gray-600">
+            <span className="text-sm text-neutral-600">
               / ${project.budget.toLocaleString()}
             </span>
           </div>
-        </div>
-
-        {/* Worker Count */}
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600 flex items-center gap-1">
-            <span>👷‍♂️</span>
-            Workers assigned
-          </span>
-          <span className="font-medium">{project.assignedWorkers.length}</span>
         </div>
       </CardContent>
     </Card>
