@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
@@ -6,8 +6,23 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+
+  useEffect(() => {
+    // Check authentication from localStorage
+    const checkAuth = () => {
+      const authUserId = localStorage.getItem("authUserId");
+      const authToken = localStorage.getItem("authToken");
+
+      // For demo, if either exists, consider authenticated
+      setIsAuthenticated(!!(authUserId || authToken));
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, []);
 
   if (isLoading) {
     // Show loading spinner while checking authentication
