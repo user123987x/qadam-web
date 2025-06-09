@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { UserRoleSelector } from "@/components/UserRoleSelector";
 import { ProfilePhotoUpload } from "@/components/ProfilePhotoUpload";
-import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { useUserRole } from "@/hooks/useUserRole";
 import {
   mockProjects,
@@ -221,38 +220,27 @@ const Profile = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700 dark:text-neutral-300">
-                Notifications
-              </span>
+              <span className="text-neutral-700">Notifications</span>
               <Button variant="outline" size="sm">
                 Configure
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-2">
-              <DarkModeToggle showLabel={true} />
-            </div>
-
-            <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700 dark:text-neutral-300">
-                Language & Region
-              </span>
+              <span className="text-neutral-700">Language & Region</span>
               <Button variant="outline" size="sm">
                 English
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700 dark:text-neutral-300">
-                Export Data
-              </span>
+              <span className="text-neutral-700">Export Data</span>
               <Button variant="outline" size="sm">
                 Download
               </Button>
             </div>
           </CardContent>
         </Card>
-
         {/* Role Switcher (Demo) */}
         <UserRoleSelector />
 
