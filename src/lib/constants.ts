@@ -205,13 +205,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
 ];
 
-// App navigation items
-export const navigationItems = [
-  { key: "home", label: "Home", icon: "🏠", path: "/dashboard" },
-  { key: "projects", label: "Projects", icon: "🏗️", path: "/projects" },
-  { key: "add", label: "Add Entry", icon: "➕", path: "/add-entry" },
-  { key: "profile", label: "Profile", icon: "👤", path: "/profile" },
-];
+// Navigation items are now handled in BottomNavigation component with proper icons
 
 // Material units
 export const materialUnits = ["kg", "m²", "L", "pcs", "m³", "m"];
