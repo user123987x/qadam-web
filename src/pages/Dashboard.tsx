@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { ProjectCard } from "@/components/ProjectCard";
 import { UserRoleSelector } from "@/components/UserRoleSelector";
 import { BottomNavigation } from "@/components/BottomNavigation";
+import { ProfilePhotoUpload } from "@/components/ProfilePhotoUpload";
 import { useUserRole } from "@/hooks/useUserRole";
 import { mockProjects, mockWorkLogs, mockMaterials } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
@@ -212,9 +213,7 @@ const Dashboard = () => {
         <div className="px-6 py-4 max-w-md mx-auto w-full">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              <div className="w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium shrink-0">
-                <RoleIcon size={24} className="text-white" />
-              </div>
+              <ProfilePhotoUpload size="md" className="shrink-0" />
               <div className="flex-1 min-w-0">
                 <h1 className="text-xl font-semibold text-neutral-800 truncate">
                   Welcome back, {currentUser?.name?.split(" ")[0]}
