@@ -1,5 +1,5 @@
-import { Switch } from "@/components/ui/switch";
 import { useDarkMode } from "@/hooks/useDarkMode";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface DarkModeToggleProps {
@@ -28,10 +28,12 @@ export const DarkModeToggle = ({
     }
   };
 
-  return (
-    <div className={cn("flex items-center gap-3", className)}>
-      {showLabel && (
-        <div className="flex items-center gap-2">
+  if (showLabel) {
+    return (
+      <div
+        className={cn("flex items-center justify-between w-full", className)}
+      >
+        <div className="flex items-center gap-3">
           <span className="text-2xl">{isDarkMode ? "🌙" : "☀️"}</span>
           <span
             className={cn(
@@ -42,17 +44,33 @@ export const DarkModeToggle = ({
             {isDarkMode ? "Dark Mode" : "Light Mode"}
           </span>
         </div>
-      )}
 
-      <Switch
-        checked={isDarkMode}
-        onCheckedChange={toggleDarkMode}
-        className="data-[state=checked]:bg-deep-blue"
-      />
+        <button
+          onClick={toggleDarkMode}
+          className={cn(
+            "relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-soft-green focus:ring-offset-2",
+            isDarkMode ? "bg-soft-green" : "bg-neutral-200 dark:bg-neutral-600",
+          )}
+        >
+          <span
+            className={cn(
+              "inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200",
+              isDarkMode ? "translate-x-6" : "translate-x-1",
+            )}
+          />
+        </button>
+      </div>
+    );
+  }
 
-      {!showLabel && (
-        <span className="text-xl">{isDarkMode ? "🌙" : "☀️"}</span>
-      )}
-    </div>
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={toggleDarkMode}
+      className={cn("p-2", className)}
+    >
+      <span className="text-xl">{isDarkMode ? "🌙" : "☀️"}</span>
+    </Button>
   );
 };
