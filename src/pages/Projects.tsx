@@ -69,17 +69,17 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
       {/* Header */}
-      <div className="glass-effect sticky top-0 z-10 border-b border-white/20">
+      <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-10">
         <div className="px-6 py-4 max-w-md mx-auto w-full">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium">
               <ProjectIcon size={24} className="text-white" />
             </div>
             <div className="flex-1">
-              <h1 className="text-xl font-semibold text-neutral-800">
+              <h1 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
                 {isWorker ? "My Projects" : "All Projects"}
               </h1>
-              <p className="text-sm text-neutral-600">
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 {isWorker
                   ? "Your assigned construction projects"
                   : "Manage all construction projects"}
