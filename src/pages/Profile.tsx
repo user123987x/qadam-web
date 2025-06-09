@@ -137,16 +137,20 @@ const Profile = () => {
                   : "Guest"}
               </Badge>
             </div>
-            <p className="text-gray-600">{currentUser?.email}</p>
+            <p className="text-gray-600 dark:text-gray-300">
+              {currentUser?.email}
+            </p>
           </div>
         </div>
       </div>
 
       <div className="max-w-md mx-auto px-6 py-4 space-y-6">
         {/* Profile Stats */}
-        <Card>
+        <Card className="app-card">
           <CardHeader>
-            <CardTitle>Profile Statistics</CardTitle>
+            <CardTitle className="text-neutral-800 dark:text-neutral-200">
+              Profile Statistics
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {profileStats.map((stat, index) => (
