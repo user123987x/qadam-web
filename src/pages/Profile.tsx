@@ -21,17 +21,26 @@ const Profile = () => {
       const activeProjects = mockProjects.filter(
         (p) => p.status === "active",
       ).length;
-      const totalBudget = mockProjects.reduce((sum, p) => sum + p.budget, 0);
+      const totalBudget = mockProjects.reduce(
+        (sum, p) => sum + (p.budget || 0),
+        0,
+      );
       const totalSpent = mockProjects.reduce(
-        (sum, p) => sum + p.spentAmount,
+        (sum, p) => sum + (p.spentAmount || 0),
         0,
       );
 
       return [
         { label: "Total Projects", value: mockProjects.length },
         { label: "Active Projects", value: activeProjects },
-        { label: "Total Budget", value: `$${totalBudget.toLocaleString()}` },
-        { label: "Amount Spent", value: `$${totalSpent.toLocaleString()}` },
+        {
+          label: "Total Budget",
+          value: `$${(totalBudget || 0).toLocaleString()}`,
+        },
+        {
+          label: "Amount Spent",
+          value: `$${(totalSpent || 0).toLocaleString()}`,
+        },
       ];
     }
 
@@ -40,34 +49,42 @@ const Profile = () => {
       const workerLogs = mockWorkLogs.filter(
         (l) => l.workerId === currentUser?.id,
       );
-      const totalEarnings = workerLogs.reduce((sum, l) => sum + l.earnings, 0);
-      const totalArea = workerLogs.reduce((sum, l) => sum + l.areaCompleted, 0);
+      const totalEarnings = workerLogs.reduce(
+        (sum, l) => sum + (l.earnings || 0),
+        0,
+      );
+      const totalArea = workerLogs.reduce(
+        (sum, l) => sum + (l.areaCompleted || 0),
+        0,
+      );
 
       return [
         { label: "Specialization", value: worker?.specialization || "N/A" },
         { label: "Rate per m²", value: `$${worker?.ratePerSquareMeter || 0}` },
         {
           label: "Total Earnings",
-          value: `$${totalEarnings.toLocaleString()}`,
+          value: `$${(totalEarnings || 0).toLocaleString()}`,
         },
-        { label: "Area Completed", value: `${totalArea} m²` },
+        { label: "Area Completed", value: `${totalArea || 0} m²` },
       ];
     }
 
     if (isSupplier) {
       const deliveredValue = mockMaterials.reduce(
-        (sum, m) => sum + m.usedQuantity * m.pricePerUnit,
+        (sum, m) => sum + (m.usedQuantity || 0) * (m.pricePerUnit || 0),
         0,
       );
-      const lowStockItems = mockMaterials.filter(
-        (m) => m.remainingQuantity / m.totalQuantity < 0.2,
-      ).length;
+      const lowStockItems = mockMaterials.filter((m) => {
+        const remaining = m.remainingQuantity || 0;
+        const total = m.totalQuantity || 1; // Avoid division by zero
+        return remaining / total < 0.2;
+      }).length;
 
       return [
         { label: "Materials Supplied", value: mockMaterials.length },
         {
           label: "Total Delivered Value",
-          value: `$${deliveredValue.toLocaleString()}`,
+          value: `$${(deliveredValue || 0).toLocaleString()}`,
         },
         { label: "Low Stock Alerts", value: lowStockItems },
         {
