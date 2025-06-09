@@ -13,8 +13,12 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const navigate = useNavigate();
 
   const statusConfig = projectStatuses.find((s) => s.value === project.status);
-  const progressPercentage = (project.completedArea / project.totalArea) * 100;
-  const budgetUsed = (project.spentAmount / project.budget) * 100;
+  const progressPercentage =
+    project.totalArea > 0
+      ? (project.completedArea / project.totalArea) * 100
+      : 0;
+  const budgetUsed =
+    project.budget > 0 ? (project.spentAmount / project.budget) * 100 : 0;
 
   return (
     <Card
