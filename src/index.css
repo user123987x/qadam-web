@@ -140,15 +140,24 @@
 
   /* Typography scale */
   h1 {
-    @apply text-2xl font-semibold tracking-tight;
+    @apply text-2xl font-semibold tracking-tight leading-tight;
   }
 
   h2 {
-    @apply text-xl font-semibold tracking-tight;
+    @apply text-xl font-semibold tracking-tight leading-tight;
   }
 
   h3 {
-    @apply text-lg font-medium tracking-tight;
+    @apply text-lg font-medium tracking-tight leading-tight;
+  }
+
+  /* Consistent spacing for main content areas */
+  .main-content {
+    @apply px-6 py-6 space-y-8 max-w-md mx-auto w-full;
+  }
+
+  .page-header {
+    @apply px-6 py-6 max-w-md mx-auto w-full;
   }
 
   /* Line clamp utilities */
@@ -180,39 +189,45 @@
   .app-card {
     @apply bg-white rounded-xl shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-neutral-200/60 backdrop-blur-sm;
     @apply hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] transition-all duration-200;
+    @apply p-0; /* Remove default padding to ensure consistent spacing */
   }
 
   .app-card-elevated {
     @apply bg-white rounded-xl shadow-[0_4px_16px_-4px_rgba(0,0,0,0.08)] border border-neutral-200/60;
     @apply hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] transition-all duration-200;
+    @apply p-0; /* Remove default padding to ensure consistent spacing */
   }
 
   /* Button System */
   .btn-primary {
     @apply bg-[hsl(var(--soft-green))] hover:bg-[hsl(var(--soft-green-light))] text-white font-medium;
-    @apply px-6 py-3 rounded-xl transition-all duration-200;
+    @apply px-6 py-3 rounded-xl transition-all duration-200 min-h-[48px] flex items-center justify-center;
     @apply shadow-[0_2px_8px_-2px_rgba(34,197,94,0.3)] hover:shadow-[0_4px_16px_-4px_rgba(34,197,94,0.4)];
     @apply active:scale-[0.98] focus:ring-2 focus:ring-[hsl(var(--soft-green))]/20 focus:outline-none;
+    @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
   .btn-secondary {
     @apply bg-[hsl(var(--deep-blue))] hover:bg-[hsl(var(--deep-blue-dark))] text-white font-medium;
-    @apply px-6 py-3 rounded-xl transition-all duration-200;
+    @apply px-6 py-3 rounded-xl transition-all duration-200 min-h-[48px] flex items-center justify-center;
     @apply shadow-[0_2px_8px_-2px_rgba(59,130,246,0.3)] hover:shadow-[0_4px_16px_-4px_rgba(59,130,246,0.4)];
     @apply active:scale-[0.98] focus:ring-2 focus:ring-[hsl(var(--deep-blue))]/20 focus:outline-none;
+    @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
   .btn-outline {
     @apply bg-white hover:bg-neutral-50 text-neutral-700 font-medium border border-neutral-200;
-    @apply px-6 py-3 rounded-xl transition-all duration-200;
+    @apply px-6 py-3 rounded-xl transition-all duration-200 min-h-[48px] flex items-center justify-center;
     @apply hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)] active:scale-[0.98];
     @apply focus:ring-2 focus:ring-neutral-200 focus:outline-none;
+    @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
   .btn-ghost {
     @apply bg-transparent hover:bg-neutral-100 text-neutral-600 hover:text-neutral-700 font-medium;
-    @apply px-4 py-2 rounded-lg transition-all duration-200;
+    @apply px-4 py-2 rounded-lg transition-all duration-200 min-h-[44px] flex items-center justify-center;
     @apply active:scale-[0.98] focus:ring-2 focus:ring-neutral-200 focus:outline-none;
+    @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100;
   }
 
   /* Input System */
