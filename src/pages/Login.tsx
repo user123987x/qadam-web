@@ -216,8 +216,30 @@ const Login = () => {
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-sm text-blue-700 text-center mb-4">
-              Try the app instantly with demo accounts:
+              Try the app instantly with demo accounts or use these credentials:
             </p>
+
+            {/* Demo Credentials */}
+            <div className="bg-white rounded-lg p-3 text-xs space-y-2">
+              <div className="font-medium text-blue-800">
+                Demo Login Credentials:
+              </div>
+              <div className="space-y-1">
+                <div>
+                  <span className="font-medium">Employer:</span>{" "}
+                  ahmad@construction.tj
+                </div>
+                <div>
+                  <span className="font-medium">Worker:</span> farid@worker.tj
+                </div>
+                <div>
+                  <span className="font-medium">Supplier:</span> info@gulnora.tj
+                </div>
+                <div className="text-gray-600 mt-2">
+                  Password: any password works in demo
+                </div>
+              </div>
+            </div>
 
             <div className="space-y-2">
               <Button
