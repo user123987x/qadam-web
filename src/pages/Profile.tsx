@@ -112,23 +112,23 @@ const Profile = () => {
   const profileStats = getProfileStats();
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pb-24">
+    <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-700/60">
+      <div className="bg-white/95 backdrop-blur-lg border-b border-neutral-200/60">
         <div className="max-w-md mx-auto px-6 py-6">
           <div className="text-center">
             <div className="mb-4">
               <ProfilePhotoUpload size="xl" className="mx-auto" />
             </div>
-            <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1">
+            <h1 className="text-2xl font-bold text-neutral-900 mb-1">
               {currentUser?.name}
             </h1>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Badge
                 className={`
-                ${userRole === "employer" ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200" : ""}
-                ${userRole === "worker" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : ""}
-                ${userRole === "supplier" ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200" : ""}
+                ${userRole === "employer" ? "bg-blue-100 text-blue-800" : ""}
+                ${userRole === "worker" ? "bg-emerald-100 text-emerald-800" : ""}
+                ${userRole === "supplier" ? "bg-purple-100 text-purple-800" : ""}
               `}
               >
                 {userRole
@@ -136,9 +136,7 @@ const Profile = () => {
                   : "Guest"}
               </Badge>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-300">
-              {currentUser?.email}
-            </p>
+            <p className="text-neutral-600">{currentUser?.email}</p>
           </div>
         </div>
       </div>
@@ -146,7 +144,7 @@ const Profile = () => {
         {/* Profile Stats */}
         <Card className="app-card">
           <CardHeader>
-            <CardTitle className="text-neutral-800 dark:text-neutral-200">
+            <CardTitle className="text-neutral-800">
               Profile Statistics
             </CardTitle>
           </CardHeader>
@@ -266,11 +264,11 @@ const Profile = () => {
         </Card>
 
         {/* Logout */}
-        <Card className="app-card border-red-200 dark:border-red-800">
+        <Card className="app-card border-red-200">
           <CardContent className="pt-6">
             <Button
               variant="outline"
-              className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
+              className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
               onClick={handleLogout}
             >
               <LogOutIcon size={20} className="mr-2" />
