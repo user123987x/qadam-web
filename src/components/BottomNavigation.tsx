@@ -1,30 +1,51 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { navigationItems } from "@/lib/constants";
+import {
+  HomeIcon,
+  ProjectIcon,
+  AddIcon,
+  UserIcon,
+} from "@/components/ui/icons";
+
+const navigationItems = [
+  { key: "home", label: "Home", icon: HomeIcon, path: "/dashboard" },
+  { key: "projects", label: "Projects", icon: ProjectIcon, path: "/projects" },
+  { key: "add", label: "Add Entry", icon: AddIcon, path: "/add-entry" },
+  { key: "profile", label: "Profile", icon: UserIcon, path: "/profile" },
+];
 
 export const BottomNavigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-bottom">
-      <div className="flex items-center justify-around h-16 max-w-md mx-auto">
+    <div className="mobile-nav safe-area-bottom">
+      <div className="flex items-center max-w-md mx-auto">
         {navigationItems.map((item) => {
           const isActive = location.pathname === item.path;
+          const IconComponent = item.icon;
 
           return (
             <button
               key={item.key}
               onClick={() => navigate(item.path)}
-              className={cn(
-                "flex flex-col items-center justify-center space-y-1 min-w-0 flex-1 h-full transition-colors",
-                isActive
-                  ? "text-emerald-600"
-                  : "text-gray-500 hover:text-gray-700",
-              )}
+              className={cn("mobile-nav-item", isActive && "active")}
             >
-              <span className="text-lg">{item.icon}</span>
-              <span className="text-xs font-medium truncate">{item.label}</span>
+              <IconComponent
+                size={22}
+                className={cn(
+                  "transition-all duration-200",
+                  isActive ? "text-soft-green" : "text-neutral-500",
+                )}
+              />
+              <span
+                className={cn(
+                  "text-xs font-medium transition-all duration-200",
+                  isActive ? "text-soft-green" : "text-neutral-500",
+                )}
+              >
+                {item.label}
+              </span>
             </button>
           );
         })}
