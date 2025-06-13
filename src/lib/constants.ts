@@ -1,4 +1,12 @@
-import { Project, WorkLog, Material, Worker, Supplier, User } from "./types";
+import {
+  Project,
+  WorkLog,
+  Material,
+  Worker,
+  Supplier,
+  User,
+  MaterialRequest,
+} from "./types";
 
 // Mock user data
 export const mockUsers: User[] = [
@@ -218,6 +226,57 @@ export const projectStatuses = [
   { value: "completed", label: "Completed", color: "bg-blue-500" },
 ];
 
+// Mock material requests
+export const mockMaterialRequests: MaterialRequest[] = [
+  {
+    id: "req-1",
+    workerId: "worker-1",
+    workerName: "Farid Nazarov",
+    projectId: "proj-1",
+    projectName: "Residential Complex A",
+    materialName: "Cement",
+    requestedQuantity: 500,
+    unit: "kg",
+    urgency: "high",
+    reason: "Running low on cement, need for foundation work",
+    status: "pending",
+    requestDate: "2024-01-22",
+    notes: "Need by Friday to stay on schedule",
+  },
+  {
+    id: "req-2",
+    workerId: "worker-2",
+    workerName: "Jamshid Karimov",
+    projectId: "proj-2",
+    projectName: "Office Building B",
+    materialName: "Steel Rebar",
+    requestedQuantity: 200,
+    unit: "kg",
+    urgency: "medium",
+    reason: "Additional rebar needed for column reinforcement",
+    status: "approved",
+    requestDate: "2024-01-20",
+    approvedBy: "Ahmad Rahimi",
+    approvedDate: "2024-01-21",
+  },
+  {
+    id: "req-3",
+    workerId: "worker-4",
+    workerName: "Rustam Asadov",
+    projectId: "proj-2",
+    projectName: "Office Building B",
+    materialName: "Paint",
+    requestedQuantity: 50,
+    unit: "L",
+    urgency: "low",
+    reason: "Need more paint for interior walls",
+    status: "fulfilled",
+    requestDate: "2024-01-18",
+    approvedBy: "Ahmad Rahimi",
+    approvedDate: "2024-01-19",
+  },
+];
+
 // Worker specializations
 export const workerSpecializations = [
   "Mason",
@@ -228,4 +287,19 @@ export const workerSpecializations = [
   "Roofer",
   "Welder",
   "General Labor",
+];
+
+// Material request urgency levels
+export const urgencyLevels = [
+  { value: "low", label: "Low Priority", color: "bg-green-500" },
+  { value: "medium", label: "Medium Priority", color: "bg-yellow-500" },
+  { value: "high", label: "High Priority", color: "bg-red-500" },
+];
+
+// Material request statuses
+export const requestStatuses = [
+  { value: "pending", label: "Pending", color: "bg-yellow-500" },
+  { value: "approved", label: "Approved", color: "bg-blue-500" },
+  { value: "rejected", label: "Rejected", color: "bg-red-500" },
+  { value: "fulfilled", label: "Fulfilled", color: "bg-green-500" },
 ];

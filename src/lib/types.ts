@@ -81,6 +81,25 @@ export interface Supplier {
   materials: string[];
 }
 
+export interface MaterialRequest {
+  id: string;
+  workerId: string;
+  workerName: string;
+  projectId: string;
+  projectName: string;
+  materialName: string;
+  requestedQuantity: number;
+  unit: string;
+  urgency: "low" | "medium" | "high";
+  reason: string;
+  status: "pending" | "approved" | "rejected" | "fulfilled";
+  requestDate: string;
+  notes?: string;
+  approvedBy?: string;
+  approvedDate?: string;
+  rejectionReason?: string;
+}
+
 export interface DashboardStats {
   totalProjects: number;
   activeProjects: number;
@@ -88,4 +107,5 @@ export interface DashboardStats {
   totalWorkers: number;
   totalEarnings: number;
   materialAlerts: number;
+  pendingRequests?: number;
 }

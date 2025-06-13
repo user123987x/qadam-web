@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkLogForm } from "@/components/WorkLogForm";
 import { MaterialLogForm } from "@/components/MaterialLogForm";
+import { MaterialRequestForm } from "@/components/MaterialRequestForm";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { useUserRole } from "@/hooks/useUserRole";
 
@@ -31,7 +32,13 @@ const AddEntry = () => {
       <div className="max-w-md mx-auto px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList
-            className={`grid w-full ${isEmployer ? "grid-cols-2" : "grid-cols-1"}`}
+            className={`grid w-full ${
+              isEmployer
+                ? "grid-cols-2"
+                : isWorker
+                  ? "grid-cols-3"
+                  : "grid-cols-1"
+            }`}
           >
             {(isWorker || isEmployer) && (
               <TabsTrigger value="work" className="flex items-center gap-2">
@@ -48,6 +55,12 @@ const AddEntry = () => {
                 {isSupplier ? "Deliveries" : "Materials"}
               </TabsTrigger>
             )}
+            {isWorker && (
+              <TabsTrigger value="request" className="flex items-center gap-2">
+                <span>📋</span>
+                Request
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <div className="mt-6">
@@ -60,6 +73,12 @@ const AddEntry = () => {
             <TabsContent value="materials" className="mt-0">
               <MaterialLogForm />
             </TabsContent>
+
+            {isWorker && (
+              <TabsContent value="request" className="mt-0">
+                <MaterialRequestForm />
+              </TabsContent>
+            )}
           </div>
         </Tabs>
 
@@ -72,6 +91,7 @@ const AddEntry = () => {
                 <li>• Log your daily work to track earnings automatically</li>
                 <li>• Be specific about the work completed</li>
                 <li>• Record material usage to help with inventory</li>
+                <li>• Request more materials when you're running low</li>
               </ul>
             )}
             {isEmployer && (
