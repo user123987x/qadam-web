@@ -335,7 +335,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-4",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-4",
     date: "2024-03-05",
@@ -346,7 +346,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-5",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-5",
     date: "2024-02-20",
@@ -357,7 +357,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-6",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-6",
     date: "2024-01-25",
@@ -368,7 +368,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-7",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-7",
     date: "2024-01-30",
@@ -379,7 +379,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-8",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-1",
     date: "2024-01-22",
@@ -390,7 +390,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-9",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-9",
     date: "2023-12-15",
