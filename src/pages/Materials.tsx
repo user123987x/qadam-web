@@ -85,18 +85,26 @@ const Materials = () => {
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold text-gray-900">
-              Material Inventory
+              {(isEmployer || isSupplier) && activeTab === "requests"
+                ? "Material Requests"
+                : "Material Inventory"}
             </h1>
-            <div className="text-lg">📦</div>
+            <div className="text-lg">
+              {(isEmployer || isSupplier) && activeTab === "requests"
+                ? "📋"
+                : "📦"}
+            </div>
           </div>
 
-          {/* Search */}
-          <Input
-            placeholder="Search materials or suppliers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-          />
+          {/* Search - Only show for inventory tab */}
+          {activeTab === "inventory" && (
+            <Input
+              placeholder="Search materials or suppliers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full"
+            />
+          )}
         </div>
       </div>
 
@@ -107,7 +115,7 @@ const Materials = () => {
             {(isEmployer || isSupplier) && (
               <TabsTrigger value="requests" className="flex items-center gap-2">
                 <span>📋</span>
-                Material Requests
+                Requests
               </TabsTrigger>
             )}
             <TabsTrigger value="inventory" className="flex items-center gap-2">
@@ -174,7 +182,7 @@ const MaterialRequestsSection = () => {
   return (
     <div className="space-y-6">
       {/* Request Filters */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
+      <div className="grid grid-cols-2 gap-2">
         {[
           { key: "pending", label: "Pending", emoji: "⏳" },
           { key: "approved", label: "Approved", emoji: "✅" },
@@ -188,7 +196,8 @@ const MaterialRequestsSection = () => {
             onClick={() => setRequestFilter(filter.key)}
             className="text-xs h-8"
           >
-            {filter.emoji} {filter.label} ({requestCounts[filter.key as keyof typeof requestCounts]})
+            {filter.emoji} {filter.label} (
+            {requestCounts[filter.key as keyof typeof requestCounts]})
           </Button>
         ))}
       </div>
@@ -250,281 +259,177 @@ const InventorySection = ({
 }) => {
   return (
     <div className="space-y-6">
-        {/* Material Stats */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-lg">Inventory Summary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
-                  {materialCounts.all}
-                </div>
-                <div className="text-sm text-gray-600">Total Materials</div>
+      {/* Material Stats */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Inventory Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">
+                {materialCounts.all}
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-red-600">
-                  {materialCounts["low-stock"]}
-                </div>
-                <div className="text-sm text-gray-600">Low Stock</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-600">
-                  {materialCounts["medium-stock"]}
-                </div>
-                <div className="text-sm text-gray-600">Medium Stock</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">
-                  {materialCounts["well-stocked"]}
-                </div>
-                <div className="text-sm text-gray-600">Well Stocked</div>
-              </div>
+              <div className="text-sm text-gray-600">Total Materials</div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">
+                {materialCounts["low-stock"]}
+              </div>
+              <div className="text-sm text-gray-600">Low Stock</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-yellow-600">
+                {materialCounts["medium-stock"]}
+              </div>
+              <div className="text-sm text-gray-600">Medium Stock</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">
+                {materialCounts["well-stocked"]}
+              </div>
+              <div className="text-sm text-gray-600">Well Stocked</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Material Tabs */}
-        <Tabs
-          value={selectedFilter}
-          onValueChange={setSelectedFilter}
-          className="w-full"
-        >
-          <TabsList className="grid grid-cols-4 w-full h-auto p-1">
-            <TabsTrigger value="all" className="text-xs px-2 py-2">
-              All
-              {materialCounts.all > 0 && (
-                <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
-                  {materialCounts.all}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="low-stock" className="text-xs px-2 py-2">
-              Low
-              {materialCounts["low-stock"] > 0 && (
-                <Badge variant="destructive" className="ml-1 text-xs h-5 px-1">
-                  {materialCounts["low-stock"]}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="medium-stock" className="text-xs px-2 py-2">
-              Medium
-              {materialCounts["medium-stock"] > 0 && (
-                <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
-                  {materialCounts["medium-stock"]}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="well-stocked" className="text-xs px-2 py-2">
-              High
-              {materialCounts["well-stocked"] > 0 && (
-                <Badge variant="default" className="ml-1 text-xs h-5 px-1">
-                  {materialCounts["well-stocked"]}
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
+      {/* Material Filters */}
+      <Tabs
+        value={selectedFilter}
+        onValueChange={setSelectedFilter}
+        className="w-full"
+      >
+        <TabsList className="grid grid-cols-4 w-full h-auto p-1">
+          <TabsTrigger value="all" className="text-xs px-2 py-2">
+            All
+            {materialCounts.all > 0 && (
+              <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
+                {materialCounts.all}
+              </Badge>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="low-stock" className="text-xs px-2 py-2">
+            Low
+            {materialCounts["low-stock"] > 0 && (
+              <Badge variant="destructive" className="ml-1 text-xs h-5 px-1">
+                {materialCounts["low-stock"]}
+              </Badge>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="medium-stock" className="text-xs px-2 py-2">
+            Medium
+            {materialCounts["medium-stock"] > 0 && (
+              <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
+                {materialCounts["medium-stock"]}
+              </Badge>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="well-stocked" className="text-xs px-2 py-2">
+            High
+            {materialCounts["well-stocked"] > 0 && (
+              <Badge variant="default" className="ml-1 text-xs h-5 px-1">
+                {materialCounts["well-stocked"]}
+              </Badge>
+            )}
+          </TabsTrigger>
+        </TabsList>
 
-          <div className="mt-4">
-            <TabsContent value={selectedFilter} className="mt-0">
-              <div className="space-y-4">
-                {filteredMaterials.length === 0 ? (
-                  <Card>
-                    <CardContent className="text-center py-8">
-                      <div className="text-4xl mb-2">📦</div>
-                      <div className="text-gray-600">No materials found</div>
-                      {searchTerm && (
-                        <div className="text-sm text-gray-500 mt-1">
-                          Try adjusting your search terms
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ) : (
-                  filteredMaterials.map((material) => {
-                    const stockPercentage =
-                      material.totalQuantity > 0
-                        ? (material.remainingQuantity /
-                            material.totalQuantity) *
-                          100
-                        : 0;
-                    const usagePercentage =
-                      material.totalQuantity > 0
-                        ? (material.usedQuantity / material.totalQuantity) * 100
-                        : 0;
-                    const stockStatus = getStockStatus(material);
-                    const totalValue =
-                      material.totalQuantity * material.pricePerUnit;
-                    const remainingValue =
-                      material.remainingQuantity * material.pricePerUnit;
+        <div className="mt-4">
+          <TabsContent value={selectedFilter} className="mt-0">
+            <div className="space-y-4">
+              {filteredMaterials.length === 0 ? (
+                <Card>
+                  <CardContent className="text-center py-8">
+                    <div className="text-4xl mb-2">📦</div>
+                    <div className="text-gray-600">No materials found</div>
+                    {searchTerm && (
+                      <div className="text-sm text-gray-500 mt-1">
+                        Try adjusting your search terms
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ) : (
+                filteredMaterials.map((material) => {
+                  const stockPercentage =
+                    material.totalQuantity > 0
+                      ? (material.remainingQuantity / material.totalQuantity) *
+                        100
+                      : 0;
+                  const usagePercentage =
+                    material.totalQuantity > 0
+                      ? (material.usedQuantity / material.totalQuantity) * 100
+                      : 0;
+                  const stockStatus = getStockStatus(material);
 
-                    return (
-                      <Card
-                        key={material.id}
-                        className="hover:shadow-md transition-shadow"
-                      >
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg leading-tight mb-1">
-                                {material.name}
-                              </h3>
-                              <p className="text-sm text-gray-600">
-                                Supplier: {material.supplier}
-                              </p>
-                            </div>
-                            <Badge
-                              variant={stockStatus.variant}
-                              className="ml-2"
-                            >
-                              {stockStatus.label}
-                            </Badge>
+                  return (
+                    <Card key={material.id} className="w-full">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-semibold text-gray-900">
+                              {material.name}
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              Supplier: {material.supplier}
+                            </p>
                           </div>
-                        </CardHeader>
+                          <Badge variant={stockStatus.variant}>
+                            {stockStatus.label}
+                          </Badge>
+                        </div>
 
-                        <CardContent className="space-y-4">
-                          {/* Stock Progress */}
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600">
-                                Stock Remaining
-                              </span>
-                              <span className="font-medium">
-                                {Math.round(stockPercentage)}%
+                        <div className="space-y-3">
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Stock Level</span>
+                              <span>
+                                {material.remainingQuantity} /{" "}
+                                {material.totalQuantity} {material.unit}
                               </span>
                             </div>
                             <Progress value={stockPercentage} className="h-2" />
-                            <div className="flex justify-between text-xs text-gray-500">
-                              <span>
-                                {material.remainingQuantity} {material.unit}{" "}
-                                left
-                              </span>
-                              <span>
-                                {material.totalQuantity} {material.unit} total
-                              </span>
-                            </div>
                           </div>
 
-                          {/* Usage Progress */}
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600">Usage</span>
-                              <span className="font-medium">
-                                {Math.round(usagePercentage)}%
-                              </span>
-                            </div>
-                            <Progress value={usagePercentage} className="h-2" />
-                            <div className="flex justify-between text-xs text-gray-500">
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Usage</span>
                               <span>
                                 {material.usedQuantity} {material.unit} used
                               </span>
-                              <span>
-                                {material.totalQuantity} {material.unit}{" "}
-                                delivered
-                              </span>
                             </div>
+                            <Progress value={usagePercentage} className="h-2" />
                           </div>
 
-                          {/* Financial Information */}
-                          <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                              <div>
-                                <div className="text-gray-600">
-                                  Price per {material.unit}
-                                </div>
-                                <div className="font-semibold">
-                                  ${material.pricePerUnit}
-                                </div>
-                              </div>
-                              <div>
-                                <div className="text-gray-600">
-                                  Remaining Value
-                                </div>
-                                <div className="font-semibold text-emerald-600">
-                                  ${remainingValue.toLocaleString()}
-                                </div>
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <span className="text-gray-600">Price/Unit:</span>
+                              <div className="font-medium">
+                                ${material.pricePerUnit}
                               </div>
                             </div>
-                            <div className="flex justify-between text-sm pt-2 border-t border-gray-200">
-                              <span className="text-gray-600">Total Value</span>
-                              <span className="font-semibold">
-                                ${totalValue.toLocaleString()}
+                            <div>
+                              <span className="text-gray-600">
+                                Last Delivery:
                               </span>
+                              <div className="font-medium">
+                                {new Date(
+                                  material.deliveryDate,
+                                ).toLocaleDateString()}
+                              </div>
                             </div>
                           </div>
-
-                          {/* Delivery Information */}
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 flex items-center gap-1">
-                              <span>🚚</span>
-                              Delivered
-                            </span>
-                            <span className="font-medium">
-                              {new Date(
-                                material.deliveryDate,
-                              ).toLocaleDateString()}
-                            </span>
-                          </div>
-
-                          {/* Action Buttons for Suppliers */}
-                          {isSupplier && (
-                            <div className="flex gap-2 pt-2">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="flex-1"
-                                onClick={() => navigate("/add-entry")}
-                              >
-                                Log Delivery
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="flex-1"
-                              >
-                                Update Stock
-                              </Button>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    );
-                  })
-                )}
-              </div>
-            </TabsContent>
-          </div>
-        </Tabs>
-
-        {/* Quick Actions for Suppliers */}
-        {isSupplier && (
-          <Card className="mt-6 bg-blue-50 border-blue-200">
-            <CardContent className="pt-6">
-              <div className="text-center space-y-3">
-                <div className="text-blue-700 font-medium">
-                  Supplier Actions
-                </div>
-                <div className="space-y-2">
-                  <Button
-                    className="w-full bg-blue-600 hover:bg-blue-700"
-                    onClick={() => navigate("/add-entry")}
-                  >
-                    <span className="mr-2">🚚</span>
-                    Log New Delivery
-                  </Button>
-                  <Button variant="outline" className="w-full border-blue-200">
-                    <span className="mr-2">📊</span>
-                    Generate Report
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-
-      <BottomNavigation />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })
+              )}
+            </div>
+          </TabsContent>
+        </div>
+      </Tabs>
     </div>
   );
 };
