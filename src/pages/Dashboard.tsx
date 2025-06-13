@@ -7,7 +7,12 @@ import { UserRoleSelector } from "@/components/UserRoleSelector";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { ProfilePhotoUpload } from "@/components/ProfilePhotoUpload";
 import { useUserRole } from "@/hooks/useUserRole";
-import { mockProjects, mockWorkLogs, mockMaterials } from "@/lib/constants";
+import {
+  mockProjects,
+  mockWorkLogs,
+  mockMaterials,
+  mockMaterialRequests,
+} from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
 import {
   ProjectIcon,
@@ -42,6 +47,9 @@ const Dashboard = () => {
         (sum, p) => sum + (p.spentAmount || 0),
         0,
       );
+      const pendingRequests = mockMaterialRequests.filter(
+        (r) => r.status === "pending",
+      ).length;
 
       return {
         title: "Project Overview",
@@ -65,10 +73,10 @@ const Dashboard = () => {
             color: "text-neutral-600",
           },
           {
-            label: "Budget Used",
-            value: `${totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0}%`,
-            icon: DollarIcon,
-            color: "text-deep-blue",
+            label: "Pending Requests",
+            value: pendingRequests || 0,
+            icon: AlertIcon,
+            color: "text-orange-600",
           },
         ],
         recentProjects: activeProjects.slice(0, 2),
@@ -86,14 +94,12 @@ const Dashboard = () => {
         (sum, l) => sum + (l.earnings || 0),
         0,
       );
-      const thisMonthLogs = workerLogs.filter((l) => {
-        const logDate = new Date(l.date);
-        const now = new Date();
-        return (
-          logDate.getMonth() === now.getMonth() &&
-          logDate.getFullYear() === now.getFullYear()
-        );
-      });
+      const myRequests = mockMaterialRequests.filter(
+        (r) => r.workerId === currentUser?.id,
+      );
+      const pendingRequests = myRequests.filter(
+        (r) => r.status === "pending",
+      ).length;
 
       return {
         title: "My Work Dashboard",
@@ -117,10 +123,10 @@ const Dashboard = () => {
             color: "text-neutral-600",
           },
           {
-            label: "This Month",
-            value: thisMonthLogs.length || 0,
-            icon: TrendingUpIcon,
-            color: "text-deep-blue",
+            label: "Pending Requests",
+            value: pendingRequests || 0,
+            icon: AlertIcon,
+            color: "text-orange-600",
           },
         ],
         recentProjects: workerProjects.slice(0, 2),
@@ -137,6 +143,9 @@ const Dashboard = () => {
         (sum, m) => sum + (m.usedQuantity || 0) * (m.pricePerUnit || 0),
         0,
       );
+      const pendingRequests = mockMaterialRequests.filter(
+        (r) => r.status === "pending" || r.status === "approved",
+      ).length;
 
       return {
         title: "Supply Management",
@@ -160,11 +169,10 @@ const Dashboard = () => {
             color: "text-soft-green",
           },
           {
-            label: "Active Projects",
-            value:
-              mockProjects.filter((p) => p.status === "active").length || 0,
-            icon: ProjectIcon,
-            color: "text-neutral-600",
+            label: "Material Requests",
+            value: pendingRequests || 0,
+            icon: AlertIcon,
+            color: "text-orange-600",
           },
         ],
         recentProjects: mockProjects
