@@ -286,25 +286,28 @@ const Dashboard = () => {
               Quick Actions
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {isSupplier && (
+          <CardContent className="space-y-3">
+            {isEmployer && (
               <>
+                <Button
+                  className="btn-outline w-full h-11 justify-start"
+                  onClick={() => navigate("/projects")}
+                >
+                  <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <span className="font-medium">Manage Projects</span>
+                </Button>
                 <Button
                   className="btn-primary w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry")}
                 >
-                  <MaterialIcon size={18} className="mr-2.5" />
-                  <span className="font-medium">Log Material Delivery</span>
+                  <FileTextIcon size={18} className="mr-2.5" />
+                  <span className="font-medium">Add Work Entry</span>
                 </Button>
-                <Button
-                  className="btn-outline w-full h-11 justify-start"
-                  onClick={() => navigate("/materials")}
-                >
-                  <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
-                  <span className="font-medium">Manage Inventory</span>
-                </Button>
-              </>
-            )}
+                {dashboardData.pendingRequests > 0 && (
+                  <Button
+                    className="btn-outline w-full h-11 justify-start border-orange-200 text-orange-700 hover:bg-orange-50"
+                    onClick={() => navigate("/materials")}
+                  >
                     <AlertIcon size={18} className="mr-2.5 text-orange-600" />
                     <span className="font-medium">
                       Review Requests ({dashboardData.pendingRequests})
@@ -336,6 +339,25 @@ const Dashboard = () => {
                 >
                   <MaterialIcon size={18} className="mr-2.5 text-soft-green" />
                   <span className="font-medium">Request Materials</span>
+                </Button>
+              </>
+            )}
+
+            {isSupplier && (
+              <>
+                <Button
+                  className="btn-primary w-full h-11 justify-start"
+                  onClick={() => navigate("/add-entry")}
+                >
+                  <MaterialIcon size={18} className="mr-2.5" />
+                  <span className="font-medium">Log Material Delivery</span>
+                </Button>
+                <Button
+                  className="btn-outline w-full h-11 justify-start"
+                  onClick={() => navigate("/materials")}
+                >
+                  <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <span className="font-medium">Manage Inventory</span>
                 </Button>
               </>
             )}
