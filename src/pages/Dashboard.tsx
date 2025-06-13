@@ -366,18 +366,18 @@ const Dashboard = () => {
             {isSupplier && (
               <>
                 <Button
-                  className="btn-primary w-full h-12 justify-start"
+                  className="btn-primary w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry")}
                 >
-                  <MaterialIcon size={20} className="mr-3" />
+                  <MaterialIcon size={18} className="mr-2.5" />
                   <span className="font-medium">Log Material Delivery</span>
                 </Button>
                 <Button
-                  className="btn-outline w-full h-12 justify-start"
+                  className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/materials")}
                 >
-                  <MaterialIcon size={20} className="mr-3 text-deep-blue" />
-                  <span className="font-medium">Material Inventory</span>
+                  <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <span className="font-medium">Manage Inventory</span>
                 </Button>
               </>
             )}
@@ -413,7 +413,7 @@ const Dashboard = () => {
           <div className="app-card border-orange-200 bg-gradient-to-br from-orange-50 to-orange-100">
             <CardHeader>
               <CardTitle className="text-lg font-medium text-orange-800 flex items-center gap-2">
-                <AlertIcon size={20} />
+                <AlertIcon size={18} />
                 Material Alerts
               </CardTitle>
             </CardHeader>
