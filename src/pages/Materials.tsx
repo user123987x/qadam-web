@@ -183,13 +183,50 @@ const MaterialRequestsSection = () => {
 
   return (
     <div className="space-y-6">
+      {/* Summary Stats for Employers */}
+      {isEmployer && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Request Summary</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600">
+                  {requestCounts.pending}
+                </div>
+                <div className="text-sm text-gray-600">Pending Approval</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
+                  {requestCounts.approved}
+                </div>
+                <div className="text-sm text-gray-600">Approved</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">
+                  {requestCounts.fulfilled}
+                </div>
+                <div className="text-sm text-gray-600">Fulfilled</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-600">
+                  {requestCounts.all}
+                </div>
+                <div className="text-sm text-gray-600">Total Requests</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Request Filters */}
       <div className="grid grid-cols-2 gap-2">
         {[
           { key: "pending", label: "Pending", emoji: "⏳" },
           { key: "approved", label: "Approved", emoji: "✅" },
           { key: "rejected", label: "Rejected", emoji: "❌" },
-          { key: "fulfilled", label: "Fulfilled", emoji: "��" },
+          { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
         ].map((filter) => (
           <Button
             key={filter.key}
