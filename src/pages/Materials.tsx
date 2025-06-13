@@ -92,7 +92,7 @@ const Materials = () => {
             <div className="text-lg">
               {(isEmployer || isSupplier) && activeTab === "requests"
                 ? "📋"
-                : "📦"}
+                : "��"}
             </div>
           </div>
 
@@ -221,24 +221,31 @@ const MaterialRequestsSection = () => {
       )}
 
       {/* Request Filters */}
-      <div className="grid grid-cols-2 gap-2">
-        {[
-          { key: "pending", label: "Pending", emoji: "⏳" },
-          { key: "approved", label: "Approved", emoji: "✅" },
-          { key: "rejected", label: "Rejected", emoji: "❌" },
-          { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
-        ].map((filter) => (
-          <Button
-            key={filter.key}
-            variant={requestFilter === filter.key ? "default" : "outline"}
-            size="sm"
-            onClick={() => setRequestFilter(filter.key)}
-            className="text-xs h-8"
-          >
-            {filter.emoji} {filter.label} (
-            {requestCounts[filter.key as keyof typeof requestCounts]})
-          </Button>
-        ))}
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium text-gray-900">Filter by Status</h3>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { key: "all", label: "All", emoji: "📋" },
+            { key: "pending", label: "Pending", emoji: "⏳" },
+            { key: "approved", label: "Approved", emoji: "✅" },
+            { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
+          ].map((filter) => (
+            <Button
+              key={filter.key}
+              variant={requestFilter === filter.key ? "default" : "outline"}
+              size="sm"
+              onClick={() => setRequestFilter(filter.key)}
+              className="text-xs h-9 justify-between"
+            >
+              <span className="flex items-center gap-1">
+                {filter.emoji} {filter.label}
+              </span>
+              <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
+                {requestCounts[filter.key as keyof typeof requestCounts]}
+              </Badge>
+            </Button>
+          ))}
+        </div>
       </div>
 
       {/* Request Cards */}
