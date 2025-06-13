@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkLogForm } from "@/components/WorkLogForm";
 import { MaterialLogForm } from "@/components/MaterialLogForm";
@@ -8,9 +9,24 @@ import { useUserRole } from "@/hooks/useUserRole";
 
 const AddEntry = () => {
   const { isWorker, isSupplier, isEmployer } = useUserRole();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(
     isWorker ? "work" : isSupplier ? "materials" : "work",
   );
+
+  // Handle URL parameters to open specific tabs
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam) {
+      if (tabParam === "request" && isWorker) {
+        setActiveTab("request");
+      } else if (tabParam === "work" && (isWorker || isEmployer)) {
+        setActiveTab("work");
+      } else if (tabParam === "materials") {
+        setActiveTab("materials");
+      }
+    }
+  }, [searchParams, isWorker, isEmployer]);
 
   return (
     <div className="min-h-screen bg-neutral-50 pb-24">
