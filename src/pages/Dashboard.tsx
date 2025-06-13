@@ -53,6 +53,7 @@ const Dashboard = () => {
 
       return {
         title: "Project Overview",
+        pendingRequests,
         stats: [
           {
             label: "Total Projects",
@@ -103,6 +104,7 @@ const Dashboard = () => {
 
       return {
         title: "My Work Dashboard",
+        pendingRequests,
         stats: [
           {
             label: "Assigned Projects",
@@ -149,6 +151,7 @@ const Dashboard = () => {
 
       return {
         title: "Supply Management",
+        pendingRequests,
         stats: [
           {
             label: "Materials Managed",
@@ -181,7 +184,12 @@ const Dashboard = () => {
       };
     }
 
-    return { title: "Dashboard", stats: [], recentProjects: [] };
+    return {
+      title: "Dashboard",
+      pendingRequests: 0,
+      stats: [],
+      recentProjects: [],
+    };
   };
 
   const dashboardData = getDashboardData();
@@ -295,14 +303,14 @@ const Dashboard = () => {
                   <FileTextIcon size={20} className="mr-3" />
                   <span className="font-medium">Add Work Entry</span>
                 </Button>
-                {pendingRequests > 0 && (
+                {dashboardData.pendingRequests > 0 && (
                   <Button
                     className="btn-outline w-full h-12 justify-start border-orange-200 text-orange-700 hover:bg-orange-50"
                     onClick={() => navigate("/materials")}
                   >
                     <AlertIcon size={20} className="mr-3 text-orange-600" />
                     <span className="font-medium">
-                      Review Material Requests ({pendingRequests})
+                      Review Material Requests ({dashboardData.pendingRequests})
                     </span>
                   </Button>
                 )}
