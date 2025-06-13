@@ -443,6 +443,22 @@ export const mockMaterialRequests: MaterialRequest[] = [
     approvedBy: "Ahmad Rahimi",
     approvedDate: "2024-01-19",
   },
+  {
+    id: "req-4",
+    workerId: "worker-1",
+    workerName: "Farid Nazarov",
+    projectId: "proj-4",
+    projectName: "Tajik Cultural Center",
+    materialName: "Traditional Stone Blocks",
+    requestedQuantity: 300,
+    unit: "pcs",
+    urgency: "medium",
+    reason:
+      "Need traditional stone blocks for authentic facade work on cultural center",
+    status: "pending",
+    requestDate: "2024-03-10",
+    notes: "Prefer local quarry stone for cultural authenticity",
+  },
 ];
 
 // Worker specializations
