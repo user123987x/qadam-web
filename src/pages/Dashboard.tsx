@@ -252,23 +252,23 @@ const Dashboard = () => {
 
       <div className="px-6 py-4 space-y-6 max-w-md mx-auto w-full">
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           {dashboardData.stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
               <Card key={index} className="app-card text-center">
-                <CardContent className="p-6">
-                  <div className="space-y-3">
+                <CardContent className="p-5">
+                  <div className="space-y-2.5">
                     <div
-                      className={`w-12 h-12 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center`}
+                      className={`w-11 h-11 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center shadow-sm`}
                     >
-                      <IconComponent size={24} className={stat.color} />
+                      <IconComponent size={20} className={stat.color} />
                     </div>
                     <div>
-                      <div className="text-2xl font-semibold text-neutral-800">
+                      <div className="text-xl font-semibold text-neutral-800 leading-tight">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-neutral-600 font-medium">
+                      <div className="text-xs text-neutral-600 font-medium mt-0.5">
                         {stat.label}
                       </div>
                     </div>
@@ -287,30 +287,27 @@ const Dashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {isEmployer && (
+            {isSupplier && (
               <>
                 <Button
-                  className="btn-outline w-full h-12 justify-start"
-                  onClick={() => navigate("/projects")}
-                >
-                  <ProjectIcon size={20} className="mr-3 text-deep-blue" />
-                  <span className="font-medium">Manage Projects</span>
-                </Button>
-                <Button
-                  className="btn-primary w-full h-12 justify-start"
+                  className="btn-primary w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry")}
                 >
-                  <FileTextIcon size={20} className="mr-3" />
-                  <span className="font-medium">Add Work Entry</span>
+                  <MaterialIcon size={18} className="mr-2.5" />
+                  <span className="font-medium">Log Material Delivery</span>
                 </Button>
-                {dashboardData.pendingRequests > 0 && (
-                  <Button
-                    className="btn-outline w-full h-12 justify-start border-orange-200 text-orange-700 hover:bg-orange-50"
-                    onClick={() => navigate("/materials")}
-                  >
-                    <AlertIcon size={20} className="mr-3 text-orange-600" />
+                <Button
+                  className="btn-outline w-full h-11 justify-start"
+                  onClick={() => navigate("/materials")}
+                >
+                  <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <span className="font-medium">Manage Inventory</span>
+                </Button>
+              </>
+            )}
+                    <AlertIcon size={18} className="mr-2.5 text-orange-600" />
                     <span className="font-medium">
-                      Review Material Requests ({dashboardData.pendingRequests})
+                      Review Requests ({dashboardData.pendingRequests})
                     </span>
                   </Button>
                 )}
@@ -320,24 +317,24 @@ const Dashboard = () => {
             {isWorker && (
               <>
                 <Button
-                  className="btn-primary w-full h-12 justify-start"
+                  className="btn-primary w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry")}
                 >
-                  <FileTextIcon size={20} className="mr-3" />
+                  <FileTextIcon size={18} className="mr-2.5" />
                   <span className="font-medium">Log Today's Work</span>
                 </Button>
                 <Button
-                  className="btn-outline w-full h-12 justify-start"
+                  className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/projects")}
                 >
-                  <ProjectIcon size={20} className="mr-3 text-deep-blue" />
+                  <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
                   <span className="font-medium">View My Projects</span>
                 </Button>
                 <Button
-                  className="btn-outline w-full h-12 justify-start border-soft-green/30 text-soft-green hover:bg-soft-green/10"
+                  className="btn-outline w-full h-11 justify-start border-soft-green/30 text-soft-green hover:bg-soft-green/10"
                   onClick={() => navigate("/add-entry?tab=request")}
                 >
-                  <MaterialIcon size={20} className="mr-3 text-soft-green" />
+                  <MaterialIcon size={18} className="mr-2.5 text-soft-green" />
                   <span className="font-medium">Request Materials</span>
                 </Button>
               </>
