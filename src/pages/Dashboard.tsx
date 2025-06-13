@@ -295,6 +295,17 @@ const Dashboard = () => {
                   <FileTextIcon size={20} className="mr-3" />
                   <span className="font-medium">Add Work Entry</span>
                 </Button>
+                {pendingRequests > 0 && (
+                  <Button
+                    className="btn-outline w-full h-12 justify-start border-orange-200 text-orange-700 hover:bg-orange-50"
+                    onClick={() => navigate("/materials")}
+                  >
+                    <AlertIcon size={20} className="mr-3 text-orange-600" />
+                    <span className="font-medium">
+                      Review Material Requests ({pendingRequests})
+                    </span>
+                  </Button>
+                )}
               </>
             )}
 
@@ -313,6 +324,13 @@ const Dashboard = () => {
                 >
                   <ProjectIcon size={20} className="mr-3 text-deep-blue" />
                   <span className="font-medium">View My Projects</span>
+                </Button>
+                <Button
+                  className="btn-outline w-full h-12 justify-start border-soft-green/30 text-soft-green hover:bg-soft-green/10"
+                  onClick={() => navigate("/add-entry?tab=request")}
+                >
+                  <MaterialIcon size={20} className="mr-3 text-soft-green" />
+                  <span className="font-medium">Request Materials</span>
                 </Button>
               </>
             )}
