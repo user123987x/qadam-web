@@ -6,15 +6,19 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BottomNavigation } from "@/components/BottomNavigation";
+import { MaterialRequestCard } from "@/components/MaterialRequestCard";
 import { useUserRole } from "@/hooks/useUserRole";
-import { mockMaterials } from "@/lib/constants";
+import { mockMaterials, mockMaterialRequests } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
 
 const Materials = () => {
-  const { isSupplier } = useUserRole();
+  const { isSupplier, isEmployer } = useUserRole();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState(
+    isEmployer || isSupplier ? "requests" : "inventory",
+  );
 
   const filteredMaterials = mockMaterials.filter((material) => {
     const matchesSearch =
@@ -97,6 +101,155 @@ const Materials = () => {
       </div>
 
       <div className="max-w-md mx-auto px-4 py-6">
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            {(isEmployer || isSupplier) && (
+              <TabsTrigger value="requests" className="flex items-center gap-2">
+                <span>📋</span>
+                Material Requests
+              </TabsTrigger>
+            )}
+            <TabsTrigger value="inventory" className="flex items-center gap-2">
+              <span>📦</span>
+              Inventory
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Material Requests Tab */}
+          {(isEmployer || isSupplier) && (
+            <TabsContent value="requests" className="mt-6">
+              <MaterialRequestsSection />
+            </TabsContent>
+          )}
+
+          {/* Inventory Tab */}
+          <TabsContent value="inventory" className="mt-6">
+            <InventorySection
+              searchTerm={searchTerm}
+              selectedFilter={selectedFilter}
+              setSelectedFilter={setSelectedFilter}
+              filteredMaterials={filteredMaterials}
+              getStockStatus={getStockStatus}
+              materialCounts={materialCounts}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      <BottomNavigation />
+    </div>
+  );
+};
+
+const MaterialRequestsSection = () => {
+  const { isEmployer, isSupplier } = useUserRole();
+  const [requestFilter, setRequestFilter] = useState<string>("pending");
+
+  const filteredRequests = mockMaterialRequests.filter((request) => {
+    if (requestFilter === "all") return true;
+    return request.status === requestFilter;
+  });
+
+  const handleStatusChange = (
+    requestId: string,
+    status: string,
+    reason?: string,
+  ) => {
+    // Here you would normally update the request in your backend
+    console.log("Status change:", { requestId, status, reason });
+  };
+
+  const requestCounts = {
+    all: mockMaterialRequests.length,
+    pending: mockMaterialRequests.filter((r) => r.status === "pending").length,
+    approved: mockMaterialRequests.filter((r) => r.status === "approved")
+      .length,
+    rejected: mockMaterialRequests.filter((r) => r.status === "rejected")
+      .length,
+    fulfilled: mockMaterialRequests.filter((r) => r.status === "fulfilled")
+      .length,
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Request Filters */}
+      <div className="grid grid-cols-2 gap-2 mb-4">
+        {[
+          { key: "pending", label: "Pending", emoji: "⏳" },
+          { key: "approved", label: "Approved", emoji: "✅" },
+          { key: "rejected", label: "Rejected", emoji: "❌" },
+          { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
+        ].map((filter) => (
+          <Button
+            key={filter.key}
+            variant={requestFilter === filter.key ? "default" : "outline"}
+            size="sm"
+            onClick={() => setRequestFilter(filter.key)}
+            className="text-xs h-8"
+          >
+            {filter.emoji} {filter.label} ({requestCounts[filter.key as keyof typeof requestCounts]})
+          </Button>
+        ))}
+      </div>
+
+      {/* Request Cards */}
+      {filteredRequests.length === 0 ? (
+        <Card>
+          <CardContent className="text-center py-8">
+            <div className="text-4xl mb-4">📭</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No {requestFilter === "all" ? "" : requestFilter} requests found
+            </h3>
+            <p className="text-gray-600">
+              {requestFilter === "pending"
+                ? "All caught up! No pending material requests at the moment."
+                : `No ${requestFilter} material requests to display.`}
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {filteredRequests.map((request) => (
+            <MaterialRequestCard
+              key={request.id}
+              request={request}
+              showActions={isEmployer || isSupplier}
+              onStatusChange={handleStatusChange}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const InventorySection = ({
+  searchTerm,
+  selectedFilter,
+  setSelectedFilter,
+  filteredMaterials,
+  getStockStatus,
+  materialCounts,
+}: {
+  searchTerm: string;
+  selectedFilter: string;
+  setSelectedFilter: (filter: string) => void;
+  filteredMaterials: typeof mockMaterials;
+  getStockStatus: (material: (typeof mockMaterials)[0]) => {
+    label: string;
+    color: string;
+    variant: "destructive" | "secondary" | "default";
+  };
+  materialCounts: {
+    all: number;
+    "low-stock": number;
+    "medium-stock": number;
+    "well-stocked": number;
+  };
+}) => {
+  return (
+    <div className="space-y-6">
         {/* Material Stats */}
         <Card className="mb-6">
           <CardHeader>
