@@ -418,7 +418,7 @@ export const projectStatuses = [
 export const mockMaterialRequests: MaterialRequest[] = [
   {
     id: "req-1",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-1",
     projectName: "Residential Complex A",
@@ -465,7 +465,7 @@ export const mockMaterialRequests: MaterialRequest[] = [
   },
   {
     id: "req-4",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-4",
     projectName: "Tajik Cultural Center",
