@@ -25,6 +25,7 @@ import {
   WorkerIcon,
   EmployerIcon,
   SupplierIcon,
+  TruckIcon,
 } from "@/components/ui/icons";
 
 const Dashboard = () => {
