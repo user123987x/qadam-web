@@ -285,6 +285,17 @@ export const mockMaterials: Material[] = [
     supplier: "ColorMax Trading",
     deliveryDate: "2024-02-01",
   },
+  {
+    id: "mat-5",
+    name: "Traditional Stone Blocks",
+    unit: "pcs",
+    totalQuantity: 500,
+    usedQuantity: 120,
+    remainingQuantity: 380,
+    pricePerUnit: 25,
+    supplier: "Tajik Quarry Ltd.",
+    deliveryDate: "2024-03-01",
+  },
 ];
 
 // Mock work logs
