@@ -111,11 +111,13 @@ const Materials = () => {
       <div className="max-w-md mx-auto px-4 py-6">
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList
+            className={`grid w-full ${isEmployer || isSupplier ? "grid-cols-2" : "grid-cols-1"}`}
+          >
             {(isEmployer || isSupplier) && (
               <TabsTrigger value="requests" className="flex items-center gap-2">
                 <span>📋</span>
-                Requests
+                Material Requests
               </TabsTrigger>
             )}
             <TabsTrigger value="inventory" className="flex items-center gap-2">
@@ -187,7 +189,7 @@ const MaterialRequestsSection = () => {
           { key: "pending", label: "Pending", emoji: "⏳" },
           { key: "approved", label: "Approved", emoji: "✅" },
           { key: "rejected", label: "Rejected", emoji: "❌" },
-          { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
+          { key: "fulfilled", label: "Fulfilled", emoji: "��" },
         ].map((filter) => (
           <Button
             key={filter.key}
