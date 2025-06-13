@@ -302,7 +302,7 @@ export const mockMaterials: Material[] = [
 export const mockWorkLogs: WorkLog[] = [
   {
     id: "log-1",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-1",
     date: "2024-01-20",
@@ -324,7 +324,7 @@ export const mockWorkLogs: WorkLog[] = [
   },
   {
     id: "log-3",
-    workerId: "worker-1",
+    workerId: "2",
     workerName: "Farid Nazarov",
     projectId: "proj-1",
     date: "2024-01-21",
