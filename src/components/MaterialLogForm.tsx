@@ -207,7 +207,7 @@ export const MaterialLogForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, notes: e.target.value })
               }
-              placeholder={`Additional notes about this ${isSupplier ? "delivery" : "usage"}...`}
+              placeholder={`Дополнительные заметки об этой ${isSupplier ? "поставке" : "использовании"}...`}
               rows={2}
             />
           </div>
