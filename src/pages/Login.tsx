@@ -294,18 +294,14 @@ const Login = () => {
               <div className="space-y-2 text-xs text-neutral-600">
                 <div className="flex justify-between">
                   <span className="font-medium">Project Manager:</span>
-                  <span className="text-neutral-500">
-                    ahmad@construction.tj
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Worker:</span>
-                  <span className="text-neutral-500">farid@worker.tj</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Supplier:</span>
-                  <span className="text-neutral-500">info@gulnora.tj</span>
-                </div>
+            <div className="text-center space-y-2 mb-8">
+              <h1 className="text-3xl font-bold text-neutral-800">
+                Добро пожаловать
+              </h1>
+              <p className="text-neutral-600">
+                Войдите в вашу учетную запись управления строительством
+              </p>
+            </div>
                 <div className="text-center text-neutral-500 pt-2 border-t border-neutral-200">
                   Any password works in demo mode
                 </div>
