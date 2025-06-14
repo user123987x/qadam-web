@@ -188,12 +188,36 @@ const Projects = () => {
                         <div className="text-4xl mb-2">📁</div>
                         <div className="text-gray-600">
                           {isWorker
-                            ? `No ${status === "all" ? "" : status + " "}assigned projects found`
-                            : `No ${status === "all" ? "" : status + " "}projects found`}
+                            ? `Не найдено ${
+                                status === "all"
+                                  ? ""
+                                  : status === "active"
+                                    ? "активных "
+                                    : status === "completed"
+                                      ? "завершенных "
+                                      : status === "planning"
+                                        ? "планируемых "
+                                        : status === "paused"
+                                          ? "приостановленных "
+                                          : ""
+                              }назначенных проектов`
+                            : `Не найдено ${
+                                status === "all"
+                                  ? ""
+                                  : status === "active"
+                                    ? "активных "
+                                    : status === "completed"
+                                      ? "завершенных "
+                                      : status === "planning"
+                                        ? "планируемых "
+                                        : status === "paused"
+                                          ? "приостановленных "
+                                          : ""
+                              }проектов`}
                         </div>
                         {searchTerm && (
                           <div className="text-sm text-gray-500 mt-1">
-                            Try adjusting your search terms
+                            Попробуйте изменить поисковые термины
                           </div>
                         )}
                       </CardContent>
@@ -222,12 +246,15 @@ const Projects = () => {
         {isWorker && (
           <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="text-sm text-blue-700">
-              <div className="font-medium mb-2">💡 Worker View:</div>
+              <div className="font-medium mb-2">💡 Режим рабочего:</div>
               <ul className="space-y-1">
-                <li>• You only see projects you're assigned to</li>
-                <li>• View your personal progress and earnings</li>
-                <li>• Click any project to log work or request materials</li>
-                <li>• Your work data is private to you</li>
+                <li>• Вы видите только назначенные вам проекты</li>
+                <li>• Просматривайте ваш личный прогресс и заработок</li>
+                <li>
+                  • Нажмите на любой проект для записи работы или запроса
+                  материалов
+                </li>
+                <li>• Ваши рабочие данные доступны только вам</li>
               </ul>
             </div>
           </div>
