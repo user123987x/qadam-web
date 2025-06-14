@@ -226,23 +226,33 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white/95 backdrop-blur-lg border-b border-neutral-200/60 sticky top-0 z-10">
+      <div
+        className={`${
+          isWorker
+            ? "bg-gradient-to-r from-green-500/90 to-green-600/90"
+            : isEmployer
+              ? "bg-gradient-to-r from-blue-500/90 to-blue-600/90"
+              : "bg-gradient-to-r from-orange-500/90 to-orange-600/90"
+        } backdrop-blur-lg border-b border-neutral-200/60 sticky top-0 z-10`}
+      >
         <div className="px-6 py-4 max-w-md mx-auto w-full">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <ProfilePhotoUpload size="md" className="shrink-0" />
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl font-semibold text-neutral-800 truncate">
-                  Welcome back, {currentUser?.name?.split(" ")[0]}
+                <h1 className="text-xl font-semibold text-white truncate">
+                  {isWorker
+                    ? "Worker Portal"
+                    : isEmployer
+                      ? "Management Portal"
+                      : "Supply Portal"}
                 </h1>
-                <p className="text-sm text-neutral-600 truncate">
-                  {dashboardData.title}
+                <p className="text-sm text-white/90 truncate">
+                  Welcome back, {currentUser?.name?.split(" ")[0]}
                 </p>
               </div>
             </div>
-            <Badge
-              className={`${getRoleColor()} bg-white border border-neutral-200 shadow-soft px-3 py-1 shrink-0`}
-            >
+            <Badge className="bg-white/20 text-white border border-white/30 px-3 py-1 shrink-0">
               {userRole
                 ? userRole.charAt(0).toUpperCase() + userRole.slice(1)
                 : "User"}
