@@ -52,7 +52,6 @@ const Signup = () => {
     if (!formData.role) newErrors.role = "Пожалуйста, выберите вашу роль";
     if (formData.role === "worker" && !formData.specialization)
       newErrors.specialization = "Пожалуйста, выберите вашу специализацию";
-    }
     if (
       (formData.role === "employer" || formData.role === "supplier") &&
       !formData.companyName.trim()
@@ -205,7 +204,7 @@ const Signup = () => {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your role" />
+                    <SelectValue placeholder="Выберите вашу роль" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="employer">
