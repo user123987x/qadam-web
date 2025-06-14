@@ -112,7 +112,7 @@ export const WorkLogForm = () => {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a worker" />
+                  <SelectValue placeholder="Выберите рабочего" />
                 </SelectTrigger>
                 <SelectContent>
                   {availableWorkers.map((worker) => (

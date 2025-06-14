@@ -41,7 +41,7 @@ export const MaterialLogForm = () => {
     if (!formData.projectId || !formData.materialId || !formData.quantity) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
+        description: "Пожалуйста, заполните все обязательные поля.",
         variant: "destructive",
       });
       return;
@@ -94,7 +94,7 @@ export const MaterialLogForm = () => {
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select a project" />
+                <SelectValue placeholder="Выберите проект" />
               </SelectTrigger>
               <SelectContent>
                 {availableProjects.map((project) => (
@@ -116,7 +116,7 @@ export const MaterialLogForm = () => {
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select a material" />
+                <SelectValue placeholder="Выберите материал" />
               </SelectTrigger>
               <SelectContent>
                 {mockMaterials.map((material) => (
