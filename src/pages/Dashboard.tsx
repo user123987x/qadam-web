@@ -287,7 +287,7 @@ const Dashboard = () => {
         <div className="app-card-elevated">
           <CardHeader>
             <CardTitle className="text-lg font-medium text-neutral-800">
-              Quick Actions
+              Быстрые действия
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -298,14 +298,14 @@ const Dashboard = () => {
                   onClick={() => navigate("/projects")}
                 >
                   <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
-                  <span className="font-medium">Manage Projects</span>
+                  <span className="font-medium">Управление проектами</span>
                 </Button>
                 <Button
                   className="btn-primary w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry")}
                 >
                   <FileTextIcon size={18} className="mr-2.5" />
-                  <span className="font-medium">Add Work Entry</span>
+                  <span className="font-medium">Добавить запись работы</span>
                 </Button>
                 {dashboardData.pendingRequests > 0 && (
                   <Button
@@ -314,7 +314,7 @@ const Dashboard = () => {
                   >
                     <AlertIcon size={18} className="mr-2.5 text-orange-600" />
                     <span className="font-medium">
-                      Review Requests ({dashboardData.pendingRequests})
+                      Рассмотреть заявки ({dashboardData.pendingRequests})
                     </span>
                   </Button>
                 )}
@@ -328,21 +328,23 @@ const Dashboard = () => {
                   onClick={() => navigate("/add-entry")}
                 >
                   <FileTextIcon size={18} className="mr-2.5" />
-                  <span className="font-medium">Log Today's Work</span>
+                  <span className="font-medium">
+                    Записать сегодняшнюю работу
+                  </span>
                 </Button>
                 <Button
                   className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/projects")}
                 >
                   <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
-                  <span className="font-medium">View My Projects</span>
+                  <span className="font-medium">Просмотреть мои проекты</span>
                 </Button>
                 <Button
                   className="btn-outline w-full h-11 justify-start border-soft-green/30 text-soft-green hover:bg-soft-green/10"
                   onClick={() => navigate("/add-entry?tab=request")}
                 >
                   <MaterialIcon size={18} className="mr-2.5 text-soft-green" />
-                  <span className="font-medium">Request Materials</span>
+                  <span className="font-medium">Запросить материалы</span>
                 </Button>
               </>
             )}
@@ -354,14 +356,16 @@ const Dashboard = () => {
                   onClick={() => navigate("/add-entry")}
                 >
                   <MaterialIcon size={18} className="mr-2.5" />
-                  <span className="font-medium">Log Material Delivery</span>
+                  <span className="font-medium">
+                    Записать поставку материалов
+                  </span>
                 </Button>
                 <Button
                   className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/materials")}
                 >
                   <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
-                  <span className="font-medium">Manage Inventory</span>
+                  <span className="font-medium">Управление складом</span>
                 </Button>
               </>
             )}
