@@ -396,7 +396,7 @@ const Dashboard = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium text-neutral-800">
-                {isWorker ? "My Projects" : "Recent Projects"}
+                {isWorker ? "Мои проекты" : "Недавние проекты"}
               </h2>
               <Button
                 variant="ghost"
@@ -404,7 +404,7 @@ const Dashboard = () => {
                 onClick={() => navigate("/projects")}
                 className="btn-ghost text-soft-green hover:text-soft-green-light"
               >
-                View All
+                Посмотреть все
               </Button>
             </div>
             <div className="space-y-4">
@@ -421,7 +421,7 @@ const Dashboard = () => {
             <CardHeader>
               <CardTitle className="text-lg font-medium text-orange-800 flex items-center gap-2">
                 <AlertIcon size={18} />
-                Material Alerts
+                Предупреждения о материалах
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -442,12 +442,12 @@ const Dashboard = () => {
                           {material.name}
                         </div>
                         <div className="text-sm text-orange-700">
-                          Only {material.remainingQuantity} {material.unit}{" "}
-                          remaining
+                          Осталось только {material.remainingQuantity}{" "}
+                          {material.unit}
                         </div>
                       </div>
                       <Badge className="bg-orange-200 text-orange-800 border-orange-300">
-                        Low Stock
+                        Мало в наличии
                       </Badge>
                     </div>
                   ))}
