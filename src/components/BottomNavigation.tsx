@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/icons";
 
 const navigationItems = [
-  { key: "home", label: "Home", icon: HomeIcon, path: "/dashboard" },
-  { key: "projects", label: "Projects", icon: ProjectIcon, path: "/projects" },
-  { key: "add", label: "Add Entry", icon: AddIcon, path: "/add-entry" },
-  { key: "profile", label: "Profile", icon: UserIcon, path: "/profile" },
+  { key: "home", label: "Главная", icon: HomeIcon, path: "/dashboard" },
+  { key: "projects", label: "Проекты", icon: ProjectIcon, path: "/projects" },
+  { key: "add", label: "Добавить", icon: AddIcon, path: "/add-entry" },
+  { key: "profile", label: "Профиль", icon: UserIcon, path: "/profile" },
 ];
 
 export const BottomNavigation = () => {
