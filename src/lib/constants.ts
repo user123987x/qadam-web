@@ -8,32 +8,32 @@ import {
   MaterialRequest,
 } from "./types";
 
-// Mock user data
+// Данные пользователей
 export const mockUsers: User[] = [
   {
     id: "1",
-    name: "Ahmad Rahimi",
+    name: "Ахмад Рахими",
     role: "employer",
-    email: "ahmad@construction.tj",
+    email: "ahmad@stroitelstvo.tj",
     avatar: "👨‍💼",
   },
   {
     id: "2",
-    name: "Farid Nazarov",
+    name: "Фарид Назаров",
     role: "worker",
-    email: "farid@worker.tj",
+    email: "farid@rabochiy.tj",
     avatar: "👷‍♂️",
   },
   {
     id: "3",
-    name: "Gulnora Supply Co.",
+    name: "Гульнора Снабжение ООО",
     role: "supplier",
     email: "info@gulnora.tj",
     avatar: "🏢",
   },
 ];
 
-// Данные проектов
+// Данны�� проектов
 export const mockProjects: Project[] = [
   {
     id: "proj-1",
@@ -407,7 +407,7 @@ export const mockWorkLogs: WorkLog[] = [
 // Единицы измерения материалов
 export const materialUnits = ["кг", "м²", "л", "шт", "м³", "м"];
 
-// Статусы проекто��
+// Статусы проектов
 export const projectStatuses = [
   { value: "planning", label: "Планирование", color: "bg-yellow-500" },
   { value: "active", label: "Активный", color: "bg-green-500" },
@@ -504,7 +504,7 @@ export const urgencyLevels = [
 // Статусы заявок на материалы
 export const requestStatuses = [
   { value: "pending", label: "В ожидании", color: "bg-yellow-500" },
-  { value: "approved", label: "Одобрено", color: "bg-blue-500" },
+  { value: "approved", label: "Одо��рено", color: "bg-blue-500" },
   { value: "rejected", label: "Отклонено", color: "bg-red-500" },
   { value: "fulfilled", label: "Выполнено", color: "bg-green-500" },
 ];
