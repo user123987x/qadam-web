@@ -298,7 +298,7 @@ export const MaterialRequestForm = () => {
             </div>
 
             <Button type="submit" className="w-full">
-              Submit Request
+              Отправить запрос
             </Button>
           </form>
         </CardContent>

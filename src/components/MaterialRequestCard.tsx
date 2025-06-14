@@ -230,7 +230,7 @@ export const MaterialRequestCard = ({
                     size="sm"
                     className="flex-1"
                   >
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
               </div>

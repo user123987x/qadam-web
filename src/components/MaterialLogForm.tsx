@@ -216,7 +216,7 @@ export const MaterialLogForm = () => {
             type="submit"
             className="w-full bg-emerald-600 hover:bg-emerald-700"
           >
-            {isSupplier ? "Log Delivery" : "Log Usage"}
+            {isSupplier ? "Записать поставку" : "Записать использование"}
           </Button>
         </form>
       </CardContent>
