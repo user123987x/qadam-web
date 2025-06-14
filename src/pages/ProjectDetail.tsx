@@ -13,11 +13,21 @@ import {
   mockWorkers,
   projectStatuses,
 } from "@/lib/constants";
+import {
+  CalendarIcon,
+  MapPinIcon,
+  DollarIcon,
+  TrendingUpIcon,
+  UserIcon,
+  MaterialIcon,
+  FileTextIcon,
+  ArrowLeftIcon,
+} from "@/components/ui/icons";
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isEmployer, isWorker } = useUserRole();
+  const { currentUser, isEmployer, isWorker } = useUserRole();
 
   const project = mockProjects.find((p) => p.id === id);
 
@@ -35,159 +45,259 @@ const ProjectDetail = () => {
     );
   }
 
+  // Check if worker has access to this project
+  if (isWorker && !project.assignedWorkers.includes(currentUser?.id || "")) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl mb-4">🚫</div>
+          <div className="text-xl font-semibold mb-2">Access Denied</div>
+          <div className="text-gray-600 mb-4">
+            You don't have access to this project
+          </div>
+          <Button onClick={() => navigate("/projects")}>
+            Back to My Projects
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const statusConfig = projectStatuses.find((s) => s.value === project.status);
   const progressPercentage = (project.completedArea / project.totalArea) * 100;
-  const budgetUsed = (project.spentAmount / project.budget) * 100;
 
-  const projectWorkLogs = mockWorkLogs.filter(
-    (l) => l.projectId === project.id,
-  );
-  const projectWorkers = mockWorkers.filter((w) =>
-    project.assignedWorkers.includes(w.id),
-  );
-  const projectMaterials = mockMaterials.filter((m) =>
-    // Simulate materials assigned to this project
-    project.id === "proj-1"
-      ? ["mat-1", "mat-2", "mat-3"].includes(m.id)
-      : project.id === "proj-2"
-        ? ["mat-2", "mat-4"].includes(m.id)
-        : ["mat-1", "mat-3"].includes(m.id),
-  );
+  // Get filtered data based on user role
+  const getProjectData = () => {
+    if (isWorker) {
+      // Workers only see their own data
+      const myWorkLogs = mockWorkLogs.filter(
+        (l) => l.projectId === project.id && l.workerId === currentUser?.id,
+      );
+      const myTotalEarnings = myWorkLogs.reduce(
+        (sum, log) => sum + log.earnings,
+        0,
+      );
+      const myAreaCompleted = myWorkLogs.reduce(
+        (sum, log) => sum + log.areaCompleted,
+        0,
+      );
+
+      return {
+        workLogs: myWorkLogs,
+        totalEarnings: myTotalEarnings,
+        areaCompleted: myAreaCompleted,
+        workers: [currentUser], // Only show themselves
+        materials: [], // Workers don't see material details
+      };
+    } else {
+      // Employers see everything
+      const projectWorkLogs = mockWorkLogs.filter(
+        (l) => l.projectId === project.id,
+      );
+      const projectWorkers = mockWorkers.filter((w) =>
+        project.assignedWorkers.includes(w.id),
+      );
+      const projectMaterials = mockMaterials; // Simplified for demo
+
+      return {
+        workLogs: projectWorkLogs,
+        workers: projectWorkers,
+        materials: projectMaterials,
+      };
+    }
+  };
+
+  const projectData = getProjectData();
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center gap-3 mb-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/projects")}
+              className="p-2"
             >
-              ← Back
+              <ArrowLeftIcon className="h-4 w-4" />
             </Button>
+            <div className="flex-1">
+              <h1 className="text-lg font-bold text-gray-900 leading-tight">
+                {project.name}
+              </h1>
+              <p className="text-sm text-gray-600">
+                {isWorker ? "My Work Details" : "Project Overview"}
+              </p>
+            </div>
             <Badge className={`${statusConfig?.color} text-white border-0`}>
               {statusConfig?.label}
             </Badge>
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-1">
-            {project.name}
-          </h1>
-          <p className="text-sm text-gray-600">{project.description}</p>
         </div>
       </div>
 
       <div className="max-w-md mx-auto px-4 py-6 space-y-6">
-        {/* Project Overview */}
-        <Card>
+        {/* Project Info */}
+        <Card className="app-card">
           <CardHeader>
-            <CardTitle>Project Overview</CardTitle>
+            <CardTitle className="text-lg">
+              {isWorker ? "Project Information" : "Project Overview"}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <p className="text-gray-600">{project.description}</p>
+
+            <div className="grid grid-cols-1 gap-3 text-sm">
+              <div className="flex items-center gap-2">
+                <MapPinIcon className="h-4 w-4 text-gray-500" />
+                <span className="text-gray-600">Location:</span>
+                <span className="font-medium">{project.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="h-4 w-4 text-gray-500" />
+                <span className="text-gray-600">Timeline:</span>
+                <span className="font-medium">
+                  {formatDate(project.startDate)} -{" "}
+                  {formatDate(project.endDate)}
+                </span>
+              </div>
+            </div>
+
             {/* Progress */}
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span>Progress</span>
-                <span className="font-semibold">
-                  {Math.round(progressPercentage)}%
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">
+                  {isWorker ? "Project Progress" : "Overall Progress"}
+                </span>
+                <span className="font-medium">
+                  {project.completedArea} / {project.totalArea} m²
                 </span>
               </div>
               <Progress value={progressPercentage} className="h-3" />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>{project.completedArea} m² done</span>
-                <span>{project.totalArea} m² total</span>
+              <div className="text-xs text-gray-500">
+                {progressPercentage.toFixed(1)}% complete
               </div>
             </div>
 
-            {/* Budget */}
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span>Budget Used</span>
-                <span className="font-semibold">{Math.round(budgetUsed)}%</span>
+            {/* Worker-specific progress */}
+            {isWorker && (
+              <div className="pt-3 border-t border-gray-200">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">My Contribution</span>
+                    <span className="font-medium text-green-600">
+                      {projectData.areaCompleted} m²
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {project.totalArea > 0
+                      ? (
+                          (projectData.areaCompleted / project.totalArea) *
+                          100
+                        ).toFixed(1)
+                      : 0}
+                    % of total project
+                  </div>
+                </div>
               </div>
-              <Progress value={budgetUsed} className="h-3" />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>${project.spentAmount.toLocaleString()}</span>
-                <span>${project.budget.toLocaleString()}</span>
-              </div>
-            </div>
+            )}
 
-            {/* Details */}
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div>
-                <div className="text-xs text-gray-500">Start Date</div>
-                <div className="font-medium">
-                  {new Date(project.startDate).toLocaleDateString()}
+            {/* Budget (Employers only) */}
+            {isEmployer && (
+              <div className="pt-3 border-t border-gray-200">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Budget Progress</span>
+                    <span className="font-medium">
+                      ${project.spentAmount?.toLocaleString()} / $
+                      {project.budget?.toLocaleString()}
+                    </span>
+                  </div>
+                  <Progress
+                    value={
+                      ((project.spentAmount || 0) / (project.budget || 1)) * 100
+                    }
+                    className="h-2"
+                  />
                 </div>
               </div>
-              <div>
-                <div className="text-xs text-gray-500">End Date</div>
-                <div className="font-medium">
-                  {new Date(project.endDate).toLocaleDateString()}
-                </div>
-              </div>
-              <div className="col-span-2">
-                <div className="text-xs text-gray-500">Location</div>
-                <div className="font-medium flex items-center gap-1">
-                  <span>📍</span>
-                  {project.location}
-                </div>
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
-        {/* Tabs for detailed information */}
-        <Tabs defaultValue="work" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="work">Work Logs</TabsTrigger>
-            <TabsTrigger value="workers">Workers</TabsTrigger>
-            <TabsTrigger value="materials">Materials</TabsTrigger>
+        {/* Tabs for different content */}
+        <Tabs defaultValue="work-logs" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="work-logs" className="flex items-center gap-2">
+              <FileTextIcon className="h-4 w-4" />
+              {isWorker ? "My Work" : "Work Logs"}
+            </TabsTrigger>
+            {isEmployer ? (
+              <TabsTrigger value="team" className="flex items-center gap-2">
+                <UserIcon className="h-4 w-4" />
+                Team
+              </TabsTrigger>
+            ) : (
+              <TabsTrigger value="earnings" className="flex items-center gap-2">
+                <DollarIcon className="h-4 w-4" />
+                Earnings
+              </TabsTrigger>
+            )}
           </TabsList>
 
           {/* Work Logs Tab */}
-          <TabsContent value="work" className="mt-4">
-            <Card>
+          <TabsContent value="work-logs" className="mt-6">
+            <Card className="app-card">
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle>Work Logs</CardTitle>
-                  {isWorker && (
-                    <Button
-                      size="sm"
-                      onClick={() => navigate("/add-entry")}
-                      className="bg-emerald-600 hover:bg-emerald-700"
-                    >
-                      + Add Work
-                    </Button>
-                  )}
-                </div>
+                <CardTitle className="text-lg">
+                  {isWorker ? "My Work Logs" : "Work Progress"}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                {projectWorkLogs.length === 0 ? (
-                  <div className="text-center py-6 text-gray-500">
-                    <div className="text-2xl mb-2">📝</div>
-                    <div>No work logs yet</div>
+                {projectData.workLogs.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="text-4xl mb-2">📝</div>
+                    <div className="text-gray-600">
+                      {isWorker ? "No work logged yet" : "No work logs found"}
+                    </div>
                   </div>
                 ) : (
-                  <div className="space-y-3">
-                    {projectWorkLogs.slice(0, 10).map((log) => (
+                  <div className="space-y-4">
+                    {projectData.workLogs.map((log) => (
                       <div
                         key={log.id}
-                        className="border-l-4 border-emerald-500 pl-3 py-2"
+                        className="border border-gray-200 rounded-lg p-3"
                       >
-                        <div className="flex justify-between items-start mb-1">
-                          <div className="font-medium">{log.workerName}</div>
-                          <div className="text-sm font-semibold text-emerald-600">
-                            +${log.earnings}
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <div className="font-medium">{log.description}</div>
+                            {!isWorker && (
+                              <div className="text-sm text-gray-600">
+                                by {log.workerName}
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-medium text-green-600">
+                              ${log.earnings}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {log.areaCompleted} m²
+                            </div>
                           </div>
                         </div>
-                        <div className="text-sm text-gray-600 mb-1">
-                          {log.areaCompleted} m² completed on{" "}
-                          {new Date(log.date).toLocaleDateString()}
-                        </div>
                         <div className="text-xs text-gray-500">
-                          {log.description}
+                          {formatDate(log.date)}
                         </div>
                       </div>
                     ))}
@@ -197,139 +307,72 @@ const ProjectDetail = () => {
             </Card>
           </TabsContent>
 
-          {/* Workers Tab */}
-          <TabsContent value="workers" className="mt-4">
-            <Card>
+          {/* Team Tab (Employers) / Earnings Tab (Workers) */}
+          <TabsContent
+            value={isEmployer ? "team" : "earnings"}
+            className="mt-6"
+          >
+            <Card className="app-card">
               <CardHeader>
-                <CardTitle>Assigned Workers</CardTitle>
+                <CardTitle className="text-lg">
+                  {isEmployer ? "Team Members" : "My Earnings"}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                {projectWorkers.length === 0 ? (
-                  <div className="text-center py-6 text-gray-500">
-                    <div className="text-2xl mb-2">👷‍♂️</div>
-                    <div>No workers assigned</div>
-                  </div>
-                ) : (
+                {isEmployer ? (
                   <div className="space-y-3">
-                    {projectWorkers.map((worker) => {
-                      const workerLogs = projectWorkLogs.filter(
-                        (l) => l.workerId === worker.id,
-                      );
-                      const workerEarnings = workerLogs.reduce(
-                        (sum, l) => sum + l.earnings,
-                        0,
-                      );
-                      const workerArea = workerLogs.reduce(
-                        (sum, l) => sum + l.areaCompleted,
-                        0,
-                      );
-
-                      return (
-                        <div
-                          key={worker.id}
-                          className="bg-gray-50 rounded-lg p-3"
-                        >
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <div className="font-medium">{worker.name}</div>
-                              <div className="text-sm text-gray-600">
-                                {worker.specialization}
-                              </div>
-                            </div>
-                            <Badge variant="outline">
-                              ${worker.ratePerSquareMeter}/m²
-                            </Badge>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2 text-xs">
-                            <div>
-                              <div className="text-gray-500">
-                                Area Completed
-                              </div>
-                              <div className="font-medium">{workerArea} m²</div>
-                            </div>
-                            <div>
-                              <div className="text-gray-500">Total Earned</div>
-                              <div className="font-medium text-emerald-600">
-                                ${workerEarnings.toLocaleString()}
-                              </div>
-                            </div>
+                    {projectData.workers.map((worker) => (
+                      <div
+                        key={worker.id}
+                        className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0"
+                      >
+                        <div>
+                          <div className="font-medium">{worker.name}</div>
+                          <div className="text-sm text-gray-600">
+                            {worker.specialization}
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Materials Tab */}
-          <TabsContent value="materials" className="mt-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Materials</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {projectMaterials.length === 0 ? (
-                  <div className="text-center py-6 text-gray-500">
-                    <div className="text-2xl mb-2">📦</div>
-                    <div>No materials tracked</div>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {projectMaterials.map((material) => {
-                      const usagePercentage =
-                        (material.usedQuantity / material.totalQuantity) * 100;
-
-                      return (
-                        <div
-                          key={material.id}
-                          className="bg-gray-50 rounded-lg p-3"
-                        >
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <div className="font-medium">{material.name}</div>
-                              <div className="text-sm text-gray-600">
-                                {material.supplier}
-                              </div>
-                            </div>
-                            <Badge
-                              variant={
-                                material.remainingQuantity <
-                                material.totalQuantity * 0.2
-                                  ? "destructive"
-                                  : "secondary"
-                              }
-                            >
-                              {material.remainingQuantity} {material.unit} left
-                            </Badge>
+                        <div className="text-right">
+                          <div className="text-sm font-medium">
+                            ${worker.ratePerSquareMeter}/m²
                           </div>
-                          <div className="mb-2">
-                            <Progress value={usagePercentage} className="h-2" />
-                          </div>
-                          <div className="grid grid-cols-3 gap-2 text-xs">
-                            <div>
-                              <div className="text-gray-500">Used</div>
-                              <div className="font-medium">
-                                {material.usedQuantity} {material.unit}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-gray-500">Total</div>
-                              <div className="font-medium">
-                                {material.totalQuantity} {material.unit}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-gray-500">Cost/Unit</div>
-                              <div className="font-medium">
-                                ${material.pricePerUnit}
-                              </div>
-                            </div>
+                          <div className="text-xs text-gray-500">
+                            {worker.phone}
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-green-600">
+                          ${projectData.totalEarnings?.toLocaleString()}
+                        </div>
+                        <div className="text-sm text-green-700 font-medium">
+                          Total Earned from this Project
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-lg font-semibold text-gray-800">
+                          {projectData.workLogs.length}
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          Work Sessions
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-semibold text-gray-800">
+                          {projectData.areaCompleted} m²
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          Area Completed
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </CardContent>
@@ -338,34 +381,36 @@ const ProjectDetail = () => {
         </Tabs>
 
         {/* Quick Actions */}
-        {(isWorker || isEmployer) && project.status === "active" && (
-          <Card className="bg-emerald-50 border-emerald-200">
-            <CardContent className="pt-6">
-              <div className="text-center space-y-3">
-                <div className="text-emerald-700 font-medium">
-                  Quick Actions for this Project
-                </div>
-                <div className="space-y-2">
-                  <Button
-                    className="w-full bg-emerald-600 hover:bg-emerald-700"
-                    onClick={() => navigate("/add-entry")}
-                  >
-                    <span className="mr-2">📝</span>
-                    Log Work Entry
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-emerald-200"
-                    onClick={() => navigate("/add-entry")}
-                  >
-                    <span className="mr-2">📦</span>
-                    Log Material Usage
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        <div className="space-y-3">
+          {isWorker && (
+            <>
+              <Button
+                className="w-full h-12"
+                onClick={() => navigate("/add-entry")}
+              >
+                <FileTextIcon className="h-4 w-4 mr-2" />
+                Log Today's Work
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full h-12"
+                onClick={() => navigate("/add-entry?tab=request")}
+              >
+                <MaterialIcon className="h-4 w-4 mr-2" />
+                Request Materials
+              </Button>
+            </>
+          )}
+          {isEmployer && (
+            <Button
+              className="w-full h-12"
+              onClick={() => navigate("/add-entry")}
+            >
+              <TrendingUpIcon className="h-4 w-4 mr-2" />
+              Manage Project
+            </Button>
+          )}
+        </div>
       </div>
 
       <BottomNavigation />
