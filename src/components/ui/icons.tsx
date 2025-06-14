@@ -417,3 +417,16 @@ export const XIcon = ({ className, size = 24 }: IconProps) => (
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
+
+export const ArrowLeftIcon = ({ className, size = 24 }: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    className={cn("", className)}
+    {...defaultIconProps}
+  >
+    <path d="M19 12H5" />
+    <path d="M12 19l-7-7 7-7" />
+  </svg>
+);
