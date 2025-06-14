@@ -63,7 +63,7 @@ export const MaterialRequestForm = () => {
     ) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields.",
+        description: "Пожалуйста, заполните все обязательные поля.",
         variant: "destructive",
       });
       return;
@@ -90,8 +90,8 @@ export const MaterialRequestForm = () => {
     });
 
     toast({
-      title: "Request Submitted",
-      description: `Your request for ${formData.requestedQuantity} ${selectedMaterial?.unit} of ${formData.materialName} has been submitted.`,
+      title: "Запрос отправлен",
+      description: `Ваш запрос на ${formData.requestedQuantity} ${selectedMaterial?.unit} ${formData.materialName} был отправлен.`,
     });
 
     // Reset form
@@ -284,11 +284,11 @@ export const MaterialRequestForm = () => {
             </div>
 
             {/* Additional Notes */}
-            <div className="space-y-2">
-              <Label htmlFor="notes">Additional Notes</Label>
+            <div>
+              <Label htmlFor="notes">Дополнительные заметки</Label>
               <Textarea
                 id="notes"
-                placeholder="Any additional information..."
+                placeholder="Любая доп��лнительная информация..."
                 value={formData.notes}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
