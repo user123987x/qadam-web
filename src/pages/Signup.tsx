@@ -37,13 +37,13 @@ const Signup = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.email.includes("@")) newErrors.email = "Invalid email format";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.password) newErrors.password = "Password is required";
+    if (!formData.firstName.trim()) newErrors.firstName = "Имя обязательно";
+    if (!formData.lastName.trim()) newErrors.lastName = "Фамилия обязательна";
+    if (!formData.email.trim()) newErrors.email = "Email обязателен";
+    if (!emailRegex.test(formData.email))
+      newErrors.email = "Неверный формат email";
+    if (!formData.phone.trim()) newErrors.phone = "Номер телефона обязателен";
+    if (!formData.password) newErrors.password = "Пароль обязателен";
     if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
     if (formData.password !== formData.confirmPassword) {
@@ -56,7 +56,7 @@ const Signup = () => {
       (formData.role === "employer" || formData.role === "supplier") &&
       !formData.companyName.trim()
     ) {
-      newErrors.companyName = "Company name is required";
+      newErrors.companyName = "Название компании обязательно";
     }
     if (!formData.agreeToTerms)
       newErrors.terms = "You must agree to the terms and conditions";
