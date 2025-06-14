@@ -187,9 +187,10 @@ export const ProfilePhotoUpload = ({
                   Загрузка...
                 </div>
               ) : profilePhoto ? (
+Изменить фото
                 "Change Photo"
               ) : (
-                "Upload Photo"
+                "Загрузить фото"
               )}
             </Button>
 

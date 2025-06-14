@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     }
 
     if (!email.includes("@")) {
-      setError("Please enter a valid email address");
+      setError("Пожалуйста, введите ��орректный email адрес");
       return;
     }
 
