@@ -53,29 +53,29 @@ const Dashboard = () => {
       ).length;
 
       return {
-        title: "Project Overview",
+        title: "Обзор проектов",
         pendingRequests,
         stats: [
           {
-            label: "Total Projects",
+            label: "Всего проектов",
             value: mockProjects.length || 0,
             icon: ProjectIcon,
             color: "text-deep-blue",
           },
           {
-            label: "Active Projects",
+            label: "Активные проекты",
             value: activeProjects.length || 0,
             icon: TrendingUpIcon,
             color: "text-soft-green",
           },
           {
-            label: "Completed",
+            label: "Завершенные",
             value: completedProjects.length || 0,
             icon: CheckIcon,
             color: "text-neutral-600",
           },
           {
-            label: "Pending Requests",
+            label: "Заявки в ожидании",
             value: pendingRequests || 0,
             icon: AlertIcon,
             color: "text-orange-600",
@@ -104,29 +104,29 @@ const Dashboard = () => {
       ).length;
 
       return {
-        title: "My Work Dashboard",
+        title: "Рабочая панель",
         pendingRequests,
         stats: [
           {
-            label: "Assigned Projects",
+            label: "Назначенные проекты",
             value: workerProjects.length || 0,
             icon: ProjectIcon,
             color: "text-deep-blue",
           },
           {
-            label: "Total Earnings",
+            label: "Общий заработок",
             value: `$${(totalEarnings || 0).toLocaleString()}`,
             icon: DollarIcon,
             color: "text-soft-green",
           },
           {
-            label: "Work Logs",
+            label: "Записи работ",
             value: workerLogs.length || 0,
             icon: FileTextIcon,
             color: "text-neutral-600",
           },
           {
-            label: "Pending Requests",
+            label: "Заявки в ожидании",
             value: pendingRequests || 0,
             icon: AlertIcon,
             color: "text-orange-600",
@@ -151,29 +151,29 @@ const Dashboard = () => {
       ).length;
 
       return {
-        title: "Supply Management",
+        title: "Управление поставками",
         pendingRequests,
         stats: [
           {
-            label: "Materials Managed",
+            label: "Управляемые материалы",
             value: mockMaterials.length || 0,
             icon: MaterialIcon,
             color: "text-deep-blue",
           },
           {
-            label: "Low Stock Alerts",
+            label: "Предупреждения о нехватке",
             value: lowStockMaterials.length || 0,
             icon: AlertIcon,
             color: "text-orange-600",
           },
           {
-            label: "Total Delivered",
+            label: "Всего поставлено",
             value: `$${(totalDelivered || 0).toLocaleString()}`,
             icon: DollarIcon,
             color: "text-soft-green",
           },
           {
-            label: "Material Requests",
+            label: "Заявки на материалы",
             value: pendingRequests || 0,
             icon: AlertIcon,
             color: "text-orange-600",
@@ -233,7 +233,7 @@ const Dashboard = () => {
               <ProfilePhotoUpload size="md" className="shrink-0" />
               <div className="flex-1 min-w-0">
                 <h1 className="text-xl font-semibold text-neutral-800 truncate">
-                  Welcome back, {currentUser?.name?.split(" ")[0]}
+                  Добро пожаловать, {currentUser?.name?.split(" ")[0]}
                 </h1>
                 <p className="text-sm text-neutral-600 truncate">
                   {dashboardData.title}
@@ -243,9 +243,13 @@ const Dashboard = () => {
             <Badge
               className={`${getRoleColor()} bg-white border border-neutral-200 shadow-soft px-3 py-1 shrink-0`}
             >
-              {userRole
-                ? userRole.charAt(0).toUpperCase() + userRole.slice(1)
-                : "User"}
+              {userRole === "employer"
+                ? "Работодатель"
+                : userRole === "worker"
+                  ? "Рабочий"
+                  : userRole === "supplier"
+                    ? "Поставщик"
+                    : "Пользователь"}
             </Badge>
           </div>
         </div>
