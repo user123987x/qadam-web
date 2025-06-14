@@ -72,7 +72,7 @@ export const mockProjects: Project[] = [
   {
     id: "proj-3",
     name: "Реконструкция школы",
-    description: "Полная реконстр��кция здания местной школы",
+    description: "Полная реконструкция здания местной школы",
     startDate: "2023-10-01",
     endDate: "2024-01-31",
     status: "completed",
@@ -299,104 +299,104 @@ export const mockMaterials: Material[] = [
   },
 ];
 
-// Mock work logs
+// Журнал работ
 export const mockWorkLogs: WorkLog[] = [
   {
     id: "log-1",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-1",
     date: "2024-01-20",
     areaCompleted: 25,
-    description: "Completed masonry work on ground floor east wall",
+    description: "Завершена кладочная работа на восточной стене первого этажа",
     ratePerSquareMeter: 15,
     earnings: 375,
   },
   {
     id: "log-2",
     workerId: "worker-2",
-    workerName: "Jamshid Karimov",
+    workerName: "Джамшид Каримов",
     projectId: "proj-1",
     date: "2024-01-20",
     areaCompleted: 18,
-    description: "Installed wooden framework for windows",
+    description: "Установлен деревянный каркас для окон",
     ratePerSquareMeter: 18,
     earnings: 324,
   },
   {
     id: "log-3",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-1",
     date: "2024-01-21",
     areaCompleted: 30,
-    description: "Continued masonry work on ground floor",
+    description: "Продолжена кладочная работа на первом этаже",
     ratePerSquareMeter: 15,
     earnings: 450,
   },
   {
     id: "log-4",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-4",
     date: "2024-03-05",
     areaCompleted: 22,
-    description: "Traditional stonework for cultural center facade",
+    description: "Традиционная каменная кладка фасада культурного центра",
     ratePerSquareMeter: 15,
     earnings: 330,
   },
   {
     id: "log-5",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-5",
     date: "2024-02-20",
     areaCompleted: 15,
-    description: "Foundation work for mountain lodge",
+    description: "Фундаментальные работы для горного комплекса",
     ratePerSquareMeter: 15,
     earnings: 225,
   },
   {
     id: "log-6",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-6",
     date: "2024-01-25",
     areaCompleted: 28,
-    description: "Interior wall construction for health clinic",
+    description: "Возведение внутренних стен поликлиники",
     ratePerSquareMeter: 15,
     earnings: 420,
   },
   {
     id: "log-7",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-7",
     date: "2024-01-30",
     areaCompleted: 35,
-    description: "Final masonry touches on museum exhibition halls",
+    description: "Финальные кладочные работы в выставочных залах музея",
     ratePerSquareMeter: 15,
     earnings: 525,
   },
   {
     id: "log-8",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-1",
     date: "2024-01-22",
     areaCompleted: 26,
-    description: "Exterior wall completion on residential complex",
+    description: "Завершение наружных стен жилого комплекса",
     ratePerSquareMeter: 15,
     earnings: 390,
   },
   {
     id: "log-9",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-9",
     date: "2023-12-15",
     areaCompleted: 20,
-    description: "Concrete foundation work for water treatment facility",
+    description: "Бетонные фундаментальные работы водоочистного сооружения",
     ratePerSquareMeter: 15,
     earnings: 300,
   },
@@ -404,33 +404,33 @@ export const mockWorkLogs: WorkLog[] = [
 
 // Navigation items are now handled in BottomNavigation component with proper icons
 
-// Material units
-export const materialUnits = ["kg", "m²", "L", "pcs", "m³", "m"];
+// Единицы измерения материалов
+export const materialUnits = ["кг", "м²", "л", "шт", "м³", "м"];
 
-// Project statuses
+// Статусы проекто��
 export const projectStatuses = [
-  { value: "planning", label: "Planning", color: "bg-yellow-500" },
-  { value: "active", label: "Active", color: "bg-green-500" },
-  { value: "paused", label: "Paused", color: "bg-orange-500" },
-  { value: "completed", label: "Completed", color: "bg-blue-500" },
+  { value: "planning", label: "Планирование", color: "bg-yellow-500" },
+  { value: "active", label: "Активный", color: "bg-green-500" },
+  { value: "paused", label: "Приостановлен", color: "bg-orange-500" },
+  { value: "completed", label: "Завершен", color: "bg-blue-500" },
 ];
 
-// Mock material requests
+// Заявки на материалы
 export const mockMaterialRequests: MaterialRequest[] = [
   {
     id: "req-1",
     workerId: "2",
-    workerName: "Farid Nazarov",
+    workerName: "Фарид Назаров",
     projectId: "proj-1",
-    projectName: "Residential Complex A",
-    materialName: "Cement",
+    projectName: "Жилой комплекс А",
+    materialName: "Цемент",
     requestedQuantity: 500,
-    unit: "kg",
+    unit: "кг",
     urgency: "high",
-    reason: "Running low on cement, need for foundation work",
+    reason: "Нехватка цемента, необходим для фундаментальных работ",
     status: "pending",
     requestDate: "2024-01-22",
-    notes: "Need by Friday to stay on schedule",
+    notes: "Необходимо к пятнице для соблюдения графика",
   },
   {
     id: "req-2",
@@ -482,29 +482,29 @@ export const mockMaterialRequests: MaterialRequest[] = [
   },
 ];
 
-// Worker specializations
+// Специализации рабочих
 export const workerSpecializations = [
-  "Mason",
-  "Carpenter",
-  "Electrician",
-  "Plumber",
-  "Painter",
-  "Roofer",
-  "Welder",
-  "General Labor",
+  "Каменщик",
+  "Столяр",
+  "Электрик",
+  "Сантехник",
+  "Маляр",
+  "Кровельщик",
+  "Сварщик",
+  "Подсобный рабочий",
 ];
 
-// Material request urgency levels
+// Уровни срочности заявок на материалы
 export const urgencyLevels = [
-  { value: "low", label: "Low Priority", color: "bg-green-500" },
-  { value: "medium", label: "Medium Priority", color: "bg-yellow-500" },
-  { value: "high", label: "High Priority", color: "bg-red-500" },
+  { value: "low", label: "Низкий приоритет", color: "bg-green-500" },
+  { value: "medium", label: "Средний приоритет", color: "bg-yellow-500" },
+  { value: "high", label: "Высокий приоритет", color: "bg-red-500" },
 ];
 
-// Material request statuses
+// Статусы заявок на материалы
 export const requestStatuses = [
-  { value: "pending", label: "Pending", color: "bg-yellow-500" },
-  { value: "approved", label: "Approved", color: "bg-blue-500" },
-  { value: "rejected", label: "Rejected", color: "bg-red-500" },
-  { value: "fulfilled", label: "Fulfilled", color: "bg-green-500" },
+  { value: "pending", label: "В ожидании", color: "bg-yellow-500" },
+  { value: "approved", label: "Одобрено", color: "bg-blue-500" },
+  { value: "rejected", label: "Отклонено", color: "bg-red-500" },
+  { value: "fulfilled", label: "Выполнено", color: "bg-green-500" },
 ];
