@@ -74,7 +74,7 @@ const Projects = () => {
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold text-gray-900">
-              {isWorker ? "My Projects" : "Projects"}
+              {isWorker ? "Мои проекты" : "Проекты"}
             </h1>
             <div className="text-lg">{isWorker ? "👷‍♂️" : "📁"}</div>
           </div>
@@ -82,7 +82,7 @@ const Projects = () => {
           {/* Search */}
           <Input
             placeholder={
-              isWorker ? "Search my projects..." : "Search projects..."
+              isWorker ? "Поиск моих проектов..." : "Поиск проектов..."
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -105,7 +105,7 @@ const Projects = () => {
                     {projectCounts.all}
                   </div>
                   <div className="text-xs text-gray-600 font-medium">
-                    {isWorker ? "Assigned" : "Total Projects"}
+                    {isWorker ? "Назначенные" : "Всего проектов"}
                   </div>
                 </div>
               </div>
@@ -123,7 +123,7 @@ const Projects = () => {
                     {projectCounts.active}
                   </div>
                   <div className="text-xs text-gray-600 font-medium">
-                    Active Projects
+                    Активные проекты
                   </div>
                 </div>
               </div>
@@ -139,15 +139,23 @@ const Projects = () => {
         >
           <TabsList className="grid grid-cols-5 w-full h-auto p-1">
             {[
-              { key: "all", label: "All", count: projectCounts.all },
-              { key: "active", label: "Active", count: projectCounts.active },
+              { key: "all", label: "Все", count: projectCounts.all },
+              { key: "active", label: "Активные", count: projectCounts.active },
               {
                 key: "completed",
-                label: "Done",
+                label: "Завершенные",
                 count: projectCounts.completed,
               },
-              { key: "planning", label: "Plan", count: projectCounts.planning },
-              { key: "paused", label: "Pause", count: projectCounts.paused },
+              {
+                key: "planning",
+                label: "Планируемые",
+                count: projectCounts.planning,
+              },
+              {
+                key: "paused",
+                label: "Приостановленные",
+                count: projectCounts.paused,
+              },
             ].map((tab) => (
               <TabsTrigger
                 key={tab.key}
@@ -166,11 +174,11 @@ const Projects = () => {
 
           <div className="mt-6">
             {[
-              { status: "all", label: "All Projects" },
-              { status: "active", label: "Active Projects" },
-              { status: "completed", label: "Completed Projects" },
-              { status: "planning", label: "Planning Projects" },
-              { status: "paused", label: "Paused Projects" },
+              { status: "all", label: "Все проекты" },
+              { status: "active", label: "Активные проекты" },
+              { status: "completed", label: "Завершенные проекты" },
+              { status: "planning", label: "Планируемые проекты" },
+              { status: "paused", label: "Приостановленные проекты" },
             ].map(({ status }) => (
               <TabsContent key={status} value={status} className="mt-0">
                 <div className="space-y-4">
