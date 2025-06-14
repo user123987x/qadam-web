@@ -86,20 +86,20 @@ const Materials = () => {
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-xl font-bold text-gray-900">
               {(isEmployer || isSupplier) && activeTab === "requests"
-                ? "Material Requests"
-                : "Material Inventory"}
+                ? "Заявки на материалы"
+                : "Инвентарь материалов"}
             </h1>
             <div className="text-lg">
               {(isEmployer || isSupplier) && activeTab === "requests"
                 ? "📋"
-                : "��"}
+                : "📦"}
             </div>
           </div>
 
           {/* Search - Only show for inventory tab */}
           {activeTab === "inventory" && (
             <Input
-              placeholder="Search materials or suppliers..."
+              placeholder="Поиск материалов или поставщиков..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full"
@@ -117,12 +117,12 @@ const Materials = () => {
             {(isEmployer || isSupplier) && (
               <TabsTrigger value="requests" className="flex items-center gap-2">
                 <span>📋</span>
-                Material Requests
+                Заявки
               </TabsTrigger>
             )}
             <TabsTrigger value="inventory" className="flex items-center gap-2">
               <span>📦</span>
-              Inventory
+              Инвентарь
             </TabsTrigger>
           </TabsList>
 
