@@ -248,7 +248,7 @@ const Signup = () => {
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your specialization" />
+                      <SelectValue placeholder="Выберите вашу специализацию" />
                     </SelectTrigger>
                     <SelectContent>
                       {workerSpecializations.map((spec) => (

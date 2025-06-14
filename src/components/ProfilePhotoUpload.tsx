@@ -100,8 +100,8 @@ export const ProfilePhotoUpload = ({
       setIsDialogOpen(false);
     } catch (error) {
       toast({
-        title: "Upload Failed",
-        description: "Failed to upload photo. Please try again.",
+        title: "Ошибка загрузки",
+        description: "Не удалось загрузить фото. Попробуйте еще раз.",
         variant: "destructive",
       });
     }
@@ -183,7 +183,7 @@ export const ProfilePhotoUpload = ({
               {isUploading ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                  Uploading...
+                  Загрузка...
                 </div>
               ) : profilePhoto ? (
                 "Change Photo"

@@ -51,7 +51,7 @@ export const useProfilePhoto = (userId: string) => {
   const validateFile = (file: File): { isValid: boolean; error?: string } => {
     // Check file type
     if (!file.type.startsWith("image/")) {
-      return { isValid: false, error: "Please select an image file" };
+      return { isValid: false, error: "Пожалуйста, выберите файл изображения" };
     }
 
     // Check file size (max 5MB)
