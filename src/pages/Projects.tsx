@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/ProjectCard";
+import { WorkerProjectCard } from "@/components/WorkerProjectCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { useUserRole } from "@/hooks/useUserRole";
 import { mockProjects, projectStatuses } from "@/lib/constants";
@@ -18,7 +19,7 @@ import {
 } from "@/components/ui/icons";
 
 const Projects = () => {
-  const { currentUser, isWorker } = useUserRole();
+  const { currentUser, isWorker, isEmployer } = useUserRole();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
 
@@ -26,7 +27,7 @@ const Projects = () => {
   const getFilteredProjects = (): Project[] => {
     let projects = mockProjects;
 
-    // Filter by user role
+    // Filter by user role - workers only see their assigned projects
     if (isWorker) {
       projects = projects.filter((p) =>
         p.assignedWorkers.includes(currentUser?.id || ""),
@@ -51,27 +52,6 @@ const Projects = () => {
     return projects;
   };
 
-  // Get worker-specific project data (only their work)
-  const getWorkerProjectData = (project: Project) => {
-    const myWorkLogs = mockWorkLogs.filter(
-      (log) => log.projectId === project.id && log.workerId === currentUser?.id
-    );
-    const myTotalEarnings = myWorkLogs.reduce((sum, log) => sum + log.earnings, 0);
-    const myAreaCompleted = myWorkLogs.reduce((sum, log) => sum + log.areaCompleted, 0);
-
-    return {
-      ...project,
-      // Hide sensitive employer data
-      budget: undefined,
-      spentAmount: undefined,
-      assignedWorkers: [currentUser?.id || ""], // Only show themselves
-      // Show only their progress
-      myWorkLogs,
-      myTotalEarnings,
-      myAreaCompleted,
-    };
-  };
-
   const filteredProjects = getFilteredProjects();
 
   const getProjectsByStatus = (status: string) => {
@@ -82,253 +62,166 @@ const Projects = () => {
   const projectCounts = {
     all: filteredProjects.length,
     active: filteredProjects.filter((p) => p.status === "active").length,
-    planning: filteredProjects.filter((p) => p.status === "planning").length,
     completed: filteredProjects.filter((p) => p.status === "completed").length,
+    planning: filteredProjects.filter((p) => p.status === "planning").length,
     paused: filteredProjects.filter((p) => p.status === "paused").length,
   };
 
   return (
     <div className="min-h-screen bg-neutral-50 pb-24">
       {/* Header */}
-      <div className="bg-white/95 backdrop-blur-lg border-b border-neutral-200/60 sticky top-0 z-10">
-        <div className="px-6 py-4 max-w-md mx-auto w-full">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-soft-green to-deep-blue rounded-xl flex items-center justify-center shadow-medium">
-              <ProjectIcon size={24} className="text-white" />
-            </div>
-            <div className="flex-1">
-              <h1 className="text-xl font-semibold text-neutral-800">
-                {isWorker ? "My Projects" : "All Projects"}
-              </h1>
-              <p className="text-sm text-neutral-600">
-                {isWorker
-                  ? "Your assigned construction projects"
-                  : "Manage all construction projects"}
-              </p>
-            </div>
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div className="max-w-md mx-auto px-4 py-4">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-xl font-bold text-gray-900">
+              {isWorker ? "My Projects" : "Projects"}
+            </h1>
+            <div className="text-lg">{isWorker ? "👷‍♂️" : "📁"}</div>
           </div>
 
           {/* Search */}
           <Input
-            placeholder="Search projects, locations..."
+            placeholder={
+              isWorker ? "Search my projects..." : "Search projects..."
+            }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="input-field"
+            className="w-full"
           />
         </div>
       </div>
 
-      <div className="px-6 py-4 space-y-6 max-w-md mx-auto w-full">
-        {/* Project Stats */}
-        <div className="app-card-elevated">
-          <CardHeader>
-            <CardTitle className="text-lg font-medium text-neutral-800">
-              Project Overview
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center">
-                  <ProjectIcon size={24} className="text-deep-blue" />
+      <div className="max-w-md mx-auto px-4 py-6">
+        {/* Summary Stats */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <Card className="app-card text-center">
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                <div className="w-10 h-10 mx-auto bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center">
+                  <ProjectIcon className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <div className="text-2xl font-semibold text-neutral-800">
+                  <div className="text-2xl font-bold text-blue-600">
                     {projectCounts.all}
                   </div>
-                  <div className="text-xs text-neutral-600 font-medium">
-                    Total Projects
+                  <div className="text-xs text-gray-600 font-medium">
+                    {isWorker ? "Assigned" : "Total Projects"}
                   </div>
                 </div>
               </div>
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center">
-                  <TrendingUpIcon size={24} className="text-soft-green" />
+            </CardContent>
+          </Card>
+
+          <Card className="app-card text-center">
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                <div className="w-10 h-10 mx-auto bg-gradient-to-br from-green-100 to-green-200 rounded-xl flex items-center justify-center">
+                  <TrendingUpIcon className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <div className="text-2xl font-semibold text-neutral-800">
+                  <div className="text-2xl font-bold text-green-600">
                     {projectCounts.active}
                   </div>
-                  <div className="text-xs text-neutral-600 font-medium">
-                    Active
+                  <div className="text-xs text-gray-600 font-medium">
+                    Active Projects
                   </div>
                 </div>
               </div>
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center">
-                  <FileTextIcon size={24} className="text-deep-blue" />
-                </div>
-                <div>
-                  <div className="text-2xl font-semibold text-neutral-800">
-                    {projectCounts.planning}
-                  </div>
-                  <div className="text-xs text-neutral-600 font-medium">
-                    Planning
-                  </div>
-                </div>
-              </div>
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center">
-                  <CheckIcon size={24} className="text-neutral-600" />
-                </div>
-                <div>
-                  <div className="text-2xl font-semibold text-neutral-800">
-                    {projectCounts.completed}
-                  </div>
-                  <div className="text-xs text-neutral-600 font-medium">
-                    Completed
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Project Tabs */}
+        {/* Status Tabs */}
         <Tabs
           value={selectedStatus}
           onValueChange={setSelectedStatus}
           className="w-full"
         >
-          <TabsList className="grid grid-cols-5 w-full h-auto p-1 bg-white border border-neutral-200">
-            <TabsTrigger
-              value="all"
-              className="text-xs px-2 py-3 data-[state=active]:bg-soft-green data-[state=active]:text-white"
-            >
-              All
-              {projectCounts.all > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 text-xs h-5 px-1 bg-neutral-100 text-neutral-600"
-                >
-                  {projectCounts.all}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="active"
-              className="text-xs px-2 py-3 data-[state=active]:bg-soft-green data-[state=active]:text-white"
-            >
-              Active
-              {projectCounts.active > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 text-xs h-5 px-1 bg-neutral-100 text-neutral-600"
-                >
-                  {projectCounts.active}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="planning"
-              className="text-xs px-2 py-3 data-[state=active]:bg-soft-green data-[state=active]:text-white"
-            >
-              Planning
-              {projectCounts.planning > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 text-xs h-5 px-1 bg-neutral-100 text-neutral-600"
-                >
-                  {projectCounts.planning}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="completed"
-              className="text-xs px-2 py-3 data-[state=active]:bg-soft-green data-[state=active]:text-white"
-            >
-              Done
-              {projectCounts.completed > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 text-xs h-5 px-1 bg-neutral-100 text-neutral-600"
-                >
-                  {projectCounts.completed}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="paused"
-              className="text-xs px-2 py-3 data-[state=active]:bg-soft-green data-[state=active]:text-white"
-            >
-              Paused
-              {projectCounts.paused > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 text-xs h-5 px-1 bg-neutral-100 text-neutral-600"
-                >
-                  {projectCounts.paused}
-                </Badge>
-              )}
-            </TabsTrigger>
+          <TabsList className="grid grid-cols-5 w-full h-auto p-1">
+            {[
+              { key: "all", label: "All", count: projectCounts.all },
+              { key: "active", label: "Active", count: projectCounts.active },
+              {
+                key: "completed",
+                label: "Done",
+                count: projectCounts.completed,
+              },
+              { key: "planning", label: "Plan", count: projectCounts.planning },
+              { key: "paused", label: "Pause", count: projectCounts.paused },
+            ].map((tab) => (
+              <TabsTrigger
+                key={tab.key}
+                value={tab.key}
+                className="text-xs px-2 py-2 flex flex-col gap-1"
+              >
+                <span>{tab.label}</span>
+                {tab.count > 0 && (
+                  <Badge variant="secondary" className="text-xs h-4 px-1">
+                    {tab.count}
+                  </Badge>
+                )}
+              </TabsTrigger>
+            ))}
           </TabsList>
 
           <div className="mt-6">
-            {["all", "active", "planning", "completed", "paused"].map(
-              (status) => (
-                <TabsContent key={status} value={status} className="mt-0">
-        <div className="space-y-4">
-          {filteredProjects.length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-8">
-                <div className="text-4xl mb-2">📁</div>
-                <div className="text-gray-600">
-                  {isWorker ? "No assigned projects found" : "No projects found"}
+            {[
+              { status: "all", label: "All Projects" },
+              { status: "active", label: "Active Projects" },
+              { status: "completed", label: "Completed Projects" },
+              { status: "planning", label: "Planning Projects" },
+              { status: "paused", label: "Paused Projects" },
+            ].map(({ status }) => (
+              <TabsContent key={status} value={status} className="mt-0">
+                <div className="space-y-4">
+                  {getProjectsByStatus(status).length === 0 ? (
+                    <Card>
+                      <CardContent className="text-center py-8">
+                        <div className="text-4xl mb-2">📁</div>
+                        <div className="text-gray-600">
+                          {isWorker
+                            ? `No ${status === "all" ? "" : status + " "}assigned projects found`
+                            : `No ${status === "all" ? "" : status + " "}projects found`}
+                        </div>
+                        {searchTerm && (
+                          <div className="text-sm text-gray-500 mt-1">
+                            Try adjusting your search terms
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    getProjectsByStatus(status).map((project) => {
+                      // Show different cards based on user role
+                      if (isWorker) {
+                        return (
+                          <WorkerProjectCard
+                            key={project.id}
+                            project={project}
+                          />
+                        );
+                      }
+                      return <ProjectCard key={project.id} project={project} />;
+                    })
+                  )}
                 </div>
-                {searchTerm && (
-                  <div className="text-sm text-gray-500 mt-1">
-                    Try adjusting your search terms
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ) : (
-            filteredProjects.map((project) => {
-              if (isWorker) {
-                const workerProject = getWorkerProjectData(project);
-                return <WorkerProjectCard key={project.id} project={workerProject} />;
-              }
-              return <ProjectCard key={project.id} project={project} />;
-            })
-          )}
-        </div>
-                    ) : (
-                      getProjectsByStatus(status).map((project) => (
-                        <ProjectCard key={project.id} project={project} />
-                      ))
-                    )}
-                  </div>
-                </TabsContent>
-              ),
-            )}
+              </TabsContent>
+            ))}
           </div>
         </Tabs>
 
-        {/* Quick Actions for Workers */}
-        {isWorker && projectCounts.active > 0 && (
-          <div className="app-card bg-gradient-to-br from-soft-green/5 to-deep-blue/5 border-soft-green/20">
-            <CardContent className="text-center py-8">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-soft-green to-deep-blue rounded-2xl flex items-center justify-center mb-4">
-                <FileTextIcon size={28} className="text-white" />
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <div className="font-medium text-neutral-800 mb-1">
-                    Ready to log work?
-                  </div>
-                  <div className="text-sm text-neutral-600">
-                    Track your daily progress and earnings
-                  </div>
-                </div>
-                <Button
-                  className="btn-primary"
-                  onClick={() => (window.location.href = "/add-entry")}
-                >
-                  <FileTextIcon size={20} className="mr-2" />
-                  Log Today's Work
-                </Button>
-              </div>
-            </CardContent>
+        {/* Worker-specific help text */}
+        {isWorker && (
+          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="text-sm text-blue-700">
+              <div className="font-medium mb-2">💡 Worker View:</div>
+              <ul className="space-y-1">
+                <li>• You only see projects you're assigned to</li>
+                <li>• View your personal progress and earnings</li>
+                <li>• Click any project to log work or request materials</li>
+                <li>• Your work data is private to you</li>
+              </ul>
+            </div>
           </div>
         )}
       </div>
