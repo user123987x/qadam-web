@@ -151,9 +151,9 @@ const Profile = () => {
           <CardContent className="space-y-4">
             {profileStats.map((stat, index) => (
               <div key={index}>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">{stat.label}</span>
-                  <span className="font-semibold">{stat.value}</span>
+                <div className="flex items-center justify-between">
+                  <h1 className="text-xl font-bold text-gray-900">Профиль</h1>
+                  <SettingsIcon className="h-5 w-5 text-gray-600" />
                 </div>
                 {index < profileStats.length - 1 && (
                   <Separator className="mt-4" />
