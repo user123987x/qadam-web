@@ -152,7 +152,7 @@ export const WorkLogForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, areaCompleted: e.target.value })
               }
-              placeholder="Enter area in square meters"
+              placeholder="Введите площадь в квадратных метрах"
               required
             />
           </div>

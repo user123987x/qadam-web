@@ -49,9 +49,9 @@ const Signup = () => {
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
-    if (!formData.role) newErrors.role = "Please select your role";
-    if (formData.role === "worker" && !formData.specialization) {
-      newErrors.specialization = "Please select your specialization";
+    if (!formData.role) newErrors.role = "Пожалуйста, выберите вашу роль";
+    if (formData.role === "worker" && !formData.specialization)
+      newErrors.specialization = "Пожалуйста, выберите вашу специализацию";
     }
     if (
       (formData.role === "employer" || formData.role === "supplier") &&

@@ -176,7 +176,7 @@ export const MaterialLogForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, quantity: e.target.value })
               }
-              placeholder={`Enter quantity in ${selectedMaterial?.unit || "units"}`}
+              placeholder={`Введите количество в ${selectedMaterial?.unit || "единицах"}`}
               required
             />
           </div>

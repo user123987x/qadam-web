@@ -73,7 +73,7 @@ export const MaterialRequestForm = () => {
     if (quantity <= 0) {
       toast({
         title: "Invalid Quantity",
-        description: "Please enter a valid quantity greater than 0.",
+        description: "Пожалуйста, введите корректное количество больше 0.",
         variant: "destructive",
       });
       return;
@@ -288,7 +288,7 @@ export const MaterialRequestForm = () => {
               <Label htmlFor="notes">Дополнительные заметки</Label>
               <Textarea
                 id="notes"
-                placeholder="Любая доп��лнительная информация..."
+                placeholder="Любая дополнительная информация..."
                 value={formData.notes}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
