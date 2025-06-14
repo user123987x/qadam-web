@@ -51,6 +51,27 @@ const Projects = () => {
     return projects;
   };
 
+  // Get worker-specific project data (only their work)
+  const getWorkerProjectData = (project: Project) => {
+    const myWorkLogs = mockWorkLogs.filter(
+      (log) => log.projectId === project.id && log.workerId === currentUser?.id
+    );
+    const myTotalEarnings = myWorkLogs.reduce((sum, log) => sum + log.earnings, 0);
+    const myAreaCompleted = myWorkLogs.reduce((sum, log) => sum + log.areaCompleted, 0);
+
+    return {
+      ...project,
+      // Hide sensitive employer data
+      budget: undefined,
+      spentAmount: undefined,
+      assignedWorkers: [currentUser?.id || ""], // Only show themselves
+      // Show only their progress
+      myWorkLogs,
+      myTotalEarnings,
+      myAreaCompleted,
+    };
+  };
+
   const filteredProjects = getFilteredProjects();
 
   const getProjectsByStatus = (status: string) => {
@@ -246,30 +267,31 @@ const Projects = () => {
             {["all", "active", "planning", "completed", "paused"].map(
               (status) => (
                 <TabsContent key={status} value={status} className="mt-0">
-                  <div className="space-y-4">
-                    {getProjectsByStatus(status).length === 0 ? (
-                      <div className="app-card">
-                        <CardContent className="text-center py-12">
-                          <div className="w-16 h-16 mx-auto bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-2xl flex items-center justify-center mb-4">
-                            <ProjectIcon
-                              size={28}
-                              className="text-neutral-400"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <div className="font-medium text-neutral-700">
-                              {status === "all"
-                                ? "No projects found"
-                                : `No ${status} projects`}
-                            </div>
-                            {searchTerm && (
-                              <div className="text-sm text-neutral-500">
-                                Try adjusting your search terms
-                              </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </div>
+        <div className="space-y-4">
+          {filteredProjects.length === 0 ? (
+            <Card>
+              <CardContent className="text-center py-8">
+                <div className="text-4xl mb-2">📁</div>
+                <div className="text-gray-600">
+                  {isWorker ? "No assigned projects found" : "No projects found"}
+                </div>
+                {searchTerm && (
+                  <div className="text-sm text-gray-500 mt-1">
+                    Try adjusting your search terms
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            filteredProjects.map((project) => {
+              if (isWorker) {
+                const workerProject = getWorkerProjectData(project);
+                return <WorkerProjectCard key={project.id} project={workerProject} />;
+              }
+              return <ProjectCard key={project.id} project={project} />;
+            })
+          )}
+        </div>
                     ) : (
                       getProjectsByStatus(status).map((project) => (
                         <ProjectCard key={project.id} project={project} />
