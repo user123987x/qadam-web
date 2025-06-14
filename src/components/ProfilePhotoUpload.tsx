@@ -27,7 +27,6 @@ export const ProfilePhotoUpload = ({
   className = "",
 }: ProfilePhotoUploadProps) => {
   const { currentUser, userRole } = useUserRole();
-Загрузить фото
   const { profilePhoto, isUploading, uploadPhoto, removePhoto, validateFile } =
     useProfilePhoto(currentUser?.id || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
