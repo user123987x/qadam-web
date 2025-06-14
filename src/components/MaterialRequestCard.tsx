@@ -48,7 +48,7 @@ export const MaterialRequestCard = ({
   const handleReject = () => {
     if (!rejectReason.trim()) {
       toast({
-        title: "Rejection Reason Required",
+        title: "Требуется причина отклонения",
         description: "Please provide a reason for rejecting this request.",
         variant: "destructive",
       });
@@ -149,7 +149,7 @@ export const MaterialRequestCard = ({
         {request.notes && (
           <div>
             <h4 className="text-sm font-medium text-gray-900 mb-2">
-              Additional Notes
+              Дополнительные заметки
             </h4>
             <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
               {request.notes}
