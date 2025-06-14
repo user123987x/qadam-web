@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     setError("");
 
     if (!email.trim()) {
-      setError("Please enter your email address");
+      setError("Пожалуйста, введите ваш email адрес");
       return;
     }
 
@@ -142,7 +142,7 @@ const ForgotPassword = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
+                  placeholder="Введите ваш email адрес"
                   required
                 />
                 <div className="text-xs text-gray-600">
