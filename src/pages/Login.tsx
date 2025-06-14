@@ -49,25 +49,25 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Simple validation
+    if (!formData.email || !formData.password) {
+      setError("Пожалуйста, заполните все поля.");
+      setIsLoading(false);
+      return;
+    }
 
-    // Demo authentication - in real app, this would call an API
+    // Demo authentication - in real app, this would be an API call
     const user = mockUsers.find(
-      (u) =>
-        u.email.toLowerCase() === formData.email.toLowerCase() &&
-        (formData.role === "" || u.role === formData.role),
+      (u) => u.email === formData.email && formData.role === u.role,
     );
 
     if (user) {
-      // Simulate successful login
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       switchUser(user.id);
-
-      // Redirect to intended page or dashboard
-      const from = location.state?.from?.pathname || "/dashboard";
-      navigate(from, { replace: true });
+      navigate("/dashboard");
     } else {
-      setError("Invalid email or password. Please try again.");
+      setError("Неверный email или пароль. Попробуйте снова.");
     }
 
     setIsLoading(false);
@@ -94,11 +94,11 @@ const Login = () => {
           </div>
           <div className="space-y-2">
             <h1 className="text-2xl font-semibold text-neutral-800 tracking-tight">
-              Construction Manager
+              Строительный менеджер
             </h1>
             <p className="text-neutral-600 text-sm leading-relaxed">
-              Streamline your construction projects with professional management
-              tools
+              Оптимизируйте ваши строительные проекты с профессиональными
+              инструментами управления
             </p>
           </div>
         </div>
@@ -107,10 +107,10 @@ const Login = () => {
         <div className="app-card-elevated">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-xl font-medium text-neutral-800">
-              Welcome Back
+              Добро пожаловать
             </CardTitle>
             <p className="text-sm text-neutral-600 mt-1">
-              Sign in to your account
+              Войдите в вашу учетную запись
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -140,7 +140,7 @@ const Login = () => {
                   htmlFor="email"
                   className="text-sm font-medium text-neutral-700"
                 >
-                  Email Address
+                  Email адрес
                 </Label>
                 <Input
                   id="email"
@@ -149,9 +149,8 @@ const Login = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  placeholder="Enter your work email"
-                  className="input-field h-12"
-                  required
+                  placeholder="введите ваш email"
+                  className="bg-white/80 border-neutral-200 focus:border-soft-green focus:ring-soft-green/20"
                 />
               </div>
 
@@ -161,7 +160,7 @@ const Login = () => {
                   htmlFor="password"
                   className="text-sm font-medium text-neutral-700"
                 >
-                  Password
+                  Пароль
                 </Label>
                 <Input
                   id="password"
@@ -170,46 +169,42 @@ const Login = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  placeholder="Enter your password"
-                  className="input-field h-12"
-                  required
+                  placeholder="введите ваш пароль"
+                  className="bg-white/80 border-neutral-200 focus:border-soft-green focus:ring-soft-green/20"
                 />
               </div>
 
-              {/* Role Selection (Optional) */}
+              {/* Role */}
               <div className="space-y-2">
-                <Label
-                  htmlFor="role"
-                  className="text-sm font-medium text-neutral-700"
-                >
-                  Role (Optional)
+                <Label className="text-sm font-medium text-neutral-700">
+                  Роль
                 </Label>
                 <Select
                   value={formData.role}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, role: value as UserRole })
+                  onValueChange={(value: UserRole) =>
+                    setFormData({ ...formData, role: value })
                   }
                 >
-                  <SelectTrigger className="input-field h-12">
-                    <SelectValue placeholder="Select your role" />
+                  <SelectTrigger className="bg-white/80 border-neutral-200 focus:border-soft-green focus:ring-soft-green/20">
+                    <SelectValue placeholder="Выберите вашу роль" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="employer">
-                      <div className="flex items-center gap-3">
-                        <EmployerIcon size={18} className="text-deep-blue" />
-                        <span>Project Manager</span>
+                      <div className="flex items-center gap-2">
+                        <EmployerIcon size={16} />
+                        Работодатель
                       </div>
                     </SelectItem>
                     <SelectItem value="worker">
-                      <div className="flex items-center gap-3">
-                        <WorkerIcon size={18} className="text-soft-green" />
-                        <span>Construction Worker</span>
+                      <div className="flex items-center gap-2">
+                        <WorkerIcon size={16} />
+                        Рабочий
                       </div>
                     </SelectItem>
                     <SelectItem value="supplier">
-                      <div className="flex items-center gap-3">
-                        <SupplierIcon size={18} className="text-deep-blue" />
-                        <span>Material Supplier</span>
+                      <div className="flex items-center gap-2">
+                        <SupplierIcon size={16} />
+                        Поставщик
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -217,153 +212,125 @@ const Login = () => {
               </div>
 
               {/* Remember Me */}
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
                 <Checkbox
                   id="remember"
                   checked={formData.rememberMe}
                   onCheckedChange={(checked) =>
-                    setFormData({ ...formData, rememberMe: checked as boolean })
+                    setFormData({ ...formData, rememberMe: !!checked })
                   }
-                  className="border-neutral-300"
+                  className="border-neutral-300 data-[state=checked]:bg-soft-green data-[state=checked]:border-soft-green"
                 />
                 <Label
                   htmlFor="remember"
-                  className="text-sm text-neutral-600 font-normal"
+                  className="text-sm text-neutral-600 cursor-pointer"
                 >
-                  Keep me signed in
+                  Запомнить меня
                 </Label>
               </div>
 
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="btn-primary w-full h-12 text-base font-medium"
                 disabled={isLoading}
+                className="w-full btn-primary h-12 text-base font-medium"
               >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    Signing In...
-                  </div>
-                ) : (
-                  "Sign In"
-                )}
+                {isLoading ? "Вход..." : "Войти"}
               </Button>
             </form>
 
-            {/* Links */}
-            <div className="space-y-4 pt-2">
-              <div className="text-center">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-soft-green hover:text-soft-green-light font-medium transition-colors"
-                >
-                  Forgot your password?
-                </Link>
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-neutral-200"></div>
               </div>
-              <div className="text-center text-sm text-neutral-600">
-                Don't have an account?{" "}
-                <Link
-                  to="/signup"
-                  className="text-soft-green hover:text-soft-green-light font-medium transition-colors"
-                >
-                  Create account
-                </Link>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-4 text-neutral-500 font-medium">
+                  или попробуйте демо
+                </span>
               </div>
             </div>
-          </CardContent>
-        </div>
 
-        {/* Demo Access */}
-        <div className="app-card bg-gradient-to-br from-deep-blue/5 to-soft-green/5 border-deep-blue/10">
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="text-lg font-medium text-neutral-800 flex items-center justify-center gap-2">
-              <div className="w-2 h-2 bg-soft-green rounded-full animate-pulse"></div>
-              Quick Demo Access
-            </CardTitle>
-            <p className="text-sm text-neutral-600">
-              Try the app instantly with demo accounts
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Demo Credentials */}
-            <div className="bg-white/60 rounded-xl p-4 space-y-3 border border-white/40">
-              <div className="text-sm font-medium text-neutral-700">
-                Demo Credentials:
-              </div>
-              <div className="space-y-2 text-xs text-neutral-600">
-                <div className="flex justify-between">
-                  <span className="font-medium">Project Manager:</span>
-            <div className="text-center space-y-2 mb-8">
-              <h1 className="text-3xl font-bold text-neutral-800">
-                Добро пожаловать
-              </h1>
-              <p className="text-neutral-600">
-                Войдите в вашу учетную запись управления строительством
+            {/* Demo Login Buttons */}
+            <div className="space-y-3">
+              <p className="text-xs text-neutral-500 text-center">
+                Быстрый вход для демонстрации
               </p>
-            </div>
-                <div className="text-center text-neutral-500 pt-2 border-t border-neutral-200">
-                  Any password works in demo mode
-                </div>
-              </div>
-            </div>
 
-            {/* Quick Login Buttons */}
-            <div className="grid gap-3">
               <Button
+                type="button"
                 variant="outline"
-                className="btn-outline h-12 justify-start"
                 onClick={() => handleDemoLogin("employer")}
+                className="w-full h-12 justify-start bg-white/60 border-neutral-200 hover:bg-neutral-50"
               >
                 <EmployerIcon size={20} className="text-deep-blue mr-3" />
                 <div className="text-left flex-1">
                   <div className="font-medium text-neutral-800">
-                    Project Manager
+                    Работодатель
                   </div>
                   <div className="text-xs text-neutral-500">
-                    Manage projects & teams
+                    Управление проектами и командой
                   </div>
                 </div>
               </Button>
 
               <Button
+                type="button"
                 variant="outline"
-                className="btn-outline h-12 justify-start"
                 onClick={() => handleDemoLogin("worker")}
+                className="w-full h-12 justify-start bg-white/60 border-neutral-200 hover:bg-neutral-50"
               >
                 <WorkerIcon size={20} className="text-soft-green mr-3" />
                 <div className="text-left flex-1">
-                  <div className="font-medium text-neutral-800">
-                    Construction Worker
-                  </div>
+                  <div className="font-medium text-neutral-800">Рабочий</div>
                   <div className="text-xs text-neutral-500">
-                    Log work & track earnings
+                    Записывайте работу и заработок
                   </div>
                 </div>
               </Button>
 
               <Button
+                type="button"
                 variant="outline"
-                className="btn-outline h-12 justify-start"
                 onClick={() => handleDemoLogin("supplier")}
+                className="w-full h-12 justify-start bg-white/60 border-neutral-200 hover:bg-neutral-50"
               >
                 <SupplierIcon size={20} className="text-deep-blue mr-3" />
                 <div className="text-left flex-1">
                   <div className="font-medium text-neutral-800">
-                    Material Supplier
+                    Поставщик материалов
                   </div>
                   <div className="text-xs text-neutral-500">
-                    Manage inventory & deliveries
+                    Управление складом и доставками
                   </div>
                 </div>
               </Button>
+            </div>
+
+            {/* Links */}
+            <div className="space-y-4 text-center">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-soft-green hover:text-soft-green-light font-medium"
+              >
+                Забыли пароль?
+              </Link>
+              <div className="text-sm text-neutral-600">
+                Нет аккаунта?{" "}
+                <Link
+                  to="/signup"
+                  className="text-soft-green hover:text-soft-green-light font-medium"
+                >
+                  Зарегистрироваться
+                </Link>
+              </div>
             </div>
           </CardContent>
         </div>
 
         {/* Footer */}
         <div className="text-center text-xs text-neutral-500">
-          Construction Manager v1.0.0 • Built for professionals
+          Строительный менеджер v1.0.0 • Создано для профессионалов
         </div>
       </div>
     </div>
