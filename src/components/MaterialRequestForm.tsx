@@ -171,7 +171,7 @@ export const MaterialRequestForm = () => {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select project" />
+                  <SelectValue placeholder="Выберите проект" />
                 </SelectTrigger>
                 <SelectContent>
                   {availableProjects.map((project) => (
@@ -196,7 +196,7 @@ export const MaterialRequestForm = () => {
                 onValueChange={handleMaterialChange}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select material" />
+                  <SelectValue placeholder="Выберите материал" />
                 </SelectTrigger>
                 <SelectContent>
                   {availableMaterials.map((material) => (
@@ -236,7 +236,7 @@ export const MaterialRequestForm = () => {
                   id="unit"
                   value={selectedMaterial?.unit || formData.unit}
                   readOnly
-                  placeholder="Select material first"
+                  placeholder="Сначала выберите материал"
                   className="bg-gray-50"
                 />
               </div>
@@ -252,7 +252,7 @@ export const MaterialRequestForm = () => {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select priority" />
+                  <SelectValue placeholder="Выберите приоритет" />
                 </SelectTrigger>
                 <SelectContent>
                   {urgencyLevels.map((level) => (
