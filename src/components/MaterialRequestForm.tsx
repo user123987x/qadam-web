@@ -62,7 +62,7 @@ export const MaterialRequestForm = () => {
       !formData.reason
     ) {
       toast({
-        title: "Missing Information",
+        title: "Отсутствует информация",
         description: "Пожалуйста, заполните все обязательные поля.",
         variant: "destructive",
       });
@@ -72,7 +72,7 @@ export const MaterialRequestForm = () => {
     const quantity = parseFloat(formData.requestedQuantity);
     if (quantity <= 0) {
       toast({
-        title: "Invalid Quantity",
+        title: "Неверное количество",
         description: "Пожалуйста, введите корректное количество больше 0.",
         variant: "destructive",
       });
@@ -80,7 +80,7 @@ export const MaterialRequestForm = () => {
     }
 
     // Here you would normally send the request to your backend
-    console.log("Material request submitted:", {
+    console.log("Запрос на материал отправлен:", {
       ...formData,
       workerId: currentUser?.id,
       workerName: currentUser?.name,
@@ -129,12 +129,12 @@ export const MaterialRequestForm = () => {
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-2 text-yellow-800">
               <AlertTriangleIcon className="h-5 w-5" />
-              Low Stock Alert
+              Оповещение о низком уровне запасов
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-yellow-700 mb-3">
-              The following materials are running low:
+              Следующие материалы заканчиваются:
             </p>
             <div className="flex flex-wrap gap-2">
               {lowStockMaterials.map((material) => (
@@ -156,14 +156,14 @@ export const MaterialRequestForm = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PackageIcon className="h-5 w-5" />
-            Request Materials
+            Запросить материалы
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Project Selection */}
             <div className="space-y-2">
-              <Label htmlFor="project">Project *</Label>
+              <Label htmlFor="project">Проэкт *</Label>
               <Select
                 value={formData.projectId}
                 onValueChange={(value) =>
@@ -190,7 +190,7 @@ export const MaterialRequestForm = () => {
 
             {/* Material Selection */}
             <div className="space-y-2">
-              <Label htmlFor="material">Material *</Label>
+              <Label htmlFor="material">Материал *</Label>
               <Select
                 value={formData.materialName}
                 onValueChange={handleMaterialChange}
@@ -204,7 +204,7 @@ export const MaterialRequestForm = () => {
                       <div className="flex justify-between items-center w-full">
                         <span>{material.name}</span>
                         <span className="text-sm text-gray-500 ml-2">
-                          {material.remainingQuantity} {material.unit} remaining
+                          {material.remainingQuantity} {material.unit} оставшийся
                         </span>
                       </div>
                     </SelectItem>
@@ -216,7 +216,7 @@ export const MaterialRequestForm = () => {
             {/* Quantity and Unit */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="quantity">Quantity Needed *</Label>
+                <Label htmlFor="quantity">Необходимо *</Label>
                 <Input
                   id="quantity"
                   type="number"
@@ -231,7 +231,7 @@ export const MaterialRequestForm = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="unit">Unit</Label>
+                <Label htmlFor="unit">Единица</Label>
                 <Input
                   id="unit"
                   value={selectedMaterial?.unit || formData.unit}
@@ -244,7 +244,7 @@ export const MaterialRequestForm = () => {
 
             {/* Urgency */}
             <div className="space-y-2">
-              <Label htmlFor="urgency">Priority Level *</Label>
+              <Label htmlFor="urgency">Приоритет*</Label>
               <Select
                 value={formData.urgency}
                 onValueChange={(value) =>
@@ -271,10 +271,10 @@ export const MaterialRequestForm = () => {
 
             {/* Reason */}
             <div className="space-y-2">
-              <Label htmlFor="reason">Reason for Request *</Label>
+              <Label htmlFor="reason">Причина запроса *</Label>
               <Textarea
                 id="reason"
-                placeholder="Explain why you need this material..."
+                placeholder="Объясните, зачем вам нужен этот материал..."
                 value={formData.reason}
                 onChange={(e) =>
                   setFormData({ ...formData, reason: e.target.value })

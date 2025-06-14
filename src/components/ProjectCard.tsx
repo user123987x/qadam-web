@@ -67,7 +67,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-neutral-700">
-              Progress
+              Прогресс
             </span>
             <span className="text-sm font-semibold text-neutral-800">
               {Math.round(progressPercentage)}%
@@ -80,8 +80,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             />
           </div>
           <div className="flex justify-between text-xs text-neutral-500">
-            <span>{project.completedArea} m² completed</span>
-            <span>{project.totalArea} m² total</span>
+            <span>{project.completedArea} м² выполнено</span>
+            <span>{project.totalArea} м² всего</span>
           </div>
         </div>
 
@@ -96,7 +96,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           <div className="flex items-center gap-2">
             <WorkerIcon size={16} className="text-neutral-400" />
             <span className="text-sm text-neutral-600">
-              {project.assignedWorkers.length} workers
+              {project.assignedWorkers.length} работников
             </span>
           </div>
         </div>
@@ -105,10 +105,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           <div className="flex items-center gap-2">
             <CalendarIcon size={16} className="text-neutral-400" />
             <span>
-              Start: {new Date(project.startDate).toLocaleDateString()}
+              Начало: {new Date(project.startDate).toLocaleDateString()}
             </span>
           </div>
-          <span>End: {new Date(project.endDate).toLocaleDateString()}</span>
+          <span>Конец: {new Date(project.endDate).toLocaleDateString()}</span>
         </div>
 
         {/* Budget Information */}
@@ -116,7 +116,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-neutral-700 flex items-center gap-2">
               <DollarIcon size={16} className="text-neutral-400" />
-              Budget Used
+              Потрачено
             </span>
             <span className="text-sm font-semibold text-neutral-800">
               {Math.round(budgetUsed)}%
@@ -124,10 +124,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-lg font-semibold text-soft-green">
-              ${project.spentAmount.toLocaleString()}
+              {project.spentAmount.toLocaleString()} TJS
             </span>
             <span className="text-sm text-neutral-600">
-              / ${project.budget.toLocaleString()}
+              / {project.budget.toLocaleString()} TJS
             </span>
           </div>
         </div>

@@ -74,12 +74,12 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
         <div className="grid grid-cols-1 gap-2 text-sm">
           <div className="flex items-center gap-2">
             <MapPinIcon className="h-4 w-4 text-gray-500" />
-            <span className="text-gray-600">Location:</span>
+            <span className="text-gray-600">Адрес:</span>
             <span className="font-medium">{project.location}</span>
           </div>
           <div className="flex items-center gap-2">
             <CalendarIcon className="h-4 w-4 text-gray-500" />
-            <span className="text-gray-600">Timeline:</span>
+            <span className="text-gray-600">Таймлайн:</span>
             <span className="font-medium">
               {formatDate(project.startDate)} - {formatDate(project.endDate)}
             </span>
@@ -89,19 +89,19 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
         {/* My Progress Section */}
         <div className="space-y-3">
           <h4 className="text-sm font-medium text-gray-900">
-            My Work Progress
+            Прогресс
           </h4>
 
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">My Completed Area</span>
+              <span className="text-gray-600">Моя завершенная область</span>
               <span className="font-medium">
-                {myAreaCompleted} / {project.totalArea} m²
+                {myAreaCompleted} / {project.totalArea} м²
               </span>
             </div>
             <Progress value={myProgressPercentage} className="h-2" />
             <div className="text-xs text-gray-500">
-              {myProgressPercentage.toFixed(1)}% of total project area
+              {myProgressPercentage.toFixed(1)}% общей площади проекта
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
           <div className="flex items-center gap-2">
             <DollarIcon className="h-4 w-4 text-green-600" />
             <div>
-              <div className="text-sm text-gray-600">My Earnings</div>
+              <div className="text-sm text-gray-600">Мой доход</div>
               <div className="font-semibold text-green-600">
                 ${myTotalEarnings.toLocaleString()}
               </div>
@@ -120,7 +120,7 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
           <div className="flex items-center gap-2">
             <FileTextIcon className="h-4 w-4 text-blue-600" />
             <div>
-              <div className="text-sm text-gray-600">Work Logs</div>
+              <div className="text-sm text-gray-600">Журнал работы</div>
               <div className="font-semibold text-blue-600">
                 {myWorkLogs.length}
               </div>
@@ -137,7 +137,7 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
           }}
         >
           <TrendingUpIcon className="h-4 w-4 mr-2" />
-          View My Work Details
+          Мои рабочие данные
         </Button>
       </CardContent>
     </Card>

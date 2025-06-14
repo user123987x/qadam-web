@@ -110,7 +110,7 @@ const ProjectDetail = () => {
   const projectData = getProjectData();
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("ru-RU", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -136,7 +136,7 @@ const ProjectDetail = () => {
                 {project.name}
               </h1>
               <p className="text-sm text-gray-600">
-                {isWorker ? "My Work Details" : "Project Overview"}
+                {isWorker ? "Мои работы" : "Обзор проекта"}
               </p>
             </div>
             <Badge className={`${statusConfig?.color} text-white border-0`}>
@@ -151,7 +151,7 @@ const ProjectDetail = () => {
         <Card className="app-card">
           <CardHeader>
             <CardTitle className="text-lg">
-              {isWorker ? "Project Information" : "Project Overview"}
+              {isWorker ? "Информация о проекте" : "Обзор проекта"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -160,12 +160,12 @@ const ProjectDetail = () => {
             <div className="grid grid-cols-1 gap-3 text-sm">
               <div className="flex items-center gap-2">
                 <MapPinIcon className="h-4 w-4 text-gray-500" />
-                <span className="text-gray-600">Location:</span>
+                <span className="text-gray-600">Адрес:</span>
                 <span className="font-medium">{project.location}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CalendarIcon className="h-4 w-4 text-gray-500" />
-                <span className="text-gray-600">Timeline:</span>
+                <span className="text-gray-600">Таймлайн:</span>
                 <span className="font-medium">
                   {formatDate(project.startDate)} -{" "}
                   {formatDate(project.endDate)}
@@ -177,15 +177,15 @@ const ProjectDetail = () => {
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">
-                  {isWorker ? "Project Progress" : "Overall Progress"}
+                  {isWorker ? "Project Progress" : "Общий прогресс"}
                 </span>
                 <span className="font-medium">
-                  {project.completedArea} / {project.totalArea} m²
+                  {project.completedArea} / {project.totalArea} м²
                 </span>
               </div>
               <Progress value={progressPercentage} className="h-3" />
               <div className="text-xs text-gray-500">
-                {progressPercentage.toFixed(1)}% complete
+                {progressPercentage.toFixed(1)}% выполнено
               </div>
             </div>
 
@@ -194,9 +194,9 @@ const ProjectDetail = () => {
               <div className="pt-3 border-t border-gray-200">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">My Contribution</span>
+                    <span className="text-gray-600">Мой вклад</span>
                     <span className="font-medium text-green-600">
-                      {projectData.areaCompleted} m²
+                      {projectData.areaCompleted} м²
                     </span>
                   </div>
                   <div className="text-xs text-gray-500">
@@ -206,7 +206,7 @@ const ProjectDetail = () => {
                           100
                         ).toFixed(1)
                       : 0}
-                    % of total project
+                    % от общего проекта
                   </div>
                 </div>
               </div>
@@ -217,10 +217,10 @@ const ProjectDetail = () => {
               <div className="pt-3 border-t border-gray-200">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Budget Progress</span>
+                    <span className="text-gray-600">Остаток бюджета</span>
                     <span className="font-medium">
-                      ${project.spentAmount?.toLocaleString()} / $
-                      {project.budget?.toLocaleString()}
+                      {project.spentAmount?.toLocaleString()} TJS / 
+                      {project.budget?.toLocaleString()} TJS
                     </span>
                   </div>
                   <Progress
@@ -240,17 +240,17 @@ const ProjectDetail = () => {
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="work-logs" className="flex items-center gap-2">
               <FileTextIcon className="h-4 w-4" />
-              {isWorker ? "My Work" : "Work Logs"}
+              {isWorker ? "Моя работа" : "Журнал работы"}
             </TabsTrigger>
             {isEmployer ? (
               <TabsTrigger value="team" className="flex items-center gap-2">
                 <UserIcon className="h-4 w-4" />
-                Team
+                Бригада
               </TabsTrigger>
             ) : (
               <TabsTrigger value="earnings" className="flex items-center gap-2">
                 <DollarIcon className="h-4 w-4" />
-                Earnings
+                Доходы
               </TabsTrigger>
             )}
           </TabsList>
@@ -260,7 +260,7 @@ const ProjectDetail = () => {
             <Card className="app-card">
               <CardHeader>
                 <CardTitle className="text-lg">
-                  {isWorker ? "My Work Logs" : "Work Progress"}
+                  {isWorker ? "Мои рабочие журналы" : "Прогресс"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -283,16 +283,16 @@ const ProjectDetail = () => {
                             <div className="font-medium">{log.description}</div>
                             {!isWorker && (
                               <div className="text-sm text-gray-600">
-                                by {log.workerName}
+                                от {log.workerName}
                               </div>
                             )}
                           </div>
                           <div className="text-right">
                             <div className="text-sm font-medium text-green-600">
-                              ${log.earnings}
+                              {log.earnings}c
                             </div>
                             <div className="text-xs text-gray-500">
-                              {log.areaCompleted} m²
+                              {log.areaCompleted} м²
                             </div>
                           </div>
                         </div>
@@ -315,7 +315,7 @@ const ProjectDetail = () => {
             <Card className="app-card">
               <CardHeader>
                 <CardTitle className="text-lg">
-                  {isEmployer ? "Team Members" : "My Earnings"}
+                  {isEmployer ? "Участники команды" : "Мой доход"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -334,7 +334,7 @@ const ProjectDetail = () => {
                         </div>
                         <div className="text-right">
                           <div className="text-sm font-medium">
-                            ${worker.ratePerSquareMeter}/m²
+                            {worker.ratePerSquareMeter}/м²
                           </div>
                           <div className="text-xs text-gray-500">
                             {worker.phone}
@@ -348,10 +348,10 @@ const ProjectDetail = () => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <div className="text-center">
                         <div className="text-3xl font-bold text-green-600">
-                          ${projectData.totalEarnings?.toLocaleString()}
+                          {projectData.totalEarnings?.toLocaleString()} TJS
                         </div>
                         <div className="text-sm text-green-700 font-medium">
-                          Total Earned from this Project
+                          Общий заработок с проекта
                         </div>
                       </div>
                     </div>
@@ -361,15 +361,15 @@ const ProjectDetail = () => {
                           {projectData.workLogs.length}
                         </div>
                         <div className="text-xs text-gray-600">
-                          Work Sessions
+                          Рабочие сессии
                         </div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-semibold text-gray-800">
-                          {projectData.areaCompleted} m²
+                          {projectData.areaCompleted} м²
                         </div>
                         <div className="text-xs text-gray-600">
-                          Area Completed
+                          Площадь завершена
                         </div>
                       </div>
                     </div>
@@ -389,7 +389,7 @@ const ProjectDetail = () => {
                 onClick={() => navigate("/add-entry")}
               >
                 <FileTextIcon className="h-4 w-4 mr-2" />
-                Log Today's Work
+                Добавить работу
               </Button>
               <Button
                 variant="outline"
@@ -397,7 +397,7 @@ const ProjectDetail = () => {
                 onClick={() => navigate("/add-entry?tab=request")}
               >
                 <MaterialIcon className="h-4 w-4 mr-2" />
-                Request Materials
+                Запросить материалы
               </Button>
             </>
           )}
@@ -407,7 +407,7 @@ const ProjectDetail = () => {
               onClick={() => navigate("/add-entry")}
             >
               <TrendingUpIcon className="h-4 w-4 mr-2" />
-              Manage Project
+              Управление проектом
             </Button>
           )}
         </div>

@@ -55,8 +55,8 @@ export const WorkLogForm = () => {
 
     // In a real app, this would submit to an API
     toast({
-      title: "Work Log Added",
-      description: `Successfully logged ${formData.areaCompleted} m² of work. Earnings: $${calculatedEarnings.toFixed(2)}`,
+      title: "Добавлен журнал работ",
+      description: `Успешно зарегистрирован ${formData.areaCompleted} м² работы. Доход: $${calculatedEarnings.toFixed(2)}`,
     });
 
     // Reset form
@@ -74,14 +74,14 @@ export const WorkLogForm = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span>📝</span>
-          Log Daily Work
+          Журнал ежедневной работы
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Project Selection */}
           <div className="space-y-2">
-            <Label htmlFor="project">Project *</Label>
+            <Label htmlFor="project">Проект *</Label>
             <Select
               value={formData.projectId}
               onValueChange={(value) =>
@@ -104,7 +104,7 @@ export const WorkLogForm = () => {
           {/* Worker Selection (only for employers) */}
           {!isWorker && (
             <div className="space-y-2">
-              <Label htmlFor="worker">Worker *</Label>
+              <Label htmlFor="worker">Работник *</Label>
               <Select
                 value={formData.workerId}
                 onValueChange={(value) =>
@@ -118,7 +118,7 @@ export const WorkLogForm = () => {
                   {availableWorkers.map((worker) => (
                     <SelectItem key={worker.id} value={worker.id}>
                       {worker.name} - {worker.specialization} ($
-                      {worker.ratePerSquareMeter}/m²)
+                      {worker.ratePerSquareMeter}/м²)
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -128,7 +128,7 @@ export const WorkLogForm = () => {
 
           {/* Date */}
           <div className="space-y-2">
-            <Label htmlFor="date">Date *</Label>
+            <Label htmlFor="date">Дата *</Label>
             <Input
               id="date"
               type="date"
@@ -142,7 +142,7 @@ export const WorkLogForm = () => {
 
           {/* Area Completed */}
           <div className="space-y-2">
-            <Label htmlFor="area">Area Completed (m²) *</Label>
+            <Label htmlFor="area">Площадь завершена (м²) *</Label>
             <Input
               id="area"
               type="number"
@@ -161,10 +161,10 @@ export const WorkLogForm = () => {
           {selectedWorker && formData.areaCompleted && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
               <div className="text-sm text-emerald-700">
-                <div className="font-medium">Earnings Calculation:</div>
+                <div className="font-medium">Расчет прибыли:</div>
                 <div>
-                  {formData.areaCompleted} m² × $
-                  {selectedWorker.ratePerSquareMeter}/m² = $
+                  {formData.areaCompleted} м² × $
+                  {selectedWorker.ratePerSquareMeter}/м² = 
                   {calculatedEarnings.toFixed(2)}
                 </div>
               </div>
@@ -173,14 +173,14 @@ export const WorkLogForm = () => {
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Work Description</Label>
+            <Label htmlFor="description">Описание работы</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              placeholder="Describe the work completed today..."
+              placeholder="Опишите работу, выполненную сегодня..."
               rows={3}
             />
           </div>

@@ -79,14 +79,14 @@ export const MaterialLogForm = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span>{isSupplier ? "🚚" : "📦"}</span>
-          {isSupplier ? "Log Material Delivery" : "Log Material Usage"}
+          {isSupplier ? "Поступление материалов" : "Расход материалов"}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Project Selection */}
           <div className="space-y-2">
-            <Label htmlFor="project">Project *</Label>
+            <Label htmlFor="project">Проэкт *</Label>
             <Select
               value={formData.projectId}
               onValueChange={(value) =>
@@ -108,7 +108,7 @@ export const MaterialLogForm = () => {
 
           {/* Material Selection */}
           <div className="space-y-2">
-            <Label htmlFor="material">Material *</Label>
+            <Label htmlFor="material">Материал *</Label>
             <Select
               value={formData.materialId}
               onValueChange={(value) =>
@@ -122,7 +122,7 @@ export const MaterialLogForm = () => {
                 {mockMaterials.map((material) => (
                   <SelectItem key={material.id} value={material.id}>
                     {material.name} - {material.remainingQuantity}{" "}
-                    {material.unit} available
+                    {material.unit} доступный
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -135,21 +135,21 @@ export const MaterialLogForm = () => {
               <div className="text-sm text-blue-700">
                 <div className="font-medium">{selectedMaterial.name}</div>
                 <div>
-                  Available: {selectedMaterial.remainingQuantity}{" "}
+                  Доступный: {selectedMaterial.remainingQuantity}{" "}
                   {selectedMaterial.unit}
                 </div>
                 <div>
-                  Price: ${selectedMaterial.pricePerUnit} per{" "}
+                  Цена: ${selectedMaterial.pricePerUnit} за{" "}
                   {selectedMaterial.unit}
                 </div>
-                <div>Supplier: {selectedMaterial.supplier}</div>
+                <div>Поставщик: {selectedMaterial.supplier}</div>
               </div>
             </div>
           )}
 
           {/* Date */}
           <div className="space-y-2">
-            <Label htmlFor="date">Date *</Label>
+            <Label htmlFor="date">Дата *</Label>
             <Input
               id="date"
               type="date"
@@ -164,7 +164,7 @@ export const MaterialLogForm = () => {
           {/* Quantity */}
           <div className="space-y-2">
             <Label htmlFor="quantity">
-              Quantity ({selectedMaterial?.unit || "units"}) *
+              Количество ({selectedMaterial?.unit || "единицы"}) *
             </Label>
             <Input
               id="quantity"
@@ -185,10 +185,10 @@ export const MaterialLogForm = () => {
           {selectedMaterial && formData.quantity && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <div className="text-sm text-green-700">
-                <div className="font-medium">Cost Calculation:</div>
+                <div className="font-medium">Расчет стоимости:</div>
                 <div>
-                  {formData.quantity} {selectedMaterial.unit} × $
-                  {selectedMaterial.pricePerUnit} = $
+                  {formData.quantity} {selectedMaterial.unit} × 
+                  {selectedMaterial.pricePerUnit} = 
                   {(
                     parseFloat(formData.quantity) *
                     selectedMaterial.pricePerUnit
@@ -200,7 +200,7 @@ export const MaterialLogForm = () => {
 
           {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes</Label>
+            <Label htmlFor="notes">Заметки</Label>
             <Textarea
               id="notes"
               value={formData.notes}

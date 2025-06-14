@@ -40,8 +40,8 @@ export const MaterialRequestCard = ({
   const handleApprove = () => {
     onStatusChange?.(request.id, "approved");
     toast({
-      title: "Request Approved",
-      description: `Material request for ${request.materialName} has been approved.`,
+      title: "Запрос одобрен",
+      description: `Материальный запрос для ${request.materialName} был одобрен.`,
     });
   };
 
@@ -49,7 +49,7 @@ export const MaterialRequestCard = ({
     if (!rejectReason.trim()) {
       toast({
         title: "Требуется причина отклонения",
-        description: "Please provide a reason for rejecting this request.",
+        description: "Пожалуйста, укажите причину отклонения этого запроса.",
         variant: "destructive",
       });
       return;
@@ -57,8 +57,8 @@ export const MaterialRequestCard = ({
 
     onStatusChange?.(request.id, "rejected", rejectReason);
     toast({
-      title: "Request Rejected",
-      description: `Material request for ${request.materialName} has been rejected.`,
+      title: "Запрос отклонен",
+      description: `Материальный запрос для ${request.materialName} был отклонен.`,
       variant: "destructive",
     });
     setShowRejectReason(false);
@@ -68,13 +68,13 @@ export const MaterialRequestCard = ({
   const handleFulfill = () => {
     onStatusChange?.(request.id, "fulfilled");
     toast({
-      title: "Request Fulfilled",
-      description: `Material request for ${request.materialName} has been marked as fulfilled.`,
+      title: "Запрос выполнен",
+      description: `Материальный запрос для ${request.materialName} отмечено как выполненное.`,
     });
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("ru-RU", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -94,7 +94,7 @@ export const MaterialRequestCard = ({
                 {request.materialName}
               </h3>
               <p className="text-sm text-gray-600">
-                {request.requestedQuantity} {request.unit} requested
+                {request.requestedQuantity} {request.unit} запрошено
               </p>
             </div>
           </div>
@@ -120,26 +120,26 @@ export const MaterialRequestCard = ({
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center gap-2">
             <UserIcon className="h-4 w-4 text-gray-500" />
-            <span className="text-gray-600">Worker:</span>
+            <span className="text-gray-600">Работник:</span>
             <span className="font-medium">{request.workerName}</span>
           </div>
           <div className="flex items-center gap-2">
             <CalendarIcon className="h-4 w-4 text-gray-500" />
-            <span className="text-gray-600">Requested:</span>
+            <span className="text-gray-600">Запрошено:</span>
             <span className="font-medium">
               {formatDate(request.requestDate)}
             </span>
           </div>
           <div className="flex items-center gap-2 col-span-2">
             <MapPinIcon className="h-4 w-4 text-gray-500" />
-            <span className="text-gray-600">Project:</span>
+            <span className="text-gray-600">Проект:</span>
             <span className="font-medium">{request.projectName}</span>
           </div>
         </div>
 
         {/* Reason */}
         <div>
-          <h4 className="text-sm font-medium text-gray-900 mb-2">Reason</h4>
+          <h4 className="text-sm font-medium text-gray-900 mb-2">Причина</h4>
           <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
             {request.reason}
           </p>
@@ -166,16 +166,16 @@ export const MaterialRequestCard = ({
               <ClockIcon className="h-4 w-4 text-gray-500" />
               <span className="text-gray-600">
                 {request.status === "approved" &&
-                  `Approved by ${request.approvedBy} on ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
+                  `Одобрено ${request.approvedBy} в ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
                 {request.status === "rejected" &&
-                  `Rejected by ${request.approvedBy} on ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
+                  `Отклонено ${request.approvedBy} в ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
                 {request.status === "fulfilled" &&
-                  `Fulfilled on ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
+                  `Выполнено ${request.approvedDate ? formatDate(request.approvedDate) : "N/A"}`}
               </span>
             </div>
             {request.rejectionReason && (
               <p className="text-sm text-red-600 mt-2 bg-red-50 p-2 rounded">
-                <strong>Rejection Reason:</strong> {request.rejectionReason}
+                <strong>Причина отклонения:</strong> {request.rejectionReason}
               </p>
             )}
           </div>
@@ -191,7 +191,7 @@ export const MaterialRequestCard = ({
                 size="sm"
               >
                 <CheckIcon className="h-4 w-4 mr-2" />
-                Approve
+                Одобрить
               </Button>
               <Button
                 onClick={() => setShowRejectReason(!showRejectReason)}
@@ -200,14 +200,14 @@ export const MaterialRequestCard = ({
                 size="sm"
               >
                 <XIcon className="h-4 w-4 mr-2" />
-                Reject
+                Отклонять
               </Button>
             </div>
 
             {showRejectReason && (
               <div className="space-y-2">
                 <Textarea
-                  placeholder="Please provide a reason for rejection..."
+                  placeholder="Пожалуйста, укажите причину отклонения..."
                   value={rejectReason}
                   onChange={(e) => setRejectReason(e.target.value)}
                   rows={3}
@@ -247,7 +247,7 @@ export const MaterialRequestCard = ({
               size="sm"
             >
               <CheckIcon className="h-4 w-4 mr-2" />
-              Mark as Fulfilled
+              Отметить как выполненное
             </Button>
           </div>
         )}

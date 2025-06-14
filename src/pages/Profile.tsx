@@ -43,15 +43,15 @@ const Profile = () => {
       );
 
       return [
-        { label: "Total Projects", value: mockProjects.length },
-        { label: "Active Projects", value: activeProjects },
+        { label: "Всего проектов", value: mockProjects.length },
+        { label: "Активные проекты", value: activeProjects },
         {
-          label: "Total Budget",
-          value: `$${(totalBudget || 0).toLocaleString()}`,
+          label: "Общий бюджет",
+          value: `${(totalBudget || 0).toLocaleString()} TJS`,
         },
         {
-          label: "Amount Spent",
-          value: `$${(totalSpent || 0).toLocaleString()}`,
+          label: "Потраченная сумма",
+          value: `${(totalSpent || 0).toLocaleString()} TJS`,
         },
       ];
     }
@@ -71,13 +71,13 @@ const Profile = () => {
       );
 
       return [
-        { label: "Specialization", value: worker?.specialization || "N/A" },
-        { label: "Rate per m²", value: `$${worker?.ratePerSquareMeter || 0}` },
+        { label: "Специализация", value: worker?.specialization || "N/A" },
+        { label: "Цена за м²", value: `$${worker?.ratePerSquareMeter || 0}` },
         {
-          label: "Total Earnings",
-          value: `$${(totalEarnings || 0).toLocaleString()}`,
+          label: "Общий доход",
+          value: `${(totalEarnings || 0).toLocaleString()}`,
         },
-        { label: "Area Completed", value: `${totalArea || 0} m²` },
+        { label: "Area Completed", value: `${totalArea || 0} м²` },
       ];
     }
 
@@ -145,15 +145,15 @@ const Profile = () => {
         <Card className="app-card">
           <CardHeader>
             <CardTitle className="text-neutral-800">
-              Profile Statistics
+              Статистика профиля
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {profileStats.map((stat, index) => (
               <div key={index}>
-                <div className="flex items-center justify-between">
-                  <h1 className="text-xl font-bold text-gray-900">Профиль</h1>
-                  <SettingsIcon className="h-5 w-5 text-gray-600" />
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">{stat.label}</span>
+                  <span className="font-semibold">{stat.value}</span>
                 </div>
                 {index < profileStats.length - 1 && (
                   <Separator className="mt-4" />
@@ -166,7 +166,7 @@ const Profile = () => {
         {/* Recent Activity */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Недавняя активность</CardTitle>
           </CardHeader>
           <CardContent>
             {isWorker && (
@@ -181,7 +181,7 @@ const Profile = () => {
                     >
                       <div className="flex-1">
                         <div className="font-medium text-sm">
-                          {log.areaCompleted} m² completed
+                          {log.areaCompleted} м² выполнено
                         </div>
                         <div className="text-xs text-gray-600">
                           {new Date(log.date).toLocaleDateString()}
@@ -192,7 +192,7 @@ const Profile = () => {
                       </div>
                       <div className="text-right">
                         <div className="font-semibold text-emerald-600">
-                          +${log.earnings}
+                          +{log.earnings}с
                         </div>
                       </div>
                     </div>
@@ -202,7 +202,7 @@ const Profile = () => {
 
             {(isEmployer || isSupplier) && (
               <div className="text-center text-gray-600 py-4">
-                Activity tracking coming soon...
+                Скоро появится отслеживание активности...
               </div>
             )}
           </CardContent>
@@ -213,28 +213,28 @@ const Profile = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <SettingsIcon size={20} />
-              App Settings
+              Настройки приложения
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700">Notifications</span>
+              <span className="text-neutral-700">Уведомления</span>
               <Button variant="outline" size="sm">
-                Configure
+                Настроить
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700">Language & Region</span>
+              <span className="text-neutral-700">Язык и регион</span>
               <Button variant="outline" size="sm">
-                English
+                Русский
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-2">
-              <span className="text-neutral-700">Export Data</span>
+              <span className="text-neutral-700">Экспорт данных</span>
               <Button variant="outline" size="sm">
-                Download
+                Скачать
               </Button>
             </div>
           </CardContent>
@@ -245,20 +245,20 @@ const Profile = () => {
         {/* Support */}
         <Card>
           <CardHeader>
-            <CardTitle>Support & Help</CardTitle>
+            <CardTitle>Поддержка и помощь</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button variant="outline" className="w-full justify-start">
               <span className="mr-2">❓</span>
-              Help & FAQ
+              Помощь & FAQ
             </Button>
             <Button variant="outline" className="w-full justify-start">
               <span className="mr-2">📞</span>
-              Contact Support
+              Связаться с поддержкой
             </Button>
             <Button variant="outline" className="w-full justify-start">
               <span className="mr-2">⭐</span>
-              Rate App
+              Оценить приложение
             </Button>
           </CardContent>
         </Card>
@@ -272,7 +272,7 @@ const Profile = () => {
               onClick={handleLogout}
             >
               <LogOutIcon size={20} className="mr-2" />
-              Sign Out
+              Выход
             </Button>
           </CardContent>
         </Card>

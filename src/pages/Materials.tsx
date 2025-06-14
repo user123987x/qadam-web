@@ -45,18 +45,18 @@ const Materials = () => {
     const stockPercentage = material.remainingQuantity / material.totalQuantity;
     if (stockPercentage < 0.2)
       return {
-        label: "Low Stock",
+        label: "Низкий запас",
         color: "bg-red-500",
         variant: "destructive" as const,
       };
     if (stockPercentage < 0.8)
       return {
-        label: "Medium Stock",
+        label: "Средний запас",
         color: "bg-yellow-500",
         variant: "secondary" as const,
       };
     return {
-      label: "Well Stocked",
+      label: "Хороший запас",
       color: "bg-green-500",
       variant: "default" as const,
     };
@@ -187,7 +187,7 @@ const MaterialRequestsSection = () => {
       {isEmployer && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Request Summary</CardTitle>
+            <CardTitle className="text-lg">Запросить описание</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
@@ -195,25 +195,25 @@ const MaterialRequestsSection = () => {
                 <div className="text-2xl font-bold text-orange-600">
                   {requestCounts.pending}
                 </div>
-                <div className="text-sm text-gray-600">Pending Approval</div>
+                <div className="text-sm text-gray-600">Ожидает одобрения</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
                   {requestCounts.approved}
                 </div>
-                <div className="text-sm text-gray-600">Approved</div>
+                <div className="text-sm text-gray-600">Одобренный</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
                   {requestCounts.fulfilled}
                 </div>
-                <div className="text-sm text-gray-600">Fulfilled</div>
+                <div className="text-sm text-gray-600">Выполнено</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-600">
                   {requestCounts.all}
                 </div>
-                <div className="text-sm text-gray-600">Total Requests</div>
+                <div className="text-sm text-gray-600">Всего запросов</div>
               </div>
             </div>
           </CardContent>
@@ -222,13 +222,13 @@ const MaterialRequestsSection = () => {
 
       {/* Request Filters */}
       <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-900">Filter by Status</h3>
+        <h3 className="text-sm font-medium text-gray-900">Фильтр по статусу</h3>
         <div className="grid grid-cols-2 gap-2">
           {[
-            { key: "all", label: "All", emoji: "📋" },
-            { key: "pending", label: "Pending", emoji: "⏳" },
-            { key: "approved", label: "Approved", emoji: "✅" },
-            { key: "fulfilled", label: "Fulfilled", emoji: "📦" },
+            { key: "all", label: "Все", emoji: "📋" },
+            { key: "pending", label: "В ожидании", emoji: "⏳" },
+            { key: "approved", label: "Одобренный", emoji: "✅" },
+            { key: "fulfilled", label: "Выполнено", emoji: "📦" },
           ].map((filter) => (
             <Button
               key={filter.key}
@@ -254,12 +254,12 @@ const MaterialRequestsSection = () => {
           <CardContent className="text-center py-8">
             <div className="text-4xl mb-4">📭</div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No {requestFilter === "all" ? "" : requestFilter} requests found
+              {requestFilter === "all" ? "" : requestFilter} запросов найдено
             </h3>
             <p className="text-gray-600">
               {requestFilter === "pending"
-                ? "All caught up! No pending material requests at the moment."
-                : `No ${requestFilter} material requests to display.`}
+                ? "Все в порядке! На данный момент нет ожидающих запросов на материалы."
+                : `Нет ${requestFilter} материальные запросы на отображение.`}
             </p>
           </CardContent>
         </Card>
@@ -308,7 +308,7 @@ const InventorySection = ({
       {/* Material Stats */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Inventory Summary</CardTitle>
+          <CardTitle className="text-lg">Сводка по запасам</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
@@ -316,25 +316,25 @@ const InventorySection = ({
               <div className="text-2xl font-bold text-blue-600">
                 {materialCounts.all}
               </div>
-              <div className="text-sm text-gray-600">Total Materials</div>
+              <div className="text-sm text-gray-600">Всего материалов</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-600">
                 {materialCounts["low-stock"]}
               </div>
-              <div className="text-sm text-gray-600">Low Stock</div>
+              <div className="text-sm text-gray-600">Низкий запас</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-yellow-600">
                 {materialCounts["medium-stock"]}
               </div>
-              <div className="text-sm text-gray-600">Medium Stock</div>
+              <div className="text-sm text-gray-600">Средний запас</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">
                 {materialCounts["well-stocked"]}
               </div>
-              <div className="text-sm text-gray-600">Well Stocked</div>
+              <div className="text-sm text-gray-600">Хороший запас</div>
             </div>
           </div>
         </CardContent>
@@ -348,7 +348,7 @@ const InventorySection = ({
       >
         <TabsList className="grid grid-cols-4 w-full h-auto p-1">
           <TabsTrigger value="all" className="text-xs px-2 py-2">
-            All
+            Все
             {materialCounts.all > 0 && (
               <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
                 {materialCounts.all}
@@ -356,7 +356,7 @@ const InventorySection = ({
             )}
           </TabsTrigger>
           <TabsTrigger value="low-stock" className="text-xs px-2 py-2">
-            Low
+            Низкий
             {materialCounts["low-stock"] > 0 && (
               <Badge variant="destructive" className="ml-1 text-xs h-5 px-1">
                 {materialCounts["low-stock"]}
@@ -364,7 +364,7 @@ const InventorySection = ({
             )}
           </TabsTrigger>
           <TabsTrigger value="medium-stock" className="text-xs px-2 py-2">
-            Medium
+            Средний
             {materialCounts["medium-stock"] > 0 && (
               <Badge variant="secondary" className="ml-1 text-xs h-5 px-1">
                 {materialCounts["medium-stock"]}
@@ -372,7 +372,7 @@ const InventorySection = ({
             )}
           </TabsTrigger>
           <TabsTrigger value="well-stocked" className="text-xs px-2 py-2">
-            High
+            Высокий
             {materialCounts["well-stocked"] > 0 && (
               <Badge variant="default" className="ml-1 text-xs h-5 px-1">
                 {materialCounts["well-stocked"]}
@@ -391,7 +391,7 @@ const InventorySection = ({
                     <div className="text-gray-600">No materials found</div>
                     {searchTerm && (
                       <div className="text-sm text-gray-500 mt-1">
-                        Try adjusting your search terms
+                        Попробуйте изменить условия поиска.
                       </div>
                     )}
                   </CardContent>
@@ -418,7 +418,7 @@ const InventorySection = ({
                               {material.name}
                             </h3>
                             <p className="text-sm text-gray-600">
-                              Supplier: {material.supplier}
+                              Поставщик: {material.supplier}
                             </p>
                           </div>
                           <Badge variant={stockStatus.variant}>
@@ -429,7 +429,7 @@ const InventorySection = ({
                         <div className="space-y-3">
                           <div>
                             <div className="flex justify-between text-sm mb-1">
-                              <span>Stock Level</span>
+                              <span>Уровень запасов</span>
                               <span>
                                 {material.remainingQuantity} /{" "}
                                 {material.totalQuantity} {material.unit}
@@ -440,9 +440,9 @@ const InventorySection = ({
 
                           <div>
                             <div className="flex justify-between text-sm mb-1">
-                              <span>Usage</span>
+                              <span>Использовано</span>
                               <span>
-                                {material.usedQuantity} {material.unit} used
+                                {material.usedQuantity} {material.unit} использовал
                               </span>
                             </div>
                             <Progress value={usagePercentage} className="h-2" />
@@ -450,14 +450,14 @@ const InventorySection = ({
 
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                              <span className="text-gray-600">Price/Unit:</span>
+                              <span className="text-gray-600">Цена/Единица:</span>
                               <div className="font-medium">
                                 ${material.pricePerUnit}
                               </div>
                             </div>
                             <div>
                               <span className="text-gray-600">
-                                Last Delivery:
+                                Обновлено:
                               </span>
                               <div className="font-medium">
                                 {new Date(
