@@ -36,9 +36,11 @@ const AddEntry = () => {
           <div className="flex items-center gap-3">
             <div className="text-lg">➕</div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Add Entry</h1>
+              <h1 className="text-xl font-bold text-gray-900">
+                Добавить запись
+              </h1>
               <p className="text-sm text-gray-600">
-                Log work progress or material usage
+                Записать прогресс работы или использование материалов
               </p>
             </div>
           </div>
@@ -59,7 +61,7 @@ const AddEntry = () => {
             {(isWorker || isEmployer) && (
               <TabsTrigger value="work" className="flex items-center gap-2">
                 <span>📝</span>
-                Work Log
+                Журнал работ
               </TabsTrigger>
             )}
             {(isSupplier || isEmployer || isWorker) && (
@@ -68,13 +70,13 @@ const AddEntry = () => {
                 className="flex items-center gap-2"
               >
                 <span>{isSupplier ? "🚚" : "📦"}</span>
-                {isSupplier ? "Deliveries" : "Materials"}
+                {isSupplier ? "Поставки" : "Материалы"}
               </TabsTrigger>
             )}
             {isWorker && (
               <TabsTrigger value="request" className="flex items-center gap-2">
                 <span>📋</span>
-                Request
+                Заявка
               </TabsTrigger>
             )}
           </TabsList>
@@ -101,29 +103,42 @@ const AddEntry = () => {
         {/* Instructions based on user role */}
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="text-sm text-blue-700">
-            <div className="font-medium mb-2">💡 Tips:</div>
+            <div className="font-medium mb-2">💡 Советы:</div>
             {isWorker && (
               <ul className="space-y-1">
-                <li>• Log your daily work to track earnings automatically</li>
-                <li>• Be specific about the work completed</li>
-                <li>• Record material usage to help with inventory</li>
-                <li>• Request more materials when you're running low</li>
+                <li>
+                  • Записывайте ежедневную работу для автоматического
+                  отслеживания заработка
+                </li>
+                <li>• Будьте конкретны в описании выполненной работы</li>
+                <li>
+                  • Записывайте использование материалов для помощи в
+                  инвентаризации
+                </li>
+                <li>• Запрашивайте дополнительные материалы при их нехватке</li>
               </ul>
             )}
             {isEmployer && (
               <ul className="space-y-1">
-                <li>• Log work on behalf of workers or track material usage</li>
                 <li>
-                  • Review entries regularly for accurate project tracking
+                  • Записывайте работы от имени рабочих или отслеживайте
+                  использование материалов
                 </li>
-                <li>• Monitor material consumption to prevent shortages</li>
+                <li>
+                  • Регулярно просматривайте записи для точного отслеживания
+                  проектов
+                </li>
+                <li>
+                  • Мониторьте потребление материалов для предотвращения
+                  нехватки
+                </li>
               </ul>
             )}
             {isSupplier && (
               <ul className="space-y-1">
-                <li>• Record all material deliveries promptly</li>
-                <li>• Check inventory levels regularly</li>
-                <li>• Note any quality issues or delivery concerns</li>
+                <li>• Записывайте все поставки материалов оперативно</li>
+                <li>• Регулярно проверяйте уровни запасов</li>
+                <li>• Отмечайте любые проблемы с качеством или доставкой</li>
               </ul>
             )}
           </div>
