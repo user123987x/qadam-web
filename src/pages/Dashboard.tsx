@@ -168,7 +168,7 @@ const Dashboard = () => {
           },
           {
             label: "Всего поставлено",
-            value: `$${(totalDelivered || 0).toLocaleString()}`,
+            value: `${(totalDelivered || 0).toLocaleString()} TJS`,
             icon: DollarIcon,
             color: "text-soft-green",
           },
@@ -377,14 +377,14 @@ const Dashboard = () => {
                   onClick={() => navigate("/add-entry")}
                 >
                   <MaterialIcon size={18} className="mr-2.5" />
-                  <span className="font-medium">Log Material Delivery</span>
+                  <span className="font-medium">Добавить поставку</span>
                 </Button>
                 <Button
                   className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/materials")}
                 >
                   <TruckIcon size={18} className="mr-2.5 text-deep-blue" />
-                  <span className="font-medium">Manage Inventory</span>
+                  <span className="font-medium">Контроль остатков</span>
                 </Button>
               </>
             )}

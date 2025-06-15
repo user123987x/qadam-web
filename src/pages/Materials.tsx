@@ -388,7 +388,7 @@ const InventorySection = ({
                 <Card>
                   <CardContent className="text-center py-8">
                     <div className="text-4xl mb-2">📦</div>
-                    <div className="text-gray-600">No materials found</div>
+                    <div className="text-gray-600">Материалы не найдены</div>
                     {searchTerm && (
                       <div className="text-sm text-gray-500 mt-1">
                         Попробуйте изменить условия поиска.
@@ -452,7 +452,7 @@ const InventorySection = ({
                             <div>
                               <span className="text-gray-600">Цена/Единица:</span>
                               <div className="font-medium">
-                                ${material.pricePerUnit}
+                                {material.pricePerUnit}с
                               </div>
                             </div>
                             <div>

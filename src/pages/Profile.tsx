@@ -93,14 +93,14 @@ const Profile = () => {
       }).length;
 
       return [
-        { label: "Materials Supplied", value: mockMaterials.length },
+        { label: "Поставляемые материалы", value: mockMaterials.length },
         {
-          label: "Total Delivered Value",
-          value: `$${(deliveredValue || 0).toLocaleString()}`,
+          label: "Общая стоимость",
+          value: `${(deliveredValue || 0).toLocaleString()} TJS`,
         },
-        { label: "Low Stock Alerts", value: lowStockItems },
+        { label: "Мало остатков", value: lowStockItems },
         {
-          label: "Active Projects",
+          label: "Активные проекты",
           value: mockProjects.filter((p) => p.status === "active").length,
         },
       ];
