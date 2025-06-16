@@ -17,6 +17,8 @@ import { Badge } from "@/components/ui/badge";
 import { UserRole } from "@/lib/types";
 import { workerSpecializations } from "@/lib/constants";
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -59,7 +61,7 @@ const Signup = () => {
       newErrors.companyName = "Название компании обязательно";
     }
     if (!formData.agreeToTerms)
-      newErrors.terms = "You must agree to the terms and conditions";
+      newErrors.terms = "Вы должны согласиться с условиями";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -76,7 +78,7 @@ const Signup = () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // In a real app, this would call an API to create the account
-    console.log("Creating account:", formData);
+    console.log("Создание аккаунта:", formData);
 
     // Simulate successful registration
     setIsLoading(false);
@@ -85,7 +87,7 @@ const Signup = () => {
     navigate("/login", {
       state: {
         message:
-          "Account created successfully! Please sign in with your credentials.",
+          "Аккаунт создан успешно! Пожалуйста, войдите, используя свои учетные данные.",
       },
     });
   };
@@ -93,11 +95,11 @@ const Signup = () => {
   const getRoleDescription = (role: UserRole) => {
     switch (role) {
       case "employer":
-        return "Manage construction projects, assign workers, and track progress";
+        return "Управляйте строительными проектами, назначайте рабочих и отслеживайте прогресс";
       case "worker":
-        return "Log daily work, track earnings, and view assigned projects";
+        return "Регистрируйте ежедневную работу, отслеживайте доходы и просматривайте назначенные проекты";
       case "supplier":
-        return "Manage material deliveries, track inventory, and monitor usage";
+        return "Управляйте поставками материалов, отслеживайте запасы и контролируйте использование";
       default:
         return "";
     }
@@ -110,31 +112,31 @@ const Signup = () => {
         <div className="text-center">
           <div className="text-6xl mb-4">🏗️</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Join Construction Manager
+            Подключение к системе управления
           </h1>
           <p className="text-gray-600">
-            Create your account to start managing construction projects
+            Создайте аккаунт, чтобы начать управлять строительными проектами
           </p>
         </div>
 
         {/* Signup Form */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-center">Create Account</CardTitle>
+            <CardTitle className="text-center">Зарегистрироваться</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name Fields */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name *</Label>
+                  <Label htmlFor="firstName">Имя *</Label>
                   <Input
                     id="firstName"
                     value={formData.firstName}
                     onChange={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
                     }
-                    placeholder="John"
+                    placeholder="Али"
                   />
                   {errors.firstName && (
                     <div className="text-xs text-red-600">
@@ -143,14 +145,14 @@ const Signup = () => {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
+                  <Label htmlFor="lastName">Фамилия *</Label>
                   <Input
                     id="lastName"
                     value={formData.lastName}
                     onChange={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
                     }
-                    placeholder="Doe"
+                    placeholder="Алиев"
                   />
                   {errors.lastName && (
                     <div className="text-xs text-red-600">
@@ -179,7 +181,7 @@ const Signup = () => {
 
               {/* Phone */}
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number *</Label>
+                <Label htmlFor="phone">Номер телефона *</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -196,7 +198,7 @@ const Signup = () => {
 
               {/* Role Selection */}
               <div className="space-y-2">
-                <Label htmlFor="role">I am a *</Label>
+                <Label htmlFor="role">Моя роль *</Label>
                 <Select
                   value={formData.role}
                   onValueChange={(value) =>
@@ -210,19 +212,19 @@ const Signup = () => {
                     <SelectItem value="employer">
                       <div className="flex items-center gap-2">
                         <span>👨‍💼</span>
-                        <span>Employer / Project Manager</span>
+                        <span>Работодатель / Менеджер</span>
                       </div>
                     </SelectItem>
                     <SelectItem value="worker">
                       <div className="flex items-center gap-2">
                         <span>👷‍♂️</span>
-                        <span>Construction Worker</span>
+                        <span>Рабочий на стройке</span>
                       </div>
                     </SelectItem>
                     <SelectItem value="supplier">
                       <div className="flex items-center gap-2">
                         <span>🏢</span>
-                        <span>Material Supplier</span>
+                        <span>Поставщик материалов</span>
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -240,7 +242,7 @@ const Signup = () => {
               {/* Worker Specialization */}
               {formData.role === "worker" && (
                 <div className="space-y-2">
-                  <Label htmlFor="specialization">Specialization *</Label>
+                  <Label htmlFor="specialization">Специализация *</Label>
                   <Select
                     value={formData.specialization}
                     onValueChange={(value) =>
@@ -270,14 +272,14 @@ const Signup = () => {
               {(formData.role === "employer" ||
                 formData.role === "supplier") && (
                 <div className="space-y-2">
-                  <Label htmlFor="companyName">Company Name *</Label>
+                  <Label htmlFor="companyName">Название компании *</Label>
                   <Input
                     id="companyName"
                     value={formData.companyName}
                     onChange={(e) =>
                       setFormData({ ...formData, companyName: e.target.value })
                     }
-                    placeholder="Your company name"
+                    placeholder="Название вашей компании"
                   />
                   {errors.companyName && (
                     <div className="text-xs text-red-600">
@@ -289,7 +291,7 @@ const Signup = () => {
 
               {/* Password Fields */}
               <div className="space-y-2">
-                <Label htmlFor="password">Password *</Label>
+                <Label htmlFor="password">Пароль *</Label>
                 <Input
                   id="password"
                   type="password"
@@ -297,7 +299,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  placeholder="Create a password"
+                  placeholder="Создайте пароль"
                 />
                 {errors.password && (
                   <div className="text-xs text-red-600">{errors.password}</div>
@@ -305,7 +307,7 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                <Label htmlFor="confirmPassword">Подтвердите пароль *</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -316,7 +318,7 @@ const Signup = () => {
                       confirmPassword: e.target.value,
                     })
                   }
-                  placeholder="Confirm your password"
+                  placeholder="Подтвердите свой пароль"
                 />
                 {errors.confirmPassword && (
                   <div className="text-xs text-red-600">
@@ -340,19 +342,19 @@ const Signup = () => {
                   />
                   <div className="text-sm">
                     <Label htmlFor="terms" className="text-sm">
-                      I agree to the{" "}
+                      Я согласен с{" "}
                       <Link
                         to="/terms"
                         className="text-emerald-600 hover:text-emerald-800"
                       >
-                        Terms of Service
+                        Условия обслуживания
                       </Link>{" "}
-                      and{" "}
+                      и{" "}
                       <Link
                         to="/privacy"
                         className="text-emerald-600 hover:text-emerald-800"
                       >
-                        Privacy Policy
+                        Политика конфиденциальности
                       </Link>
                     </Label>
                   </div>
@@ -368,19 +370,19 @@ const Signup = () => {
                 className="w-full bg-emerald-600 hover:bg-emerald-700"
                 disabled={isLoading}
               >
-                {isLoading ? "Creating Account..." : "Create Account"}
+                {isLoading ? "Создание аккаунта..." : "Зарегистрироваться"}
               </Button>
             </form>
 
             {/* Links */}
             <div className="mt-4 text-center">
               <div className="text-sm text-gray-600">
-                Already have an account?{" "}
+                У вас уже есть аккаунт?{" "}
                 <Link
                   to="/login"
                   className="text-emerald-600 hover:text-emerald-800 font-medium"
                 >
-                  Sign in
+                  Войти
                 </Link>
               </div>
             </div>
@@ -392,24 +394,24 @@ const Signup = () => {
           <CardContent className="pt-6">
             <div className="text-center">
               <h3 className="font-semibold text-emerald-800 mb-3">
-                Why Choose Construction Manager?
+                Почему стоит выбрать менеджера по строительству?
               </h3>
               <div className="space-y-2 text-sm text-emerald-700">
                 <div className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>Replace manual notebooks and spreadsheets</span>
+                  <span>Замените ручные блокноты и электронные таблицы</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>Real-time project tracking and progress</span>
+                  <span>Отслеживание и ход выполнения проекта в режиме реального времени</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>Automatic payment calculations</span>
+                  <span>Автоматические расчеты платежей</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>✅</span>
-                  <span>Material inventory management</span>
+                  <span>Управление материальными запасами</span>
                 </div>
               </div>
             </div>

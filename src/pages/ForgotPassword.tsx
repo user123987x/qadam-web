@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     }
 
     if (!email.includes("@")) {
-      setError("Пожалуйста, введите ��орректный email адрес");
+      setError("Пожалуйста, введите корректный email адрес");
       return;
     }
 
@@ -46,10 +46,10 @@ const ForgotPassword = () => {
           <div className="text-center">
             <div className="text-6xl mb-4">📧</div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Check Your Email
+              Проверьте свою почту
             </h1>
             <p className="text-gray-600">
-              We've sent password reset instructions to your email
+              Мы отправили инструкции по сбросу пароля на вашу электронную почту
             </p>
           </div>
 
@@ -58,10 +58,10 @@ const ForgotPassword = () => {
               <div className="text-center space-y-4">
                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
                   <div className="text-emerald-800 font-medium mb-2">
-                    Email Sent Successfully!
+                    Письмо успешно отправлено!
                   </div>
                   <div className="text-sm text-emerald-700">
-                    We've sent password reset instructions to:
+                    Мы отправили инструкции по сбросу пароля на:
                   </div>
                   <div className="text-sm font-medium text-emerald-800 mt-1">
                     {email}
@@ -70,14 +70,13 @@ const ForgotPassword = () => {
 
                 <div className="text-sm text-gray-600 space-y-2">
                   <p>
-                    Please check your email inbox (and spam folder) for the
-                    password reset link.
+                    Проверьте свой почтовый ящик (и папку со спамом) на наличие ссылки для сброса пароля.
                   </p>
-                  <p>The link will expire in 1 hour for security reasons.</p>
+                  <p>Срок действия ссылки истечет через 1 час по соображениям безопасности.</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       setEmailSent(false);
                       setEmail("");
@@ -86,13 +85,13 @@ const ForgotPassword = () => {
                     className="w-full"
                   >
                     Send to Different Email
-                  </Button>
+                  </Button> */}
 
                   <Button
                     onClick={() => navigate("/login")}
                     className="w-full bg-emerald-600 hover:bg-emerald-700"
                   >
-                    Back to Sign In
+                    Вернуться к входу
                   </Button>
                 </div>
               </div>
@@ -100,7 +99,7 @@ const ForgotPassword = () => {
           </Card>
 
           <div className="text-center text-xs text-gray-500">
-            Didn't receive the email? Check your spam folder or contact support
+            Не получили письмо? Проверьте папку со спамом или обратитесь в службу поддержки
           </div>
         </div>
       </div>
@@ -114,17 +113,17 @@ const ForgotPassword = () => {
         <div className="text-center">
           <div className="text-6xl mb-4">🔐</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Reset Password
+            Сбросить пароль
           </h1>
           <p className="text-gray-600">
-            Enter your email to receive password reset instructions
+            Введите свой адрес электронной почты, чтобы получить инструкции по сбросу пароля
           </p>
         </div>
 
         {/* Reset Form */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-center">Forgot Password</CardTitle>
+            <CardTitle className="text-center">Забыли пароль</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -136,7 +135,7 @@ const ForgotPassword = () => {
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -146,7 +145,7 @@ const ForgotPassword = () => {
                   required
                 />
                 <div className="text-xs text-gray-600">
-                  We'll send password reset instructions to this email
+                  Мы отправим инструкции по сбросу пароля на этот адрес электронной почты
                 </div>
               </div>
 
@@ -157,8 +156,8 @@ const ForgotPassword = () => {
                 disabled={isLoading}
               >
                 {isLoading
-                  ? "Sending Instructions..."
-                  : "Send Reset Instructions"}
+                  ? "Отправка инструкций..."
+                  : "Отправить инструкции по сбросу"}
               </Button>
             </form>
 
@@ -169,16 +168,16 @@ const ForgotPassword = () => {
                   to="/login"
                   className="text-sm text-emerald-600 hover:text-emerald-800"
                 >
-                  ← Back to Sign In
+                  ← Вернуться к входу
                 </Link>
               </div>
               <div className="text-sm text-gray-600">
-                Don't have an account?{" "}
+                Нет аккаунта?{" "}
                 <Link
                   to="/signup"
                   className="text-emerald-600 hover:text-emerald-800 font-medium"
                 >
-                  Sign up
+                  Зарегистрироваться
                 </Link>
               </div>
             </div>
@@ -189,19 +188,19 @@ const ForgotPassword = () => {
         <Card className="bg-blue-50 border-blue-200">
           <CardContent className="pt-6">
             <div className="text-center">
-              <h3 className="font-semibold text-blue-800 mb-2">Need Help?</h3>
+              <h3 className="font-semibold text-blue-800 mb-2">Нужна помощь?</h3>
               <div className="text-sm text-blue-700 space-y-1">
-                <p>If you're having trouble resetting your password:</p>
-                <p>• Make sure you're using the email you registered with</p>
-                <p>• Check your spam or junk mail folder</p>
-                <p>• Contact our support team for assistance</p>
+                <p>Если у вас возникли проблемы со сбросом пароля:</p>
+                <p>• Убедитесь, что вы используете адрес электронной почты, указанный при регистрации.</p>
+                <p>• Проверьте папку со спамом или нежелательной почтой</p>
+                <p>• Обратитесь за помощью в нашу службу поддержки.</p>
               </div>
               <Button
                 variant="outline"
                 size="sm"
                 className="mt-3 border-blue-300 hover:bg-blue-100"
               >
-                Contact Support
+                Связаться с поддержки
               </Button>
             </div>
           </CardContent>
@@ -209,7 +208,7 @@ const ForgotPassword = () => {
 
         {/* Footer */}
         <div className="text-center text-xs text-gray-500">
-          Construction Manager v1.0.0 - Built for Tajikistan
+          Строительный менеджер v1.0.0 • Создано для профессионалов
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ export const mockUsers: User[] = [
   {
     id: "1",
     name: "Ахмад Рахими",
+    phone: "+992 91 234 5678",
     role: "employer",
     email: "ahmad@stroitelstvo.tj",
     avatar: "👨‍💼",
@@ -20,6 +21,7 @@ export const mockUsers: User[] = [
   {
     id: "2",
     name: "Фарид Назаров",
+    phone: "+992 91 234 5678",
     role: "worker",
     email: "farid@rabochiy.tj",
     avatar: "👷‍♂️",
@@ -27,6 +29,7 @@ export const mockUsers: User[] = [
   {
     id: "3",
     name: "Гульнора Снабжение ООО",
+    phone: "+992 91 234 5678",
     role: "supplier",
     email: "info@gulnora.tj",
     avatar: "🏢",

@@ -3,6 +3,7 @@ export type UserRole = "employer" | "worker" | "supplier";
 export interface User {
   id: string;
   name: string;
+  phone: string;
   role: UserRole;
   email: string;
   avatar?: string;
