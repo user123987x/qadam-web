@@ -2,16 +2,16 @@
   "name": "fusion-starter",
   "private": true,
   "type": "module",
- "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "postbuild": "cp dist/index.html dist/404.html",
-  "predeploy": "npm run build && npm run postbuild",
-  "deploy": "gh-pages -d dist",
-  "test": "vitest --run",
-  "format.fix": "prettier --write .",
-  "typecheck": "tsc"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
+    "predeploy": "npm run build && npm run postbuild",
+    "deploy": "gh-pages -d dist",
+    "test": "vitest --run",
+    "format.fix": "prettier --write .",
+    "typecheck": "tsc"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
