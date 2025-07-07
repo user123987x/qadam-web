@@ -27,6 +27,7 @@ import {
   SupplierIcon,
   TruckIcon,
 } from "@/components/ui/icons";
+import {WorkerProjectCard} from "@/components/WorkerProjectCard.tsx";
 
 const Dashboard = () => {
   const { currentUser, userRole, isEmployer, isWorker, isSupplier } =
@@ -297,7 +298,7 @@ const Dashboard = () => {
                   className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/projects")}
                 >
-                  <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <ProjectIcon size={18} className="mr-2.5" />
                   <span className="font-medium">Управление проектами</span>
                 </Button>
                 <Button
@@ -309,7 +310,7 @@ const Dashboard = () => {
                 </Button>
                 {dashboardData.pendingRequests > 0 && (
                   <Button
-                    className="btn-outline w-full h-11 justify-start border-orange-200 text-orange-700 hover:bg-orange-50"
+                    className="btn-outline w-full h-11 justify-start border-orange-200 text-orange-700"
                     onClick={() => navigate("/materials")}
                   >
                     <AlertIcon size={18} className="mr-2.5 text-orange-600" />
@@ -336,14 +337,14 @@ const Dashboard = () => {
                   className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/projects")}
                 >
-                  <ProjectIcon size={18} className="mr-2.5 text-deep-blue" />
+                  <ProjectIcon size={18} className="mr-2.5" />
                   <span className="font-medium">Просмотреть мои проекты</span>
                 </Button>
                 <Button
-                  className="btn-outline w-full h-11 justify-start border-soft-green/30 text-soft-green hover:bg-soft-green/10"
+                  className="btn-outline w-full h-11 justify-start"
                   onClick={() => navigate("/add-entry?tab=request")}
                 >
-                  <MaterialIcon size={18} className="mr-2.5 text-soft-green" />
+                  <MaterialIcon size={18} className="mr-2.5" />
                   <span className="font-medium">Запросить материалы</span>
                 </Button>
               </>
@@ -394,24 +395,74 @@ const Dashboard = () => {
         {/* Recent Projects */}
         {dashboardData.recentProjects.length > 0 && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-medium text-neutral-800">
-                {isWorker ? "Мои проекты" : "Недавние проекты"}
-              </h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate("/projects")}
-                className="btn-ghost text-soft-green hover:text-soft-green-light"
-              >
-                Посмотреть все
-              </Button>
-            </div>
-            <div className="space-y-4">
-              {dashboardData.recentProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+            {isWorker && (
+              <>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-medium text-neutral-800">
+                    {isWorker ? "Мои проекты" : "Недавние проекты"}
+                  </h2>
+                  <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => navigate("/projects")}
+                      className="btn-ghost text-soft-green hover:text-soft-green-light"
+                  >
+                    Посмотреть все
+                  </Button>
+                </div>
+                <div className="space-y-4">
+                  {dashboardData.recentProjects.map((project) => (
+                      <WorkerProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {isEmployer && (
+                <>
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-medium text-neutral-800">
+                      {isWorker ? "Мои проекты" : "Недавние проекты"}
+                    </h2>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigate("/projects")}
+                        className="btn-ghost text-soft-green hover:text-soft-green-light"
+                    >
+                      Посмотреть все
+                    </Button>
+                  </div>
+                  <div className="space-y-4">
+                    {dashboardData.recentProjects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
+                    ))}
+                  </div>
+                </>
+            )}
+
+            {isSupplier && (
+                <>
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-medium text-neutral-800">
+                      {isWorker ? "Мои проекты" : "Недавние проекты"}
+                    </h2>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigate("/projects")}
+                        className="btn-ghost text-soft-green hover:text-soft-green-light"
+                    >
+                      Посмотреть все
+                    </Button>
+                  </div>
+                  <div className="space-y-4">
+                    {dashboardData.recentProjects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
+                    ))}
+                  </div>
+                </>
+            )}
           </div>
         )}
 
@@ -457,7 +508,7 @@ const Dashboard = () => {
         )}
 
         {/* Demo Role Switcher */}
-        <UserRoleSelector />
+        {/*<UserRoleSelector />*/}
       </div>
 
       <BottomNavigation />

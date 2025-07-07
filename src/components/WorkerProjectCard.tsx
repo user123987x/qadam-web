@@ -41,7 +41,7 @@ export const WorkerProjectCard = ({ project }: WorkerProjectCardProps) => {
   const statusConfig = projectStatuses.find((s) => s.value === project.status);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("ru-RU", {
       month: "short",
       day: "numeric",
       year: "numeric",
